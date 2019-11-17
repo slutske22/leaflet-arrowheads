@@ -1,7 +1,3 @@
-// import L from '../node_modules/leaflet'
-// import Vectorhat from 'leaflet-vectorhat'
-
-
 var mapOptions = {
   center: [32.96176, -117.03529],
   zoom: 16,
@@ -21,6 +17,12 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 var vector1 = L.polyline([
    [map.getCenter().lat-0.001, map.getCenter().lng-0.008],
    [map.getCenter().lat+0.001, map.getCenter().lng-0.008],
-]).addTo(map)
+]).vectorhat().addTo(map)
 
-vector1.vectorhat()
+var vector2 = L.polyline([
+   [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
+   [map.getCenter().lat-0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
+   [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
+]).vectorhats().addTo(map)
