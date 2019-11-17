@@ -1,3 +1,6 @@
+import L from '../node_modules/leaflet'
+import GeometryUtil from '../node_modules/leaflet-geometryutil'
+
 L.Polyline.include({
 
    vectorhat: function(options = {
