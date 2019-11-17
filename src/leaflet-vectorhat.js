@@ -1,5 +1,5 @@
-import L from '../node_modules/leaflet'
-import GeometryUtil from '../node_modules/leaflet-geometryutil'
+import Polyline from '../node_modules/leaflet'
+import L.GeometryUtil from '../node_modules/leaflet-geometryutil'
 
 L.Polyline.include({
 
