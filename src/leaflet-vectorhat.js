@@ -45,9 +45,10 @@ L.Polyline.include({
 
 
 
-
-
-
+   vectorhats: function(){
+      this.hatsApplied = true;
+      return this;
+   },
 
    buildVectorHats: function( options ={
       filledIn: false,
@@ -57,17 +58,25 @@ L.Polyline.include({
       continous: false
    }){
 
+      if (this._vectorhats){
+         this._vectorhats.remove()
+         let vectorhats = []
+         let allhats = []
+      }
+
       let allhats = [];
       this._parts.forEach( (peice, index) => {
 
-         console.log('Peice', index);
+         console.log('Peice number', index);
          let latlngs = peice.map( point => {
-            return this._map.containerPointToLatLng(point);
+            return this._map.layerPointToLatLng(point);
          })
+         console.log('peice', peice);
          console.log('latlngs', latlngs);
 
          let hats = []
          for (var i = 1; i < peice.length; i++) {
+
             let bearing = L.GeometryUtil.bearing(
                latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
             )
@@ -86,68 +95,20 @@ L.Polyline.include({
 
             hats.push(hat)
 
-
-            // console.log('hats', hats);
          } // for loop
 
          allhats.push(...hats);
-         // console.log('allhats', allhats);
 
       }) // forEach peice
 
       let vectorhats = L.layerGroup(allhats)
       this._vectorhats = vectorhats;
-      console.log(vectorhats);
 
-
-      // console.log(this);
       return this
 
    },
 
 
-
-
-
-
-
-
-   vectorhats: function( options = {
-      filledIn: false,
-      yawn: 60,
-      frequency: true,
-      continous: false
-   }){
-      let vertices = this.getLatLngs();
-
-      // Arrays with bearings for each point.  Skip first one, unless continuous is set true in the options.
-      let hats = [];
-      let bearings = [null]
-      let leftWingPoints = [null]
-      let rightWingPoints = [null]
-
-      for (var i = 1; i < vertices.length; i++) {
-         bearing = L.GeometryUtil.bearing(vertices[i-1], vertices[i])
-         leftWingPoints.push(
-            L.GeometryUtil.destination(vertices[i], bearing - 180 - options.yawn/2, 10)
-         );
-         rightWingPoints.push(
-            L.GeometryUtil.destination(vertices[i], bearing - 180 + options.yawn/2, 10)
-         );
-         hats.push(
-            L.polyline([
-               [leftWingPoints[i].lat, leftWingPoints[i].lng],
-               [vertices[i].lat, vertices[i].lng],
-               [rightWingPoints[i].lat, rightWingPoints[i].lng]
-            ], this.options)
-         );
-      }
-
-      let vectorhats = L.layerGroup(hats)
-      this._vectorhats = vectorhats;
-
-      return this;
-   },
 
    getVectorhat: function(){
       if (this._vectorhat){
@@ -170,16 +131,31 @@ L.Polyline.include({
       if (this._vectorhat){
          map.addLayer(this._vectorhat);
       }
-      if (this._vectorhats){
+      if (this.hatsApplied){
+         this.buildVectorHats()
          map.addLayer(this._vectorhats);
       }
       return this;
    },
 
 
+   _update: function () {
+		if (!this._map) { return; }
+
+		this._clipPoints();
+		this._simplifyPoints();
+		this._updatePath();
+
+      if (this.hatsApplied){
+         this.buildVectorHats();
+         map.addLayer(this._vectorhats);
+      }
+	},
+
    _updatePath: function () {
 		this._renderer._updatePoly(this);
-      this.buildVectorHats();
+
+
 	},
 
    // @method remove: this

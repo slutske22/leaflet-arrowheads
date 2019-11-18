@@ -17,17 +17,16 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 var vector1 = L.polyline([
    [map.getCenter().lat-0.001, map.getCenter().lng-0.008],
    [map.getCenter().lat+0.001, map.getCenter().lng-0.008],
-]).addTo(map).buildVectorHats()
+]).vectorhats().addTo(map)
 
-// var vector2 = L.polyline([
-//    [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
-//    [map.getCenter().lat-0.001, map.getCenter().lng-0.007],
-//    [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
-//    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
-//    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
-// ]).addTo(map)
-//
-//
+var vector2 = L.polyline([
+   [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
+   [map.getCenter().lat-0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
+   [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
+], {smoothFactor: 30}).vectorhats().addTo(map)
+
 var vector3 = L.polyline([
    [
       [map.getCenter().lat-0.002, map.getCenter().lng-0.004],
@@ -38,4 +37,4 @@ var vector3 = L.polyline([
       [map.getCenter().lat+0.001, map.getCenter().lng-0.005],
       [map.getCenter().lat+0.002, map.getCenter().lng-0.004]
    ]
-], {smoothFactor: 30}).addTo(map).buildVectorHats()
+], {smoothFactor: 30}).vectorhats().addTo(map)
