@@ -49,11 +49,9 @@ L.Polyline.include({
 
       // Merge user input options with default options:
       const defaults = {
-         filledIn: false,
          yawn: 60,
          size: 20,
-         frequency: true,
-         continous: false
+         frequency: true
       }
       let actualOptions = Object.assign({}, defaults, options)
       this._vectorhatOptions = actualOptions;
@@ -70,15 +68,36 @@ L.Polyline.include({
          let allhats = []
       }
 
+      //  ------------  FILTER THE OPTIONS ---------------- //
+      
+      /**
+         * The next 3 lines folds the options of the parent polyline into the default options for all polylines
+         * The options for the vectorhat are then folded in as well
+         * All options defined in parent polyline will be inherited by the vectorhat, unless otherwise specified in the vectorhat(options) call
+      */
+
+      let defaultOptionsOfParent = Object.getPrototypeOf(Object.getPrototypeOf(this.options))
+      // merge default options of parent polyline (this.options's prototype's prototype) with options passed to parent polyline (this.options).
+      let parentOptions = Object.assign({}, defaultOptionsOfParent, this.options)
+      // now merge in the options the user has put in the vectorhat call
+      let hatOptions = Object.assign({}, parentOptions, options)
+      // ...with a few exceptions:
+      hatOptions.smoothFactor = 1;
+      hatOptions.fillOpacity = 1
+
+      console.log('defaultOptionsOfParent', defaultOptionsOfParent );
+      console.log('options', options);
+      console.log('hatOptions', hatOptions);
+
       let allhats = [];
       this._parts.forEach( (peice, index) => {
 
-         console.log('Peice number', index);
+         // console.log('Peice number', index);
          let latlngs = peice.map( point => {
             return this._map.layerPointToLatLng(point);
          })
-         console.log('peice', peice);
-         console.log('latlngs', latlngs);
+         // console.log('peice', peice);
+         // console.log('latlngs', latlngs);
 
          let hats = []
          for (var i = 1; i < peice.length; i++) {
@@ -94,10 +113,10 @@ L.Polyline.include({
                L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, options.size)
 
             let hat = L.polyline([
-               [leftWingPoint.lat, leftWingPoint.lng],
-               [latlngs[i].lat, latlngs[i].lng],
-               [rightWingPoint.lat, rightWingPoint.lng]
-            ], {smoothFactor: 1})
+                  [leftWingPoint.lat, leftWingPoint.lng],
+                  [latlngs[i].lat, latlngs[i].lng],
+                  [rightWingPoint.lat, rightWingPoint.lng]
+               ], hatOptions) // let hat = L.polyline
 
             hats.push(hat)
 
