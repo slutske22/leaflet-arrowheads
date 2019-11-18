@@ -45,8 +45,15 @@ L.Polyline.include({
 
 
 
-   vectorhats: function(){
+   vectorhats: function(options ={
+      filledIn: false,
+      yawn: 60,
+      size: 20,
+      frequency: true,
+      continous: false
+   }){
       this.hatsApplied = true;
+      this.vectorhatOptions = options;
       return this;
    },
 
