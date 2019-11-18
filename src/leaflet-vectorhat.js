@@ -1,3 +1,8 @@
+function modulus(i, n){
+   return (i % n + n) % n;
+}
+
+
 L.Polyline.include({
 
    vectorhat: function(options = {
@@ -35,6 +40,79 @@ L.Polyline.include({
       return this
 
    },
+
+
+
+
+
+
+
+
+
+   buildVectorHats: function( options ={
+      filledIn: false,
+      yawn: 60,
+      frequency: true,
+      continous: false
+   }){
+
+      let hatOptions = this.options;
+      hatOptions.smoothFactor = 1;
+
+      let allhats = [];
+      this._parts.forEach( (peice, index) => {
+
+         console.log('Peice', index);
+         let latlngs = peice.map( point => {
+            return this._map.containerPointToLatLng(point);
+         })
+         console.log('latlngs', latlngs);
+
+         let hats = []
+         for (var i = 1; i < peice.length; i++) {
+            let bearing = L.GeometryUtil.bearing(
+               latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
+            )
+
+            let leftWingPoint =
+               L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, 10)
+
+            let rightWingPoint =
+               L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, 10)
+
+            let hat = L.polyline([
+               [leftWingPoint.lat, leftWingPoint.lng],
+               [latlngs[i].lat, latlngs[i].lng],
+               [rightWingPoint.lat, rightWingPoint.lng]
+            ], hatOptions)
+
+            hats.push(hat)
+
+
+            // console.log('hats', hats);
+         } // for loop
+
+         allhats.push(...hats);
+         // console.log('allhats', allhats);
+
+      }) // forEach peice
+
+      let vectorhats = L.layerGroup(allhats)
+      this._vectorhats = vectorhats;
+      console.log(vectorhats);
+
+
+      // console.log(this);
+      return this
+
+   },
+
+
+
+
+
+
+
 
    vectorhats: function( options = {
       filledIn: false,
@@ -99,6 +177,12 @@ L.Polyline.include({
       }
       return this;
    },
+
+
+   _updatePath: function () {
+		this._renderer._updatePoly(this);
+      this.buildVectorHats();
+	},
 
    // @method remove: this
    // Removes the layer from the map it is currently active on.
