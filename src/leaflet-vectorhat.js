@@ -52,12 +52,10 @@ L.Polyline.include({
    buildVectorHats: function( options ={
       filledIn: false,
       yawn: 60,
+      size: 20,
       frequency: true,
       continous: false
    }){
-
-      let hatOptions = this.options;
-      hatOptions.smoothFactor = 1;
 
       let allhats = [];
       this._parts.forEach( (peice, index) => {
@@ -75,16 +73,16 @@ L.Polyline.include({
             )
 
             let leftWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, 10)
+               L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, options.size)
 
             let rightWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, 10)
+               L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, options.size)
 
             let hat = L.polyline([
                [leftWingPoint.lat, leftWingPoint.lng],
                [latlngs[i].lat, latlngs[i].lng],
                [rightWingPoint.lat, rightWingPoint.lng]
-            ], hatOptions)
+            ], {smoothFactor: 1})
 
             hats.push(hat)
 
