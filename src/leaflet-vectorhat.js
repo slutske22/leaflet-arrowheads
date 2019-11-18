@@ -45,25 +45,24 @@ L.Polyline.include({
 
 
 
-   vectorhats: function(options ={
-      filledIn: false,
-      yawn: 60,
-      size: 20,
-      frequency: true,
-      continous: false
-   }){
+   vectorhats: function(options = {}){
+
+      // Merge user input options with default options:
+      const defaults = {
+         filledIn: false,
+         yawn: 60,
+         size: 20,
+         frequency: true,
+         continous: false
+      }
+      let actualOptions = Object.assign({}, defaults, options)
+      this._vectorhatOptions = actualOptions;
+
       this.hatsApplied = true;
-      this.vectorhatOptions = options;
       return this;
    },
 
-   buildVectorHats: function( options ={
-      filledIn: false,
-      yawn: 60,
-      size: 20,
-      frequency: true,
-      continous: false
-   }){
+   buildVectorHats: function( options ){
 
       if (this._vectorhats){
          this._vectorhats.remove()
@@ -139,7 +138,7 @@ L.Polyline.include({
          map.addLayer(this._vectorhat);
       }
       if (this.hatsApplied){
-         this.buildVectorHats()
+         this.buildVectorHats(this._vectorhatOptions)
          map.addLayer(this._vectorhats);
       }
       return this;
@@ -154,7 +153,7 @@ L.Polyline.include({
 		this._updatePath();
 
       if (this.hatsApplied){
-         this.buildVectorHats();
+         this.buildVectorHats(this._vectorhatOptions);
          map.addLayer(this._vectorhats);
       }
 	},
