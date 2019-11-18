@@ -14,10 +14,10 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
       accessToken: 'pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNqeGw1Y3BibDAybG4zeHFyaXl3OXVwZXUifQ.fZ_5Raq5z-DUpo2AK-bQHA'
    }).addTo(map)
 
-// var vector1 = L.polyline([
-//    [map.getCenter().lat-0.001, map.getCenter().lng-0.008],
-//    [map.getCenter().lat+0.001, map.getCenter().lng-0.008],
-// ]).vectorhats().addTo(map)
+var vector1 = L.polyline([
+   [map.getCenter().lat-0.001, map.getCenter().lng-0.008],
+   [map.getCenter().lat+0.001, map.getCenter().lng-0.008],
+]).vectorhats({fill: true, lineCap: 'butt'}).addTo(map)
 
 var vector2 = L.polyline([
    [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
@@ -25,16 +25,26 @@ var vector2 = L.polyline([
    [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
-], {smoothFactor: 30, weight: 5}).vectorhats().addTo(map)
+], {smoothFactor: 1, weight: 2}).vectorhats().addTo(map)
 
-// var vector3 = L.polyline([
-//    [
-//       [map.getCenter().lat-0.002, map.getCenter().lng-0.004],
-//       [map.getCenter().lat-0.001, map.getCenter().lng-0.005],
-//       [map.getCenter().lat+0.000, map.getCenter().lng-0.004]
-//    ],
-//    [
-//       [map.getCenter().lat+0.001, map.getCenter().lng-0.005],
-//       [map.getCenter().lat+0.002, map.getCenter().lng-0.004]
-//    ]
-// ], {smoothFactor: 30}).vectorhats().addTo(map)
+var vector3 = L.polyline([
+   [
+      [map.getCenter().lat-0.002, map.getCenter().lng-0.004],
+      [map.getCenter().lat-0.001, map.getCenter().lng-0.005],
+      [map.getCenter().lat+0.000, map.getCenter().lng-0.004]
+   ],
+   [
+      [map.getCenter().lat+0.001, map.getCenter().lng-0.005],
+      [map.getCenter().lat+0.002, map.getCenter().lng-0.004]
+   ]
+], {smoothFactor: 30}).vectorhats().addTo(map)
+
+var vector4 = L.polyline([
+   [map.getCenter().lat-0.002, map.getCenter().lng-0.003],
+   [map.getCenter().lat-0.0015, map.getCenter().lng-0.0025],
+   [map.getCenter().lat-0.0005, map.getCenter().lng-0.0025],
+   [map.getCenter().lat+0.000, map.getCenter().lng-0.003],
+   [map.getCenter().lat+0.001, map.getCenter().lng-0.0025],
+   [map.getCenter().lat+0.0015, map.getCenter().lng-0.0025],
+   [map.getCenter().lat+0.002, map.getCenter().lng-0.003],
+], {smoothFactor: 10, weight: 2}).vectorhats().addTo(map)
