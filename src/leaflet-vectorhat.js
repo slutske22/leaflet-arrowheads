@@ -10,7 +10,7 @@ L.Polyline.include({
       // Merge user input options with default options:
       const defaults = {
          yawn: 60,
-         size: 20,
+         size: 10,
          frequency: true
       }
       let actualOptions = Object.assign({}, defaults, options)
@@ -46,46 +46,114 @@ L.Polyline.include({
 
       // now merge in the options the user has put in the vectorhat call
       let hatOptions = Object.assign({}, parentOptions, options)
-      
+
       // ...with a few exceptions:
       hatOptions.smoothFactor = 1;
       hatOptions.fillOpacity = 1
       hatOptions.fill = options.fill ? true : false
 
-      console.log('defaultOptionsOfParent', defaultOptionsOfParent );
-      console.log('options', options);
-      console.log('hatOptions', hatOptions);
+      // console.log('defaultOptionsOfParent', defaultOptionsOfParent );
+      // console.log('options', options);
+      // console.log('hatOptions', hatOptions);
 
+
+
+
+
+
+
+
+
+      let size = options.size.toString();
       let allhats = [];
+
       this._parts.forEach( (peice, index) => {
 
-         // console.log('Peice number', index);
          let latlngs = peice.map( point => {
             return this._map.layerPointToLatLng(point);
          })
-         // console.log('peice', peice);
-         // console.log('latlngs', latlngs);
+
+
 
          let hats = []
          for (var i = 1; i < peice.length; i++) {
 
-            let bearing = L.GeometryUtil.bearing(
-               latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
-            )
+            //  ------------  DETERMINE UNIT OF SIZE ---------------- //
 
-            let leftWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, options.size)
+            if (size.slice(size.length-1, size.length) === '%' ){
 
-            let rightWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, options.size)
+               // size is in percent
+               console.log("size is as a percent")
+               let sizeNumber = size.slice(0, size.length-1)
 
-            let hat = L.polyline([
-                  [leftWingPoint.lat, leftWingPoint.lng],
-                  [latlngs[i].lat, latlngs[i].lng],
-                  [rightWingPoint.lat, rightWingPoint.lng]
-               ], hatOptions) // let hat = L.polyline
+               let hatSize = ( () => {
+                  let total = 0;
+                  for (var i = 1; i < peice.length; i++) {
+                     let distance = this._map.distance(latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i] )
+                     total += distance;
+                  }
+                  let averageDistance = ( total / peice.length )
+                  let hatSize = averageDistance * sizeNumber / 100
+                  return hatSize
+               })();
 
-            hats.push(hat)
+               let bearing = L.GeometryUtil.bearing(
+                  latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
+               )
+
+               let leftWingPoint =
+                  L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, hatSize)
+
+               let rightWingPoint =
+                  L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, hatSize)
+
+               let hat = L.polyline([
+                     [leftWingPoint.lat, leftWingPoint.lng],
+                     [latlngs[i].lat, latlngs[i].lng],
+                     [rightWingPoint.lat, rightWingPoint.lng]
+                  ], hatOptions) // let hat = L.polyline
+
+               hats.push(hat)
+
+
+            } else if ( size.slice(size.length-2, size.length) === 'px' ){
+
+               // size is in pixels
+               console.log('size is as a pixel')
+
+
+            } else {
+
+
+
+               // unitless size is in meters
+               console.log('size is in meters')
+               let bearing = L.GeometryUtil.bearing(
+                  latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
+               )
+
+               let leftWingPoint =
+                  L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, options.size)
+
+               let rightWingPoint =
+                  L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, options.size)
+
+               let hat = L.polyline([
+                     [leftWingPoint.lat, leftWingPoint.lng],
+                     [latlngs[i].lat, latlngs[i].lng],
+                     [rightWingPoint.lat, rightWingPoint.lng]
+                  ], hatOptions) // let hat = L.polyline
+
+               hats.push(hat)
+
+            }  // if else block for Size
+
+
+
+
+
+
+
 
          } // for loop
 
