@@ -27,7 +27,7 @@ var simpleVector2 = L.polyline([
 var simpleVector3 = L.polyline([
    [map.getCenter().lat-0.05, map.getCenter().lng+0.05],
    [map.getCenter().lat+0.05, map.getCenter().lng+0.05 + 0.05],
-]).vectorhats().addTo(map)
+]).vectorhats({size: '20px'}).addTo(map)
 
 var simpleVector4 = L.polyline([
    [map.getCenter().lat-0.05, map.getCenter().lng+0.15],
