@@ -90,8 +90,7 @@ L.Polyline.include({
          //  -------  LOOP THROUGH EACH POINT IN A SEGMENT ---------- //
          for (var i = 1; i < peice.length; i++) {
 
-            //  ------------  DETERMINE UNIT OF SIZE ---------------- //
-            //  If size is given in percent:
+            //  If size is given in percent ----------------------------
             if (size.slice(size.length-1, size.length) === '%' ){
 
                let sizeNumber = size.slice(0, size.length-1)
@@ -109,7 +108,7 @@ L.Polyline.include({
 
                pushHats(i, hatSize)
 
-            // If size is given in pixels
+            // If size is given in pixels --------------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
 
                let sizeNumber = size.slice(0, size.length-2)
@@ -119,17 +118,38 @@ L.Polyline.include({
                )
 
                let leftWingXY = ( () => {
-                  let thetaLeft = (bearing - options.yawn/2) * (Math.PI / 180)
-                  let thetaRight = (bearing + options.yawn/2) * (Math.PI / 180)
-                  let dxLeft = peice[i].x * Math.sin(thetaLeft)
-                  let dyLeft = peice[i].y * Math.cos(thetaLeft)
-                  let dxRight =peice[i].x * Math.sin(thetaRight)
-                  let dyRight =peice[i].y * Math.cos(thetaRight)
+                  let thetaLeft = (360-bearing - options.yawn/2) * (Math.PI / 180)
+                  let thetaRight = (360-bearing + options.yawn/2) * (Math.PI / 180)
+                  let dxLeft = sizeNumber * Math.sin(thetaLeft)
+                  let dyLeft = sizeNumber * Math.cos(thetaLeft)
+                  let dxRight =sizeNumber * Math.sin(thetaRight)
+                  let dyRight =sizeNumber * Math.cos(thetaRight)
+                  let leftWingXY = {
+                     x: peice[i].x + dxLeft,
+                     y: peice[i].y + dyLeft
+                  }
+                  let rightWingXY = {
+                     x: peice[i].x + dxRight,
+                     y: peice[i].y + dyRight
+                  }
+                  let leftWingPoint = this._map.layerPointToLatLng(leftWingXY)
+                  let rightWingPoint = this._map.layerPointToLatLng(rightWingXY)
+
+                  let hat = L.polyline([
+                        [leftWingPoint.lat, leftWingPoint.lng],
+                        [latlngs[i].lat, latlngs[i].lng],
+                        [rightWingPoint.lat, rightWingPoint.lng]
+                     ], hatOptions) // let hat = L.polyline
+
+                  hats.push(hat)
+
                   console.log('dyRight', dyRight);
+                  console.log('dyLeft', dyLeft);
+
                })()
                console.log('size is as a pixel')
 
-            // If size is given in meters (as a unitless number)
+            // If size is given in meters (as a unitless number) -----------
             } else {
 
                pushHats(i, options.size)
