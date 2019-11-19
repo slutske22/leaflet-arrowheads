@@ -12,6 +12,7 @@ L.Polyline.include({
          yawn: 60,
          size: '15%',
          endOnly: false,
+         proportionalToTotal: false,
          lineCap: 'butt'
       }
       let actualOptions = Object.assign({}, defaults, options)
@@ -109,13 +110,15 @@ L.Polyline.include({
             hats.push(hat)
          }
 
-         //  -------  LOOP THROUGH EACH POINT IN A SEGMENT ---------- //
+         //  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
          for (var i = 1; i < peice.length; i++) {
 
-            //  If size is given in percent ----------------------------
+            // -----------------------------------------------------------
+            //              If size is given in percent
+            // -----------------------------------------------------------
             if (size.slice(size.length-1, size.length) === '%' ){
 
-               let sizeNumber = size.slice(0, size.length-1)
+               let sizePercent = size.slice(0, size.length-1)
 
                let hatSize = ( () => {
                   let total = 0;
@@ -124,32 +127,48 @@ L.Polyline.include({
                      total += distance;
                   }
                   let averageDistance = ( total / (peice.length-1) )
-                  let hatSize = averageDistance * sizeNumber / 100
+                  let hatSize = averageDistance * sizePercent / 100
                   return hatSize
                })();
 
                if (options.endOnly){
-                  lastHatOnly(hatSize)
+                  if (!options.proportionalToTotal){
+                     lastHatOnly(hatSize)
+                  } else {
+                     let totalLength = ( () => {
+                        let total = 0;
+                        for (var i = 0; i < peice.length-1; i++) {
+                           total += this._map.distance(latlngs[i], latlngs[i+1])
+                           console.log(total)
+                        }
+                        return total
+                     })();
+                     console.log(totalLength);
+                     lastHatSize = totalLength * sizePercent / 100;
+                     lastHatOnly(lastHatSize)
+                  }
                } else {
                   pushHats(i, hatSize)
                }
 
-            // If size is given in pixels --------------------------------
+            // -----------------------------------------------------------
+            //                If size is given in pixels
+            // -----------------------------------------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
 
-               let sizeNumber = size.slice(0, size.length-2)
+               let sizePixels = size.slice(0, size.length-2)
 
                let bearing = L.GeometryUtil.bearing(
                   latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
                )
 
-               let leftWingXY = ( () => {
+               const pixelHats = ( () => {
                   let thetaLeft = (360-bearing - options.yawn/2) * (Math.PI / 180)
                   let thetaRight = (360-bearing + options.yawn/2) * (Math.PI / 180)
-                  let dxLeft = sizeNumber * Math.sin(thetaLeft)
-                  let dyLeft = sizeNumber * Math.cos(thetaLeft)
-                  let dxRight =sizeNumber * Math.sin(thetaRight)
-                  let dyRight =sizeNumber * Math.cos(thetaRight)
+                  let dxLeft = sizePixels * Math.sin(thetaLeft)
+                  let dyLeft = sizePixels * Math.cos(thetaLeft)
+                  let dxRight =sizePixels * Math.sin(thetaRight)
+                  let dyRight =sizePixels * Math.cos(thetaRight)
                   let leftWingXY = {
                      x: peice[i].x + dxLeft,
                      y: peice[i].y + dyLeft
@@ -169,19 +188,18 @@ L.Polyline.include({
 
                   hats.push(hat)
 
-                  console.log('dyRight', dyRight);
-                  console.log('dyLeft', dyLeft);
 
                })()
-               console.log('size is as a pixel')
 
-            // If size is given in meters (as a unitless number) -----------
+            // -----------------------------------------------------------
+            //       If size is given in meters (as a unitless number)
+            // -----------------------------------------------------------
             } else {
 
                if (options.endOnly){
-                  lastHatOnly(hatSize)
+                  lastHatOnly(options.size)
                } else {
-                  pushHats(i, hatSize)
+                  pushHats(i, options.size)
                }
 
             }  // if else block for Size
