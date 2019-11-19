@@ -55,7 +55,7 @@ var multiVector2 = L.polyline([
       [map.getCenter().lat+0.001, map.getCenter().lng-0.005],
       [map.getCenter().lat+0.002, map.getCenter().lng-0.004]
    ]
-], {smoothFactor: 30}).vectorhats({size: '200%'}).addTo(map)
+], {smoothFactor: 30}).vectorhats({size: '10%'}).addTo(map)
 
 var multiVector3 = L.polyline([
    [map.getCenter().lat-0.002, map.getCenter().lng-0.003],
@@ -65,4 +65,4 @@ var multiVector3 = L.polyline([
    [map.getCenter().lat+0.001, map.getCenter().lng-0.0025],
    [map.getCenter().lat+0.0015, map.getCenter().lng-0.0025],
    [map.getCenter().lat+0.002, map.getCenter().lng-0.003],
-], {smoothFactor: 10, weight: 2}).vectorhats({size: '20%'}).addTo(map)
+], {smoothFactor: 10, weight: 2}).vectorhats({size: '15%'}).addTo(map)

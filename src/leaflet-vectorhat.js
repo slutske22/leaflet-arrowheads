@@ -92,7 +92,7 @@ L.Polyline.include({
                      let distance = this._map.distance(latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i] )
                      total += distance;
                   }
-                  let averageDistance = ( total / peice.length )
+                  let averageDistance = ( total / (peice.length-1) )
                   let hatSize = averageDistance * sizeNumber / 100
                   return hatSize
                })();
