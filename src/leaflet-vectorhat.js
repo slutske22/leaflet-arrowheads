@@ -10,8 +10,8 @@ L.Polyline.include({
       // Merge user input options with default options:
       const defaults = {
          yawn: 60,
-         size: 2000,
-         frequency: true,
+         size: '15%',
+         endOnly: false,
          lineCap: 'butt'
       }
       let actualOptions = Object.assign({}, defaults, options)
@@ -87,6 +87,28 @@ L.Polyline.include({
             hats.push(hat)
          }
 
+         // Function to build only last hat of each peice based on given size
+         const lastHatOnly = (size) => {
+            let n = latlngs.length - 1
+            let bearing = L.GeometryUtil.bearing(
+               latlngs[ n - 1 ], latlngs[ n ]
+            )
+
+            let leftWingPoint =
+               L.GeometryUtil.destination(latlngs[n], bearing - 180 - options.yawn/2, size)
+
+            let rightWingPoint =
+               L.GeometryUtil.destination(latlngs[n], bearing - 180 + options.yawn/2, size)
+
+            let hat = L.polyline([
+                  [leftWingPoint.lat, leftWingPoint.lng],
+                  [latlngs[n].lat, latlngs[n].lng],
+                  [rightWingPoint.lat, rightWingPoint.lng]
+               ], hatOptions) // let hat = L.polyline
+
+            hats.push(hat)
+         }
+
          //  -------  LOOP THROUGH EACH POINT IN A SEGMENT ---------- //
          for (var i = 1; i < peice.length; i++) {
 
@@ -106,7 +128,11 @@ L.Polyline.include({
                   return hatSize
                })();
 
-               pushHats(i, hatSize)
+               if (options.endOnly){
+                  lastHatOnly(hatSize)
+               } else {
+                  pushHats(i, hatSize)
+               }
 
             // If size is given in pixels --------------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
@@ -152,7 +178,11 @@ L.Polyline.include({
             // If size is given in meters (as a unitless number) -----------
             } else {
 
-               pushHats(i, options.size)
+               if (options.endOnly){
+                  lastHatOnly(hatSize)
+               } else {
+                  pushHats(i, hatSize)
+               }
 
             }  // if else block for Size
 
@@ -181,7 +211,7 @@ L.Polyline.include({
       if (this._vectorhats){
          return this._vectorhats;
       } else {
-         return console.log(`You tried to call '.getVectorhats() on a shape that does not have a vectorhat.  Use '.vectorhats()' to add a vectorhats before trying to call '.getVectorhats()'`);
+         return console.log(`Error: You tried to call '.getVectorhats() on a shape that does not have a vectorhat.  Use '.vectorhats()' to add a vectorhats before trying to call '.getVectorhats()'`);
       }
    },
 
