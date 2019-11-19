@@ -10,8 +10,9 @@ L.Polyline.include({
       // Merge user input options with default options:
       const defaults = {
          yawn: 60,
-         size: 10,
-         frequency: true
+         size: '10%',
+         frequency: true,
+         lineCap: 'butt'
       }
       let actualOptions = Object.assign({}, defaults, options)
       this._vectorhatOptions = actualOptions;
