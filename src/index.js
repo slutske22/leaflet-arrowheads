@@ -1,6 +1,6 @@
 var mapOptions = {
   center: [36.8, -122.1408],
-  zoom: 12,
+  zoom: 10,
   zoomDelta: 0.5,
   zoomSnap: 0
 }
@@ -14,41 +14,41 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
       accessToken: 'pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNqeGw1Y3BibDAybG4zeHFyaXl3OXVwZXUifQ.fZ_5Raq5z-DUpo2AK-bQHA'
    }).addTo(map)
 
-var simpleVector0 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng-0.25],
-   [map.getCenter().lat+0.05, map.getCenter().lng-0.25 + 0.05],
-], {color: 'black'}).vectorhats()
-
-var simpleVector1 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng-0.15],
-   [map.getCenter().lat+0.05, map.getCenter().lng-0.15 + 0.05],
-], {color: 'blue'}).vectorhats()
-
-var simpleVector2 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng-0.05],
-   [map.getCenter().lat+0.05, map.getCenter().lng-0.05 + 0.05],
-], {color: 'purple'}).vectorhats()
-
-var simpleVector3 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng+0.05],
-   [map.getCenter().lat+0.05, map.getCenter().lng+0.05 + 0.05],
-], {color: 'green'}).vectorhats()
-
-var simpleVector4 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng+0.15],
-   [map.getCenter().lat+0.05, map.getCenter().lng+0.15 + 0.05],
-], {color: 'orange'}).vectorhats()
-
-var simpleVector5 = L.polyline([
-   [map.getCenter().lat-0.05, map.getCenter().lng+0.25],
-   [map.getCenter().lat+0.05, map.getCenter().lng+0.25 + 0.05],
-], {color: 'red'}).vectorhats()
-
-var group = L.layerGroup([
-   simpleVector0, simpleVector1, simpleVector2, simpleVector3, simpleVector4, simpleVector5
-])
-
-group.addTo(map)
+// var simpleVector0 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng-0.25],
+//    [map.getCenter().lat+0.05, map.getCenter().lng-0.25 + 0.05],
+// ], {color: 'black'}).vectorhats()
+//
+// var simpleVector1 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng-0.15],
+//    [map.getCenter().lat+0.05, map.getCenter().lng-0.15 + 0.05],
+// ], {color: 'blue'}).vectorhats()
+//
+// var simpleVector2 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng-0.05],
+//    [map.getCenter().lat+0.05, map.getCenter().lng-0.05 + 0.05],
+// ], {color: 'purple'}).vectorhats()
+//
+// var simpleVector3 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng+0.05],
+//    [map.getCenter().lat+0.05, map.getCenter().lng+0.05 + 0.05],
+// ], {color: 'green'}).vectorhats()
+//
+// var simpleVector4 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng+0.15],
+//    [map.getCenter().lat+0.05, map.getCenter().lng+0.15 + 0.05],
+// ], {color: 'orange'}).vectorhats()
+//
+// var simpleVector5 = L.polyline([
+//    [map.getCenter().lat-0.05, map.getCenter().lng+0.25],
+//    [map.getCenter().lat+0.05, map.getCenter().lng+0.25 + 0.05],
+// ], {color: 'red'}).vectorhats()
+//
+// var group = L.layerGroup([
+//    simpleVector0, simpleVector1, simpleVector2, simpleVector3, simpleVector4, simpleVector5
+// ])
+//
+// group.addTo(map)
 
 
 
@@ -60,25 +60,25 @@ group.addTo(map)
 //    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
 //    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
 // ], {smoothFactor: 1, weight: 2}).vectorhats({fill: true}).addTo(map)
-//
-// var multiVector2 = L.polyline([
-//    [
-//       [map.getCenter().lat-0.002, map.getCenter().lng-0.004],
-//       [map.getCenter().lat-0.001, map.getCenter().lng-0.005],
-//       [map.getCenter().lat+0.000, map.getCenter().lng-0.004]
-//    ],
-//    [
-//       [map.getCenter().lat+0.001, map.getCenter().lng-0.005],
-//       [map.getCenter().lat+0.002, map.getCenter().lng-0.004]
-//    ]
-// ], {smoothFactor: 30}).vectorhats({size: '20px', endOnly: true}).addTo(map)
-//
-// var multiVector3 = L.polyline([
-//    [map.getCenter().lat-0.002, map.getCenter().lng-0.003],
-//    [map.getCenter().lat-0.0015, map.getCenter().lng-0.0025],
-//    [map.getCenter().lat-0.0005, map.getCenter().lng-0.0025],
-//    [map.getCenter().lat+0.000, map.getCenter().lng-0.003],
-//    [map.getCenter().lat+0.001, map.getCenter().lng-0.0025],
-//    [map.getCenter().lat+0.0015, map.getCenter().lng-0.0025],
-//    [map.getCenter().lat+0.002, map.getCenter().lng-0.003],
-// ], {smoothFactor: 10, weight: 2}).vectorhats({size: '10%',  proportionalToTotal: false, endOnly: true}).addTo(map)
+
+var multiVector2 = L.polyline([
+   [
+      [map.getCenter().lat-0.2, map.getCenter().lng-0.4 + 0.5],
+      [map.getCenter().lat-0.1, map.getCenter().lng-0.5 + 0.5],
+      [map.getCenter().lat+0.0, map.getCenter().lng-0.4 + 0.5]
+   ],
+   [
+      [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
+      [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
+   ]
+], {smoothFactor: 30}).vectorhats({size: '10%', endOnly: true}).addTo(map)
+
+var multiVector3 = L.polyline([
+   [map.getCenter().lat-0.2, map.getCenter().lng-0.3 + 0.5],
+   [map.getCenter().lat-0.15, map.getCenter().lng-0.25 + 0.5],
+   [map.getCenter().lat-0.05, map.getCenter().lng-0.25 + 0.5],
+   [map.getCenter().lat+0.0, map.getCenter().lng-0.3 + 0.5],
+   [map.getCenter().lat+0.1, map.getCenter().lng-0.25 + 0.5],
+   [map.getCenter().lat+0.15, map.getCenter().lng-0.25 + 0.5],
+   [map.getCenter().lat+0.2, map.getCenter().lng-0.3 + 0.5],
+], {smoothFactor: 10, weight: 2}).vectorhats({size: '10%',  proportionalToTotal: false, endOnly: true}).addTo(map)

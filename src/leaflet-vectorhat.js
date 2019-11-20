@@ -62,6 +62,70 @@ L.Polyline.include({
       //  --------- LOOP THROUGH EACH POLYLINE SEGMENT ------------ //
       this._parts.forEach( (peice, index) => {
 
+
+
+         // ---- CHECK FOR POINTS OUTSIDE OF MAP BOUNDS ------------ //
+         var thereArePointsOutsideOfBounds = false;
+         var pointsArray;
+
+         if (this._parts.length > 1 && this._latlngs.length ===  this._parts.length) {
+            pointsArray = this._latlngs[index]
+         } else if (this._parts.length === 1) {
+            pointsArray = this._latlngs
+         }
+
+         pointsArray.forEach( point => {
+            if (!this._map.getBounds().contains( point )){
+               thereArePointsOutsideOfBounds = true;
+            }
+         })
+
+         console.log('thereArePointsOutsideOfBounds', thereArePointsOutsideOfBounds);
+
+
+         // ------- CHECK FOR PEICES SIMPLIFIED BY SMOOTHFACTOR -----  //
+         // let derivedLayerPoints = this._latlngs[index].map( latlng => {
+         //    return this._map.latLngToLayerPoint(latlng)
+         // })
+         //
+         // let commonPoints = []
+         //
+         // for (var i = 0; i < derivedLayerPoints.length; i++) {
+         //    for (var j = 0; j < peice.length; j++) {
+         //       if (derivedLayerPoints[i].x === peice[j].x
+         //          && derivedLayerPoints[i].y === peice[j].y){
+         //             commonPoints.push( derivedLayerPoints[i] )
+         //          }
+         //    }
+         // }
+         //
+         // let rederivedLatlngs = commonPoints.map( point => {
+         //    return this._map.layerPointToLatLng(point)
+         // })
+         //
+         //
+         // console.clear()
+         //
+         //
+         // console.log(`peice ${index}: ${peice}`);
+         // console.log(`Original latLng ${index}: ${this._latlngs[index]}`);
+         // console.log(`Latlngs to layerpoints ${index}: ${derivedLayerPoints}`);
+         // console.log(`Common points: ${commonPoints}`);
+         // console.log(`Rederived latlngs: ${rederivedLatlngs}`);
+
+
+
+         // console.log(this._latlngs);
+         // console.log('this._parts', this._parts);
+         // console.log('this._latlngs', this._latlngs);
+
+
+
+
+
+
+
+
          let latlngs = peice.map( point => this._map.layerPointToLatLng(point));
          let n = latlngs.length - 1
          let hats = [];
@@ -244,9 +308,21 @@ L.Polyline.include({
    _update: function () {
 		if (!this._map) { return; }
 
+      if (this._parts) {
+         let noOfPartsBeforeUpdate = this._parts.map( (part) => part.length )
+         // console.log(noOfPartsBeforeUpdate);
+      }
+
 		this._clipPoints();
 		this._simplifyPoints();
 		this._updatePath();
+
+
+      // if (this._parts) {
+      //    let noOfPartsAfterUpdate = this._parts.map( (part) => part.length )
+      //    console.log(noOfPartsAfterUpdate);
+      // }
+
 
       if (this.hatsApplied){
          this.buildVectorHats(this._vectorhatOptions);
@@ -255,15 +331,15 @@ L.Polyline.include({
 	},
 
 
-   remove: function () {
-      if (this._vectorhat){
-         this._vectorhat.removeFrom(this._map || this._mapToAdd);
-      }
-      if (this._vectorhats){
-         this._vectorhats.removeFrom(this._map || this._mapToAdd);
-      }
-      return this.removeFrom(this._map || this._mapToAdd);
-   },
+   // remove: function () {
+   //    if (this._vectorhat){
+   //       this._vectorhat.removeFrom(this._map || this._mapToAdd);
+   //    }
+   //    if (this._vectorhats){
+   //       this._vectorhats.removeFrom(this._map || this._mapToAdd);
+   //    }
+   //    return this.removeFrom(this._map || this._mapToAdd);
+   // },
 
 
 })
