@@ -13,7 +13,6 @@ L.Polyline.include({
          size: '15%',
          endOnly: false,
          proportionalToTotal: false,
-         lineCap: 'butt'
       }
       let actualOptions = Object.assign({}, defaults, options)
       this._vectorhatOptions = actualOptions;
@@ -24,7 +23,7 @@ L.Polyline.include({
 
    buildVectorHats: function( options ){
 
-      // Reset variables from before this._update()
+      // Reset variables from previous this._update()
       if (this._vectorhats){
          this._vectorhats.remove()
          let vectorhats = []
@@ -64,6 +63,7 @@ L.Polyline.include({
       this._parts.forEach( (peice, index) => {
 
          let latlngs = peice.map( point => this._map.layerPointToLatLng(point));
+         let n = latlngs.length - 1
          let hats = [];
 
 
@@ -79,39 +79,74 @@ L.Polyline.include({
             let rightWingPoint =
                L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, size)
 
-            let hat = L.polyline([
+            let hatPoints = [
                   [leftWingPoint.lat, leftWingPoint.lng],
                   [latlngs[i].lat, latlngs[i].lng],
                   [rightWingPoint.lat, rightWingPoint.lng]
-               ], hatOptions) // let hat = L.polyline
+               ]
+
+            let hat = options.fill
+               ? L.polygon(hatPoints, hatOptions)
+               : L.polyline(hatPoints, hatOptions)
 
             hats.push(hat)
-         }
+         } // pushHats()
 
-         // Function to build only last hat of each peice based on given size
-         const lastHatOnly = (size) => {
-            let n = latlngs.length - 1
+
+         // Function to build hats based on pixel input
+         const pushHatsFromPixels = (i, size) => {
+
+            let sizePixels = size.slice(0, size.length-2)
+
             let bearing = L.GeometryUtil.bearing(
-               latlngs[ n - 1 ], latlngs[ n ]
+               latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
             )
 
-            let leftWingPoint =
-               L.GeometryUtil.destination(latlngs[n], bearing - 180 - options.yawn/2, size)
+            let thetaLeft = (360-bearing - options.yawn/2) * (Math.PI / 180),
+               thetaRight = (360-bearing + options.yawn/2) * (Math.PI / 180)
 
-            let rightWingPoint =
-               L.GeometryUtil.destination(latlngs[n], bearing - 180 + options.yawn/2, size)
+            let dxLeft = sizePixels * Math.sin(thetaLeft),
+               dyLeft = sizePixels * Math.cos(thetaLeft),
+               dxRight =sizePixels * Math.sin(thetaRight),
+               dyRight =sizePixels * Math.cos(thetaRight)
 
-            let hat = L.polyline([
+            let leftWingXY = {
+               x: peice[i].x + dxLeft,
+               y: peice[i].y + dyLeft
+            }
+            let rightWingXY = {
+               x: peice[i].x + dxRight,
+               y: peice[i].y + dyRight
+            }
+
+            let leftWingPoint = this._map.layerPointToLatLng(leftWingXY),
+               rightWingPoint = this._map.layerPointToLatLng(rightWingXY)
+
+            let hatPoints = [
                   [leftWingPoint.lat, leftWingPoint.lng],
-                  [latlngs[n].lat, latlngs[n].lng],
+                  [latlngs[i].lat, latlngs[i].lng],
                   [rightWingPoint.lat, rightWingPoint.lng]
-               ], hatOptions) // let hat = L.polyline
+               ]
+
+            let hat = options.fill
+               ? L.polygon(hatPoints, hatOptions)
+               : L.polyline(hatPoints, hatOptions)
 
             hats.push(hat)
-         }
+
+         } // pushHatsFromPixels()
+
 
          //  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
          for (var i = 1; i < peice.length; i++) {
+
+            let totalLength = ( () => {
+               let total = 0;
+               for (var i = 0; i < peice.length-1; i++) {
+                  total += this._map.distance(latlngs[i], latlngs[i+1])
+               }
+               return total;
+            })();
 
             // -----------------------------------------------------------
             //              If size is given in percent
@@ -119,34 +154,21 @@ L.Polyline.include({
             if (size.slice(size.length-1, size.length) === '%' ){
 
                let sizePercent = size.slice(0, size.length-1)
-
                let hatSize = ( () => {
-                  let total = 0;
-                  for (var i = 1; i < peice.length; i++) {
-                     let distance = this._map.distance(latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i] )
-                     total += distance;
+
+                  if (options.endOnly && options.proportionalToTotal){
+                     return totalLength * sizePercent / 100;
+                  } else {
+                     let averageDistance = ( totalLength / (peice.length-1) )
+                     return averageDistance * sizePercent / 100
                   }
-                  let averageDistance = ( total / (peice.length-1) )
-                  let hatSize = averageDistance * sizePercent / 100
-                  return hatSize
-               })();
+
+               })() // hatsize Definition
+
+
 
                if (options.endOnly){
-                  if (!options.proportionalToTotal){
-                     lastHatOnly(hatSize)
-                  } else {
-                     let totalLength = ( () => {
-                        let total = 0;
-                        for (var i = 0; i < peice.length-1; i++) {
-                           total += this._map.distance(latlngs[i], latlngs[i+1])
-                           console.log(total)
-                        }
-                        return total
-                     })();
-                     console.log(totalLength);
-                     lastHatSize = totalLength * sizePercent / 100;
-                     lastHatOnly(lastHatSize)
-                  }
+                  pushHats(n, hatSize)
                } else {
                   pushHats(i, hatSize)
                }
@@ -156,40 +178,12 @@ L.Polyline.include({
             // -----------------------------------------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
 
-               let sizePixels = size.slice(0, size.length-2)
+               if (options.endOnly){
+                  pushHatsFromPixels(n, options.size)
+               } else {
+                  pushHatsFromPixels(i, options.size)
+               }
 
-               let bearing = L.GeometryUtil.bearing(
-                  latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
-               )
-
-               const pixelHats = ( () => {
-                  let thetaLeft = (360-bearing - options.yawn/2) * (Math.PI / 180)
-                  let thetaRight = (360-bearing + options.yawn/2) * (Math.PI / 180)
-                  let dxLeft = sizePixels * Math.sin(thetaLeft)
-                  let dyLeft = sizePixels * Math.cos(thetaLeft)
-                  let dxRight =sizePixels * Math.sin(thetaRight)
-                  let dyRight =sizePixels * Math.cos(thetaRight)
-                  let leftWingXY = {
-                     x: peice[i].x + dxLeft,
-                     y: peice[i].y + dyLeft
-                  }
-                  let rightWingXY = {
-                     x: peice[i].x + dxRight,
-                     y: peice[i].y + dyRight
-                  }
-                  let leftWingPoint = this._map.layerPointToLatLng(leftWingXY)
-                  let rightWingPoint = this._map.layerPointToLatLng(rightWingXY)
-
-                  let hat = L.polyline([
-                        [leftWingPoint.lat, leftWingPoint.lng],
-                        [latlngs[i].lat, latlngs[i].lng],
-                        [rightWingPoint.lat, rightWingPoint.lng]
-                     ], hatOptions) // let hat = L.polyline
-
-                  hats.push(hat)
-
-
-               })()
 
             // -----------------------------------------------------------
             //       If size is given in meters (as a unitless number)
@@ -197,7 +191,7 @@ L.Polyline.include({
             } else {
 
                if (options.endOnly){
-                  lastHatOnly(options.size)
+                  pushHats(n, options.size)
                } else {
                   pushHats(i, options.size)
                }
