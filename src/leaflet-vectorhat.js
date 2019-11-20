@@ -267,3 +267,40 @@ L.Polyline.include({
 
 
 })
+
+
+
+L.LayerGroup.include({
+
+   removeLayer: function (layer) {
+		var id = layer in this._layers ? layer : this.getLayerId(layer);
+
+		if (this._map && this._layers[id]) {
+         if (this._layers[id]._vectorhats){
+            this._layers[id]._vectorhats.remove() ;
+         }
+			this._map.removeLayer(this._layers[id]);
+		}
+
+		delete this._layers[id];
+
+		return this;
+	},
+
+
+   onRemove: function (map, layer) {
+      // console.log('working');
+
+      for (var layer in this._layers) {
+         if (this._layers[layer]){
+            this._layers[layer].remove()
+         }
+      }
+
+      this.eachLayer(map.removeLayer, map);
+
+      // console.log(this);
+   },
+
+
+})
