@@ -25,7 +25,14 @@ If you need to access the vectorhats directly, you can call the `.getVectorhats(
 
 ````
 myVector.getVectorhats() // returns the vectorhats polyline object
-myVector.getVectorhats().remove() // removes vectorhat from parent polyline
+myVector.getVectorhats().remove() // removes vectorhats from map
+````
+
+Vectorhats can also be deleted from their parent polyline entirely:
+
+````
+myVector.deleteHats()
+
 ````
 
 Vectorhats can take a configuration object as its argument:

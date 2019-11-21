@@ -18,7 +18,7 @@ L.Polyline.include({
       let actualOptions = Object.assign({}, defaults, options)
       this._vectorhatOptions = actualOptions;
 
-      this.hatsApplied = true;
+      this._hatsApplied = true;
       return this;
    },
 
@@ -235,16 +235,14 @@ L.Polyline.include({
 
    deleteHats: function(){
 
-      if (this._map && this._layers[id]) {
-         if (this._layers[id]._vectorhats){
-            this._layers[id]._vectorhats.remove() ;
-         }
-			this._map.removeLayer(this._layers[id]);
-		}
+      if (this._vectorhats){
+         this._vectorhats.remove()
+         delete this._vectorhats;
+         delete this._vectorhatOptions;
+         this._hatsApplied = false;
+      } 
 
-      delete this._vectorhats
 
-      this.hatsApplied = false
    },
 
 
@@ -253,8 +251,8 @@ L.Polyline.include({
       if (this._vectorhat){
          map.addLayer(this._vectorhat);
       }
-      if (this.hatsApplied){
-         this.buildVectorHats(this._vectorhatOptions)
+      if (this._hatsApplied){
+         this.buildVectorHats(this._vectorhatOptions);
          map.addLayer(this._vectorhats);
       }
       return this;
@@ -269,7 +267,7 @@ L.Polyline.include({
 		this._updatePath();
 
 
-      if (this.hatsApplied){
+      if (this._hatsApplied){
          this.buildVectorHats(this._vectorhatOptions);
          map.addLayer(this._vectorhats);
       }
