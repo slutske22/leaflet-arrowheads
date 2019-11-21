@@ -262,15 +262,14 @@ L.Polyline.include({
 	},
 
 
-   // remove: function () {
-   //    if (this._vectorhat){
-   //       this._vectorhat.removeFrom(this._map || this._mapToAdd);
-   //    }
-   //    if (this._vectorhats){
-   //       this._vectorhats.removeFrom(this._map || this._mapToAdd);
-   //    }
-   //    return this.removeFrom(this._map || this._mapToAdd);
-   // },
+   remove: function () {
+
+      if (this._vectorhats){
+         this._vectorhats.removeFrom(this._map || this._mapToAdd);
+         this._vectorhats = []
+      }
+      return this.removeFrom(this._map || this._mapToAdd);
+   },
 
 
 })
