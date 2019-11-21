@@ -1,7 +1,7 @@
 var mapOptions = {
-  center: [36.8, -122.1408],
+  center: [36.8, -122.4408],
   zoom: 10,
-  zoomDelta: 0.5,
+  zoomDelta: 0.25,
   zoomSnap: 0
 }
 
@@ -60,25 +60,27 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 //    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
 //    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
 // ], {smoothFactor: 1, weight: 2}).vectorhats({fill: true}).addTo(map)
-
-var multiVector2 = L.polyline([
-   [
-      [map.getCenter().lat-0.2, map.getCenter().lng-0.4 + 0.5],
-      [map.getCenter().lat-0.1, map.getCenter().lng-0.5 + 0.5],
-      [map.getCenter().lat+0.0, map.getCenter().lng-0.4 + 0.5]
-   ],
-   [
-      [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
-      [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
-   ]
-], {smoothFactor: 30}).vectorhats({size: '10%', endOnly: true}).addTo(map)
+//
+// var multiVector2 = L.polyline([
+//    [
+//       [map.getCenter().lat-0.2, map.getCenter().lng-0.4 + 0.5],
+//       [map.getCenter().lat-0.1, map.getCenter().lng-0.5 + 0.5],
+//       [map.getCenter().lat+0.0, map.getCenter().lng-0.4 + 0.5]
+//    ],
+//    [
+//       [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
+//       [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
+//    ]
+// ], {smoothFactor: 30}).vectorhats({size: '10%', endOnly: true}).addTo(map)
 
 var multiVector3 = L.polyline([
    [map.getCenter().lat-0.2, map.getCenter().lng-0.3 + 0.5],
    [map.getCenter().lat-0.15, map.getCenter().lng-0.25 + 0.5],
+   [map.getCenter().lat-0.1, map.getCenter().lng-0.22 + 0.5],
    [map.getCenter().lat-0.05, map.getCenter().lng-0.25 + 0.5],
    [map.getCenter().lat+0.0, map.getCenter().lng-0.3 + 0.5],
+   [map.getCenter().lat+0.05, map.getCenter().lng-0.3 + 0.5],
    [map.getCenter().lat+0.1, map.getCenter().lng-0.25 + 0.5],
    [map.getCenter().lat+0.15, map.getCenter().lng-0.25 + 0.5],
    [map.getCenter().lat+0.2, map.getCenter().lng-0.3 + 0.5],
-], {smoothFactor: 10, weight: 2}).vectorhats({size: '10%',  proportionalToTotal: false, endOnly: true}).addTo(map)
+], {smoothFactor: 10, weight: 2}).vectorhats({size: '20%',  proportionalToTotal: false, endOnly: false, proportionalToRemainder: true}).addTo(map)

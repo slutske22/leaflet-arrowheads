@@ -11,6 +11,7 @@ L.Polyline.include({
       const defaults = {
          yawn: 60,
          size: '15%',
+         proportionalToRemainder: false,
          endOnly: false,
          proportionalToTotal: false,
       }
@@ -30,6 +31,7 @@ L.Polyline.include({
          let allhats = []
       }
 
+      //  -------------------------------------------------------- //
       //  ------------  FILTER THE OPTIONS ----------------------- //
       /*
          * The next 3 lines folds the options of the parent polyline into the default options for all polylines
@@ -51,6 +53,7 @@ L.Polyline.include({
       hatOptions.fill = options.fill ? true : false
 
       //  ------------  FILTER THE OPTIONS END -------------------- //
+      //  --------------------------------------------------------- //
 
 
 
@@ -59,94 +62,15 @@ L.Polyline.include({
       let size = options.size.toString(); // stringify if its a number
       let allhats = []; // empty array to receive hat polylines
 
-      //  --------- LOOP THROUGH EACH POLYLINE SEGMENT ------------ //
+      //  --------------------------------------------------------- //
+      //  ------ LOOP THROUGH EACH POLYLINE SEGMENT --------------- //
+      //  ------ TO CALCULATE HAT SIZES AND CAPTURE IN ARRAY ------ //
       this._parts.forEach( (peice, index) => {
 
-
-
-         // ---- CHECK FOR POINTS OUTSIDE OF MAP BOUNDS ------------ //
-         var thereArePointsOutsideOfBounds = false;
-         var pointsArray = []
-
-         console.log('this._parts', this._parts);
-         console.log('this._latlngs', this._latlngs);
-
-         // multiple parts, multiple latlng segments, they are the same
-         if (this._parts.length > 1 && this._latlngs[0].length && this._latlngs.length ===  this._parts.length) {
-            pointsArray = this._latlngs[index]
-            console.log('more than one part and latlngs array is not same size as parts array');
-         // multiple parts, but not multiple latlng segments, making sure number of entries in single latlng part doesnt happen to be same as leaflet's parts
-         } else if (this._parts.length > 1 && !this._latlngs[0].length && this._latlngs.length !==  this._parts.length){
-            console.log('things are not lining up');
-         // multiple parts, only single latlng group.  leaflet has arbitrarily broken up the single latlng segment into several parts
-         } else if (this._parts.length > 1 && !this._latlngs[0].length && this._latlngs.length ===  this._parts.length){
-            console.log('total parts is same as latlngs');
-         // single part
-         } else if (this._parts.length === 1) {
-            pointsArray = this._latlngs
-            console.log('only one part');
-         }
-
-         pointsArray.forEach( point => {
-            if (!this._map.getBounds().contains( point )){
-               thereArePointsOutsideOfBounds = true;
-            }
-         })
-
-
-
-
-
-         console.log('thereArePointsOutsideOfBounds', thereArePointsOutsideOfBounds);
-
-
-         // ------- CHECK FOR PEICES SIMPLIFIED BY SMOOTHFACTOR -----  //
-         // let derivedLayerPoints = pointsArray.map( latlng => {
-         //    return this._map.latLngToLayerPoint(latlng)
-         // })
-         //
-         // let commonPoints = []
-         //
-         // for (var i = 0; i < derivedLayerPoints.length; i++) {
-         //    for (var j = 0; j < peice.length; j++) {
-         //       if (derivedLayerPoints[i].x === peice[j].x
-         //          && derivedLayerPoints[i].y === peice[j].y){
-         //             commonPoints.push( derivedLayerPoints[i] )
-         //          }
-         //    }
-         // }
-         //
-         // let rederivedLatlngs = commonPoints.map( point => {
-         //    return this._map.layerPointToLatLng(point)
-         // })
-         //
-         //
-         // console.clear()
-         //
-         //
-         // console.log(`peice ${index}: ${peice}`);
-         // console.log(`Original latLng ${index}: ${this._latlngs[index]}`);
-         // console.log(`Latlngs to layerpoints ${index}: ${derivedLayerPoints}`);
-         // console.log(`Common points: ${commonPoints}`);
-         // console.log(`Rederived latlngs: ${rederivedLatlngs}`);
-
-
-
-         // console.log(this._latlngs);
-         // console.log('this._parts', this._parts);
-         // console.log('this._latlngs', this._latlngs);
-
-
-
-
-
-
-
-
+         // Preliminary defintions:
          let latlngs = peice.map( point => this._map.layerPointToLatLng(point));
          let n = latlngs.length - 1
          let hats = [];
-
 
          // Function to build hats based on index and a given hatsize in meters
          const pushHats = (i, size) => {
@@ -234,6 +158,10 @@ L.Polyline.include({
             // -----------------------------------------------------------
             if (size.slice(size.length-1, size.length) === '%' ){
 
+               if (!options.proportionalToRemainder){
+                  this.options.noClip = true;
+               }
+
                let sizePercent = size.slice(0, size.length-1)
                let hatSize = ( () => {
 
@@ -244,7 +172,7 @@ L.Polyline.include({
                      return averageDistance * sizePercent / 100
                   }
 
-               })() // hatsize Definition
+               })() // hatsize calculation
 
 
 
@@ -280,17 +208,14 @@ L.Polyline.include({
             }  // if else block for Size
 
 
-
-
-
-
-
-
-         } // for loop
+         } // for loop for each point witin a peice
 
          allhats.push(...hats);
 
       }) // forEach peice
+      //  --------- LOOP THROUGH EACH POLYLINE END ---------------- //
+      //  --------------------------------------------------------- //
+
 
       let vectorhats = L.layerGroup(allhats)
       this._vectorhats = vectorhats;
@@ -339,20 +264,9 @@ L.Polyline.include({
    _update: function () {
 		if (!this._map) { return; }
 
-      if (this._parts) {
-         let noOfPartsBeforeUpdate = this._parts.map( (part) => part.length )
-         // console.log(noOfPartsBeforeUpdate);
-      }
-
-		this._clipPoints();
+      this._clipPoints();
 		this._simplifyPoints();
 		this._updatePath();
-
-
-      // if (this._parts) {
-      //    let noOfPartsAfterUpdate = this._parts.map( (part) => part.length )
-      //    console.log(noOfPartsAfterUpdate);
-      // }
 
 
       if (this.hatsApplied){
@@ -362,15 +276,14 @@ L.Polyline.include({
 	},
 
 
-   // remove: function () {
-   //    if (this._vectorhat){
-   //       this._vectorhat.removeFrom(this._map || this._mapToAdd);
-   //    }
-   //    if (this._vectorhats){
-   //       this._vectorhats.removeFrom(this._map || this._mapToAdd);
-   //    }
-   //    return this.removeFrom(this._map || this._mapToAdd);
-   // },
+   remove: function () {
+
+      if (this._vectorhats){
+         this._vectorhats.removeFrom(this._map || this._mapToAdd);
+         this._vectorhats = []
+      }
+      return this.removeFrom(this._map || this._mapToAdd);
+   },
 
 
 })
@@ -396,7 +309,6 @@ L.LayerGroup.include({
 
 
    onRemove: function (map, layer) {
-      // console.log('working');
 
       for (var layer in this._layers) {
          if (this._layers[layer]){
@@ -406,7 +318,6 @@ L.LayerGroup.include({
 
       this.eachLayer(map.removeLayer, map);
 
-      // console.log(this);
    },
 
 
