@@ -308,6 +308,20 @@ L.Polyline.include({
       }
    },
 
+   deleteHats: function(){
+
+      if (this._map && this._layers[id]) {
+         if (this._layers[id]._vectorhats){
+            this._layers[id]._vectorhats.remove() ;
+         }
+			this._map.removeLayer(this._layers[id]);
+		}
+
+      delete this._vectorhats
+
+      this.hatsApplied = false
+   },
+
 
    addTo: function (map) {
       map.addLayer(this);
