@@ -97,7 +97,86 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
 ## Examples
 
+<table>
+   <tr>
+      <td colspan="4"><b>Yawn Options</td>
+   </tr>
+   <tr>
+      <td width="35%">
+         <code>L.polyline.vectorhats()</code><br>
+         (Standard option gives 60 degree yawn)
+      </td>
+      <td>
+         <img src="images/yawn-1.PNG" width="100px">
+      </td>
+      <td width="35%">
+         <code>L.polyline.vectorhats({ <br>
+         &nbsp;&nbsp;&nbsp;yawn: 90<br>
+         })</code>
+      </td>
+      <td>
+         <img src="images/yawn-2.PNG" width="100px">
+      </td>
+   </tr>
+   <tr>
+      <td><code>L.polyline.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;yawn: 40 <br>
+      })</code></td>
+      <td><img src="images/yawn-3.PNG" width="100px"></td>
+      <td><code>.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;yawn: 40, fill: true <br>
+      })</code></td>
+      <td><img src="images/yawn-4.PNG" width="100px"></td>
+   </tr>
+</table>
 
+<table>
+   <tr>
+      <td colspan="4"><b>Color and Fill Options</td>
+   </tr>
+   <tr>
+      <td width="35%">
+         <code>L.polyline.vectorhats()</code><br>
+         (Standard options makes vectorhats a vector with same color as parent)
+      </td>
+      <td>
+         <img src="images/color-1.PNG" width="100px">
+      </td>
+      <td width="35%">
+         <code>L.polyline.vectorhats({ <br>
+         &nbsp;&nbsp;&nbsp;fill: true<br>
+         })</code>
+      </td>
+      <td>
+         <img src="images/fill-1.PNG" width="100px">
+      </td>
+   </tr>
+   <tr>
+      <td><code>L.polyline.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;color: 'black' <br>
+      })</code></td>
+      <td><img src="images/color-2.PNG" width="100px"></td>
+      <td><code>L.polyline([coords],{<br>
+      &nbsp;&nbsp;&nbsp;color: 'black'<br>
+         })<br>
+      &nbsp;&nbsp;&nbsp;.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fill: true <br>
+      &nbsp;&nbsp;&nbsp;})</code></td>
+      <td><img src="images/fill-2.PNG" width="100px"></td>
+   </tr>
+   <tr>
+      <td><code>L.polyline.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;color: 'black' <br>
+      })</code></td>
+      <td><img src="images/fill-3.PNG" width="100px"></td>
+      <td><code>L.polyline.vectorhats({ <br>
+      &nbsp;&nbsp;&nbsp;fill: true,<br>
+      &nbsp;&nbsp;&nbsp;color: 'black' <br>
+      &nbsp;&nbsp;&nbsp;fillColor: 'green' <br>
+      })</code></td>
+      <td><img src="images/color-3.PNG" width="100px"></td>
+   </tr>
+</table>
 
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
