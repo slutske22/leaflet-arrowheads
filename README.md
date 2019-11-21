@@ -9,6 +9,20 @@
 
 ## Usage
 
+Vectorhats can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
+
+`var myVector = L.polyline([ coords ]).vectorhats()`
+
+Vectorhats will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
+
+`myVector.addTo(map)` or `myVector.remove()`
+
+If you need to access the vectorhats directly, you can call the `.getVectorhats()` method on your polyline.
+
+
+`myVector.getVectorhats().remove() // will remove hat from vector`
+
+
 ## Options
 
 Leaflet-vectorhats offers a variety of options for rendering and styling vectorhats.  See the options table below.<br>
