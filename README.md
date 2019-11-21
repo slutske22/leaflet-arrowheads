@@ -11,7 +11,9 @@
 
 Vectorhats can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
 
-`var myVector = L.polyline([ coords ]).vectorhats()`
+````
+var myVector = L.polyline([ coords ]).vectorhats()
+````
 
 Vectorhats will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
@@ -19,8 +21,10 @@ Vectorhats will be added to your polyline and will automatically be added to and
 
 If you need to access the vectorhats directly, you can call the `.getVectorhats()` method on your polyline.
 
+````
+myVector.getVectorhats().remove() // will remove hat from vector
 
-`myVector.getVectorhats().remove() // will remove hat from vector`
+````
 
 
 ## Options
