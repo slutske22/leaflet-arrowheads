@@ -17,22 +17,30 @@ var myVector = L.polyline([ coords ]).vectorhats()
 
 Vectorhats will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
-`myVector.addTo(map)` or `myVector.remove()`
+````
+myVector.addTo(map) or myVector.remove()
+````
 
 If you need to access the vectorhats directly, you can call the `.getVectorhats()` method on your polyline.
 
 ````
-myVector.getVectorhats().remove() // will remove hat from vector
+myVector.getVectorhats() // returns the vectorhats polyline object
+myVector.getVectorhats().remove() // removes vectorhat from parent polyline
+````
 
+Vectorhats can take a configuration object as its argument:
+
+````
+var myVector = L.polyline([ coords ]).vectorhats({ <Options> })
 ````
 
 
 ## Options
 
-Leaflet-vectorhats offers a variety of options for rendering and styling vectorhats.  See the options table below.<br>
+Vectorhats offers a variety of options for rendering and styling vectorhats.  See the options table below.<br>
 <br>
-Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Vectorhats also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the vectorhats' options, but changing smoothFactor will result in improperly rendered arrows.
-
+Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Vectorhats also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the vectorhats' options, but changing smoothFactor will result in improperly rendered arrows.<br>
+<br>
 <table>
 
    <tr>
@@ -88,6 +96,8 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
 
 ## Examples
+
+
 
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
