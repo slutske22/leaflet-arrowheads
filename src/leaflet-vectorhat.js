@@ -66,12 +66,25 @@ L.Polyline.include({
 
          // ---- CHECK FOR POINTS OUTSIDE OF MAP BOUNDS ------------ //
          var thereArePointsOutsideOfBounds = false;
-         var pointsArray;
+         var pointsArray = []
 
-         if (this._parts.length > 1 && this._latlngs.length ===  this._parts.length) {
+         console.log('this._parts', this._parts);
+         console.log('this._latlngs', this._latlngs);
+
+         // multiple parts, multiple latlng segments, they are the same
+         if (this._parts.length > 1 && this._latlngs[0].length && this._latlngs.length ===  this._parts.length) {
             pointsArray = this._latlngs[index]
+            console.log('more than one part and latlngs array is not same size as parts array');
+         // multiple parts, but not multiple latlng segments, making sure number of entries in single latlng part doesnt happen to be same as leaflet's parts
+         } else if (this._parts.length > 1 && !this._latlngs[0].length && this._latlngs.length !==  this._parts.length){
+            console.log('things are not lining up');
+         // multiple parts, only single latlng group.  leaflet has arbitrarily broken up the single latlng segment into several parts
+         } else if (this._parts.length > 1 && !this._latlngs[0].length && this._latlngs.length ===  this._parts.length){
+            console.log('total parts is same as latlngs');
+         // single part
          } else if (this._parts.length === 1) {
             pointsArray = this._latlngs
+            console.log('only one part');
          }
 
          pointsArray.forEach( point => {
@@ -80,11 +93,15 @@ L.Polyline.include({
             }
          })
 
+
+
+
+
          console.log('thereArePointsOutsideOfBounds', thereArePointsOutsideOfBounds);
 
 
          // ------- CHECK FOR PEICES SIMPLIFIED BY SMOOTHFACTOR -----  //
-         // let derivedLayerPoints = this._latlngs[index].map( latlng => {
+         // let derivedLayerPoints = pointsArray.map( latlng => {
          //    return this._map.latLngToLayerPoint(latlng)
          // })
          //
