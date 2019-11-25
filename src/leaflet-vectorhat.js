@@ -71,9 +71,9 @@ export default L.Polyline.include({
       this._parts.forEach( (peice, index) => {
 
          // Preliminary defintions:
-         let latlngs = peice.map( point => this._map.layerPointToLatLng(point));
+         const latlngs = peice.map( point => this._map.layerPointToLatLng(point));
 
-         let totalLength = ( () => {
+         const totalLength = ( () => {
             let total = 0;
             for (var i = 0; i < peice.length-1; i++) {
                total += this._map.distance(latlngs[i], latlngs[i+1])
@@ -82,7 +82,14 @@ export default L.Polyline.include({
          })();
 
 
-         if ( !isNaN(options.frequency) ) {
+         let derivedLatLngs;
+         let derivedBearings;
+
+
+
+         if (options.frequency === 'allvertices'){
+            derivedLatLngs = latlngs
+         } else if ( !isNaN(options.frequency) ) {
 
             let spacing = 1 / options.frequency;
 
@@ -91,7 +98,7 @@ export default L.Polyline.include({
                for (var i = 0; i < options.frequency; i++) {
 
                   let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
-                     this._map, latlngs, spacing * (i+1)
+                     this._map, latlngs, spacing * (i + 1)
                   )
 
                   intPoints.push(interpolatedPoint)
@@ -100,9 +107,26 @@ export default L.Polyline.include({
                return intPoints
             })()
 
-            console.log('totalLength', totalLength);
+
+            let bearings = ( () => {
+               let bearings = [];
+               for (var i = 0; i < interpolatedPoints.length; i++) {
+                  let bearing = L.GeometryUtil.bearing(
+                     interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
+                  )
+                  bearings.push(bearing)
+               }
+               return bearings;
+            })()
+
+
+            derivedLatLngs = interpolatedPoints;
+            derivedBearings = bearings;
+
             console.log('number of points', latlngs.length);
             console.log(interpolatedPoints);
+            console.log(bearings);
+
 
          }
 
