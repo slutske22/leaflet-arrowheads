@@ -201,7 +201,7 @@ export default L.Polyline.include({
 
 
          // Function to build hats based on pixel input
-         const pushHatsFromPixels = (i, size) => {
+         const pushHatsFromPixels = (i, size, coords, bearings) => {
 
             let sizePixels = size.slice(0, size.length-2)
 
