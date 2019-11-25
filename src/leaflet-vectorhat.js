@@ -124,12 +124,14 @@ export default L.Polyline.include({
 
             derivedLatLngs = latlngs
 
+            console.log('derivedLatLngs', derivedLatLngs);
+            console.log('derivedBearings', derivedBearings);
+
          } else if (options.frequency === 'endonly') {
 
             console.log('end only');
 
             derivedLatLngs = [
-               latlngs[latlngs.length - 2],
                latlngs[latlngs.length - 1]
             ];
 
@@ -138,6 +140,9 @@ export default L.Polyline.include({
                   latlngs[latlngs.length - 2], latlngs[latlngs.length - 1]
                )
             ];
+
+            console.log('derivedLatLngs', derivedLatLngs);
+            console.log('derivedBearings', derivedBearings);
 
 
          } else {
@@ -167,6 +172,9 @@ export default L.Polyline.include({
                }
                return bearings;
             })()
+
+            console.log('derivedLatLngs', derivedLatLngs);
+            console.log('derivedBearings', derivedBearings);
 
 
          }
