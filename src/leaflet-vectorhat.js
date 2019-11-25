@@ -62,12 +62,15 @@ export default L.Polyline.include({
 
 
 
-      let size = options.size.toString(); // stringify if its a number
-      let allhats = []; // empty array to receive hat polylines
-
       //  --------------------------------------------------------- //
       //  ------ LOOP THROUGH EACH POLYLINE SEGMENT --------------- //
       //  ------ TO CALCULATE HAT SIZES AND CAPTURE IN ARRAY ------ //
+
+      let size = options.size.toString(); // stringify if its a number
+      let allhats = []; // empty array to receive hat polylines
+      const { frequency } = options;
+
+
       this._parts.forEach( (peice, index) => {
 
          // Immutable variables for each peice
@@ -80,8 +83,6 @@ export default L.Polyline.include({
             }
             return total;
          })();
-
-         const { frequency } = options
 
 
          // TBD by options if tree below
@@ -101,19 +102,16 @@ export default L.Polyline.include({
             console.log('frequency in meters');
             spacing = frequency.slice(0,frequency.length-1) / totalLength;
             noOfPoints = 1 / spacing
-            console.log(spacing, noOfPoints);
             // round things out for more even spacing:
             noOfPoints = Math.floor(noOfPoints)
             spacing = 1 / noOfPoints
-            console.log(spacing, noOfPoints);
-
          }
 
 
 
          if (options.frequency === 'allvertices'){
 
-            let bearings = ( () => {
+            derivedBearings = ( () => {
                let bearings = [];
                for (var i = 0; i < latlngs.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
@@ -125,46 +123,50 @@ export default L.Polyline.include({
             })()
 
             derivedLatLngs = latlngs
-            derivedBearings = bearings
 
-            console.log(derivedLatLngs, bearings);
+         } else if (options.frequency === 'endonly') {
+
+            console.log('end only');
+
+            derivedLatLngs = [
+               latlngs[latlngs.length - 2],
+               latlngs[latlngs.length - 1]
+            ];
+
+            derivedBearings = [
+               L.GeometryUtil.bearing(
+                  latlngs[latlngs.length - 2], latlngs[latlngs.length - 1]
+               )
+            ];
 
 
          } else {
 
-            let interpolatedPoints = ( () => {
-               let intPoints = []
+            derivedLatLngs = ( () => {
+               let interpolatedPoints = []
                for (var i = 0; i < noOfPoints; i++) {
 
                   let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
                      this._map, latlngs, spacing * (i + 1)
                   )
 
-                  intPoints.push(interpolatedPoint)
+                  interpolatedPoints.push(interpolatedPoint)
                   L.circle(interpolatedPoint.latLng, {color: 'black'}).addTo(this._map)
                }
-               return intPoints
+               return interpolatedPoints
             })()
 
 
-            let bearings = ( () => {
+            derivedBearings = ( () => {
                let bearings = [];
-               for (var i = 0; i < interpolatedPoints.length; i++) {
+               for (var i = 0; i < derivedLatLngs.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
-                     interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
+                     derivedLatLngs[i].latLng, latlngs[ derivedLatLngs[i].predecessor ]
                   )
                   bearings.push(bearing)
                }
                return bearings;
             })()
-
-
-            derivedLatLngs = interpolatedPoints;
-            derivedBearings = bearings;
-
-            console.log('number of points', latlngs.length);
-            console.log(interpolatedPoints);
-            console.log(bearings);
 
 
          }
