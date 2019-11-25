@@ -70,7 +70,7 @@ export default L.Polyline.include({
       //  ------ TO CALCULATE HAT SIZES AND CAPTURE IN ARRAY ------ //
       this._parts.forEach( (peice, index) => {
 
-         // Preliminary defintions:
+         // Immutable variables for each peice
          const latlngs = peice.map( point => this._map.layerPointToLatLng(point));
 
          const totalLength = ( () => {
@@ -81,21 +81,60 @@ export default L.Polyline.include({
             return total;
          })();
 
+         const { frequency } = options
 
+
+         // TBD by options if tree below
          let derivedLatLngs;
          let derivedBearings;
+         let spacing;
+         let noOfPoints;
+
+
+         //  Determining latlng and bearing arrays based on frequency choice:
+         if ( !isNaN(frequency) ) {
+            spacing = 1 / frequency;
+            noOfPoints = frequency;
+         } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === '%' ){
+            console.log('frequency in %');
+         } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === 'm' ){
+            console.log('frequency in meters');
+            spacing = frequency.slice(0,frequency.length-1) / totalLength;
+            noOfPoints = 1 / spacing
+            console.log(spacing, noOfPoints);
+            // round things out for more even spacing:
+            noOfPoints = Math.floor(noOfPoints)
+            spacing = 1 / noOfPoints
+            console.log(spacing, noOfPoints);
+
+         }
 
 
 
          if (options.frequency === 'allvertices'){
-            derivedLatLngs = latlngs
-         } else if ( !isNaN(options.frequency) ) {
 
-            let spacing = 1 / options.frequency;
+            let bearings = ( () => {
+               let bearings = [];
+               for (var i = 0; i < latlngs.length; i++) {
+                  let bearing = L.GeometryUtil.bearing(
+                     latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
+                  )
+                  bearings.push(bearing)
+               }
+               return bearings;
+            })()
+
+            derivedLatLngs = latlngs
+            derivedBearings = bearings
+
+            console.log(derivedLatLngs, bearings);
+
+
+         } else {
 
             let interpolatedPoints = ( () => {
                let intPoints = []
-               for (var i = 0; i < options.frequency; i++) {
+               for (var i = 0; i < noOfPoints; i++) {
 
                   let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
                      this._map, latlngs, spacing * (i + 1)
@@ -136,7 +175,7 @@ export default L.Polyline.include({
 
 
          // Function to build hats based on index and a given hatsize in meters
-         const pushHats = (i, size) => {
+         const pushHats = (i, size, coords, bearings) => {
             let bearing = L.GeometryUtil.bearing(
                latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
             )
