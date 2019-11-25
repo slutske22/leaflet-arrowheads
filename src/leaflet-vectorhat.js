@@ -14,7 +14,7 @@ export default L.Polyline.include({
       const defaults = {
          yawn: 60,
          size: '15%',
-         proportionalToRemainder: false,
+         frequency: 'allvertices',
          endOnly: false,
          proportionalToTotal: false,
       }
@@ -72,8 +72,44 @@ export default L.Polyline.include({
 
          // Preliminary defintions:
          let latlngs = peice.map( point => this._map.layerPointToLatLng(point));
+
+         let totalLength = ( () => {
+            let total = 0;
+            for (var i = 0; i < peice.length-1; i++) {
+               total += this._map.distance(latlngs[i], latlngs[i+1])
+            }
+            return total;
+         })();
+
+
+         if ( !isNaN(options.frequency) ) {
+
+            let spacing = 1 / options.frequency;
+
+            let interpolatedPoints = ( () => {
+               let intPoints = []
+               for (var i = 0; i < options.frequency; i++) {
+
+                  let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
+                     this._map, latlngs, spacing * (i+1)
+                  )
+
+                  intPoints.push(interpolatedPoint)
+                  L.circle(interpolatedPoint.latLng, {color: 'black'}).addTo(this._map)
+               }
+               return intPoints
+            })()
+
+            console.log('totalLength', totalLength);
+            console.log('number of points', latlngs.length);
+            console.log(interpolatedPoints);
+
+         }
+
          let n = latlngs.length - 1
          let hats = [];
+
+
 
          // Function to build hats based on index and a given hatsize in meters
          const pushHats = (i, size) => {
@@ -148,22 +184,14 @@ export default L.Polyline.include({
          //  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
          for (var i = 1; i < peice.length; i++) {
 
-            let totalLength = ( () => {
-               let total = 0;
-               for (var i = 0; i < peice.length-1; i++) {
-                  total += this._map.distance(latlngs[i], latlngs[i+1])
-               }
-               return total;
-            })();
+
 
             // -----------------------------------------------------------
             //              If size is given in percent
             // -----------------------------------------------------------
             if (size.slice(size.length-1, size.length) === '%' ){
 
-               if (!options.proportionalToRemainder){
-                  this.options.noClip = true;
-               }
+               this.options.noClip = true;
 
                let sizePercent = size.slice(0, size.length-1)
                let hatSize = ( () => {

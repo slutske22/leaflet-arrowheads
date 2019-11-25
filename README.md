@@ -79,13 +79,6 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
 
    <tr>
-      <td> proportionalToRemainder </td>
-      <td> Boolean </td>
-      <td> false </td>
-      <td> Only relevant when <code>size</code> is given as a percent.  Will automatically scale the arrowhead to the percent size of the portion of the vector that is within the map bounds.  At high zoom levels, behaves like giving size in pixels.</td>
-   </tr>
-
-   <tr>
       <td> endOnly </td>
       <td> Boolean </td>
       <td> false </td>
