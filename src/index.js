@@ -1,3 +1,5 @@
+import Polyline from './leaflet-vectorhat.js'
+
 var mapOptions = {
   center:  [34.024209560512354, -118.80992889404297 ],
   zoom: 10,

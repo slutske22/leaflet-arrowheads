@@ -501,7 +501,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 			cumulativeDistanceToA = cumulativeDistanceToB;
 			cumulativeDistanceToB += pointA.distanceTo(pointB);
 		}
-		
+
 		if (pointA == undefined && pointB == undefined) { // Happens when line has no length
 			var pointA = pts[0], pointB = pts[1], i = 1;
 		}
@@ -765,3 +765,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 return L.GeometryUtil;
 
 }));
+
+
+export default L.GeometryUtil

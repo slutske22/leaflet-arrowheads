@@ -1,9 +1,12 @@
+import GeometryUtil from './leaflet.geometryutil.js'
+
+
 function modulus(i, n){
    return (i % n + n) % n;
 }
 
 
-L.Polyline.include({
+export default L.Polyline.include({
 
    vectorhats: function(options = {}){
 
@@ -240,7 +243,7 @@ L.Polyline.include({
          delete this._vectorhats;
          delete this._vectorhatOptions;
          this._hatsApplied = false;
-      } 
+      }
 
 
    },
@@ -269,7 +272,7 @@ L.Polyline.include({
 
       if (this._hatsApplied){
          this.buildVectorHats(this._vectorhatOptions);
-         map.addLayer(this._vectorhats);
+         this._map.addLayer(this._vectorhats);
       }
 	},
 
