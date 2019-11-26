@@ -2,8 +2,8 @@ import Polyline from './leaflet-vectorhat.js'
 
 var mapOptions = {
   center:  [34.024209560512354, -118.80992889404297 ],
-  zoom: 12,
-  zoomDelta: 0.25,
+  zoom: 14,
+  zoomDelta: 0.5,
   zoomSnap: 0,
   wheelPxPerZoomLevel: 100
 }
@@ -328,4 +328,4 @@ var malibuPathPoints = [
   ]
 ]
 
-var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).vectorhats({frequency: 'endonly', size: '30%'}).addTo(map)
+var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).vectorhats({frequency: 'allvertices', size: '25%' }).addTo(map)

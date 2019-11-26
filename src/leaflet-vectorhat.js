@@ -18,6 +18,9 @@ export default L.Polyline.include({
          endOnly: false,
          proportionalToTotal: false,
       }
+
+      this.options.noClip = true;
+
       let actualOptions = Object.assign({}, defaults, options)
       this._vectorhatOptions = actualOptions;
 
@@ -41,6 +44,7 @@ export default L.Polyline.include({
          * The options for the vectorhat are then folded in as well
          * All options defined in parent polyline will be inherited by the vectorhat, unless otherwise specified in the vectorhat(options) call
       */
+
 
       let defaultOptionsOfParent = Object.getPrototypeOf(Object.getPrototypeOf(this.options))
 
@@ -113,19 +117,20 @@ export default L.Polyline.include({
 
             derivedBearings = ( () => {
                let bearings = [];
-               for (var i = 0; i < latlngs.length; i++) {
+               for (var i = 1; i < latlngs.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
                      latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
-                  )
+                  ) + 180
                   bearings.push(bearing)
                }
                return bearings;
             })()
 
             derivedLatLngs = latlngs
+            derivedLatLngs.shift()
 
-            console.log('derivedLatLngs', derivedLatLngs);
-            console.log('derivedBearings', derivedBearings);
+            // console.log('derivedLatLngs', derivedLatLngs);
+            // console.log('derivedBearings', derivedBearings);
 
          } else if (options.frequency === 'endonly') {
 
@@ -138,11 +143,11 @@ export default L.Polyline.include({
             derivedBearings = [
                L.GeometryUtil.bearing(
                   latlngs[latlngs.length - 2], latlngs[latlngs.length - 1]
-               )
+               ) + 180
             ];
 
-            console.log('derivedLatLngs', derivedLatLngs);
-            console.log('derivedBearings', derivedBearings);
+            // console.log('derivedLatLngs', derivedLatLngs);
+            // console.log('derivedBearings', derivedBearings);
 
 
          } else {
@@ -171,15 +176,15 @@ export default L.Polyline.include({
                return bearings;
             })()
 
-            console.log('derivedLatLngs', derivedLatLngs);
-            console.log('derivedBearings', derivedBearings);
+            // console.log('derivedLatLngs', derivedLatLngs);
+            // console.log('derivedBearings', derivedBearings);
 
 
          }
 
-         derivedLatLngs.forEach( point => {
-            L.circle([point.lat, point.lng], {color:'black'}).addTo(this._map)
-         })
+         // derivedLatLngs.forEach( point => {
+         //    L.circle([point.lat, point.lng], {color:'black'}).addTo(this._map)
+         // })
 
 
          let n = latlngs.length - 1
@@ -188,21 +193,17 @@ export default L.Polyline.include({
 
 
          // Function to build hats based on index and a given hatsize in meters
-         const pushHats = (i, size, coords, bearings) => {
-
-            let bearing = L.GeometryUtil.bearing(
-               latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
-            )
+         const pushHats = (size) => {
 
             let leftWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 - options.yawn/2, size)
+               L.GeometryUtil.destination(derivedLatLngs[i], derivedBearings[i] - options.yawn/2, size)
 
             let rightWingPoint =
-               L.GeometryUtil.destination(latlngs[i], bearing - 180 + options.yawn/2, size)
+               L.GeometryUtil.destination(derivedLatLngs[i], derivedBearings[i] + options.yawn/2, size)
 
             let hatPoints = [
                   [leftWingPoint.lat, leftWingPoint.lng],
-                  [latlngs[i].lat, latlngs[i].lng],
+                  [derivedLatLngs[i].lat, derivedLatLngs[i].lng],
                   [rightWingPoint.lat, rightWingPoint.lng]
                ]
 
@@ -211,20 +212,21 @@ export default L.Polyline.include({
                : L.polyline(hatPoints, hatOptions)
 
             hats.push(hat)
+            
          } // pushHats()
 
 
          // Function to build hats based on pixel input
-         const pushHatsFromPixels = (i, size, coords, bearings) => {
+         const pushHatsFromPixels = (size) => {
 
             let sizePixels = size.slice(0, size.length-2)
 
-            let bearing = L.GeometryUtil.bearing(
-               latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
-            )
+            let derivedXY = this._map.latLngToLayerPoint(derivedLatLngs[i])
 
-            let thetaLeft = (360-bearing - options.yawn/2) * (Math.PI / 180),
-               thetaRight = (360-bearing + options.yawn/2) * (Math.PI / 180)
+            let bearing = derivedBearings[i]
+
+            let thetaLeft = (180 - bearing - options.yawn/2) * (Math.PI / 180),
+               thetaRight = (180 -bearing + options.yawn/2) * (Math.PI / 180)
 
             let dxLeft = sizePixels * Math.sin(thetaLeft),
                dyLeft = sizePixels * Math.cos(thetaLeft),
@@ -232,12 +234,12 @@ export default L.Polyline.include({
                dyRight =sizePixels * Math.cos(thetaRight)
 
             let leftWingXY = {
-               x: peice[i].x + dxLeft,
-               y: peice[i].y + dyLeft
+               x: derivedXY.x + dxLeft,
+               y: derivedXY.y + dyLeft
             }
             let rightWingXY = {
-               x: peice[i].x + dxRight,
-               y: peice[i].y + dyRight
+               x: derivedXY.x + dxRight,
+               y: derivedXY.y + dyRight
             }
 
             let leftWingPoint = this._map.layerPointToLatLng(leftWingXY),
@@ -245,7 +247,7 @@ export default L.Polyline.include({
 
             let hatPoints = [
                   [leftWingPoint.lat, leftWingPoint.lng],
-                  [latlngs[i].lat, latlngs[i].lng],
+                  [derivedLatLngs[i].lat, derivedLatLngs[i].lng],
                   [rightWingPoint.lat, rightWingPoint.lng]
                ]
 
@@ -259,7 +261,7 @@ export default L.Polyline.include({
 
 
          //  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
-         for (var i = 1; i < peice.length; i++) {
+         for (var i = 0; i < derivedLatLngs.length; i++) {
 
 
 
@@ -268,12 +270,10 @@ export default L.Polyline.include({
             // -----------------------------------------------------------
             if (size.slice(size.length-1, size.length) === '%' ){
 
-               this.options.noClip = true;
-
                let sizePercent = size.slice(0, size.length-1)
                let hatSize = ( () => {
 
-                  if (options.endOnly && options.proportionalToTotal){
+                  if (options.frequency === 'endonly' && options.proportionalToTotal){
                      return totalLength * sizePercent / 100;
                   } else {
                      let averageDistance = ( totalLength / (peice.length-1) )
@@ -283,35 +283,23 @@ export default L.Polyline.include({
                })() // hatsize calculation
 
 
-
-               if (options.endOnly){
-                  pushHats(n, hatSize)
-               } else {
-                  pushHats(i, hatSize)
-               }
+               pushHats( hatSize );
 
             // -----------------------------------------------------------
             //                If size is given in pixels
             // -----------------------------------------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
 
-               if (options.endOnly){
-                  pushHatsFromPixels(n, options.size)
-               } else {
-                  pushHatsFromPixels(i, options.size)
-               }
-
+               pushHatsFromPixels(options.size)
 
             // -----------------------------------------------------------
             //       If size is given in meters (as a unitless number)
             // -----------------------------------------------------------
             } else {
 
-               if (options.endOnly){
-                  pushHats(n, options.size)
-               } else {
-                  pushHats(i, options.size)
-               }
+               this.options.noClip = false;
+
+               pushHats(options.size)
 
             }  // if else block for Size
 
@@ -321,6 +309,7 @@ export default L.Polyline.include({
          allhats.push(...hats);
 
       }) // forEach peice
+
       //  --------- LOOP THROUGH EACH POLYLINE END ---------------- //
       //  --------------------------------------------------------- //
 
