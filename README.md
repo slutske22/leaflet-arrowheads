@@ -72,7 +72,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> Determines the size of the arrowhead.  Accepts three types of values: <br>
          <ul>
             <li> A number will set the size of the vectorhat to that number of meters </li>
-            <li> A string value which is a number with a percent sign <i>( '15%', '20%', '25%', etc. )</i> will render arrows whose size is that percentage of the size of the parent polyline.  If the polyline has multiple segments and <code>endOnly</code> is set to false, arrows will be rendered at each vertex, with a size that is 'size' percent of the average size of the segments. </li>
+            <li> A string value which is a number with a percent sign <i>( '15%', '20%', '25%', etc. )</i> will render arrows whose size is that percentage of the size of the parent polyline.  If the polyline has multiple segments, 'size' will take the percent of the average size of the segments. </li>
             <li> A string value which is a number with the suffix 'px' <i>( '20px', '25px', '30px', etc. )</i> will render an arrowhead whose size stays at a constant pixel value, regardless of zoom level.  Will look strange at low zoom levels or for smaller parent vectors.  Ideal for larger parent vectors and at higher zoom levels. </li>
          </ul>
       </td>
@@ -83,14 +83,22 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> Number | String <br>
       <i> ( Number of vectorhats | Meters, Pixels, 'allvertices', 'endonly' ) </i> </td>
       <td> 'allvertices' </td>
-      <td> How many vectorhats are rendered on a polyline.  'allvertices' renders a hat on each vertex.  'endonly' renders only one at the end. A number value renders that number of vectorhats evenly spaces across the polyline.  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render vectorhats spaced evenly along the polyline with roughly that many meters between each one.  A string value with suffix 'px' (i.e. <code>'30px'</code>) will render vectorhats spaced evenly with roughly that many pixels between each, regardless of zoom level.</td>
+      <td> How many vectorhats are rendered on a polyline.  
+         <ul>
+            <li> 'allvertices' renders a hat on each vertex. </li>
+            <li> 'endonly' renders only one at the end.</li>
+            <li> A number value renders that number of vectorhats evenly spaces across the polyline.  </li>
+            <li>  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render vectorhats spaced evenly along the polyline with roughly that many meters between each one.  </li>
+            <li>A string value with suffix 'px' (i.e. <code>'30px'</code>) will render vectorhats spaced evenly with roughly that many pixels between each, regardless of zoom level.</li>
+         </ul>
+      </td>
    </tr>
 
    <tr>
       <td> proportionalToTotal </td>
       <td> Boolean </td>
       <td> false </td>
-      <td> Only relevant when <code>size</code> is given as a percent, and when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the vectorhat at the end of the polyline with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
+      <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the vectorhat(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
 
 </table>
