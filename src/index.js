@@ -328,4 +328,4 @@ var malibuPathPoints = [
   ]
 ]
 
-var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).vectorhats({frequency: 'allvertices', size: '30%'}).addTo(map)
+var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).vectorhats({frequency: 'endonly', size: '30%'}).addTo(map)

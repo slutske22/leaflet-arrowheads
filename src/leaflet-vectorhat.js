@@ -147,26 +147,24 @@ export default L.Polyline.include({
 
          } else {
 
-            derivedLatLngs = ( () => {
-               let interpolatedPoints = []
-               for (var i = 0; i < noOfPoints; i++) {
+            derivedLatLngs = []
+            let interpolatedPoints = []
+            for (var i = 0; i < noOfPoints; i++) {
 
-                  let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
-                     this._map, latlngs, spacing * (i + 1)
-                  )
+               let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
+                  this._map, latlngs, spacing * (i + 1)
+               )
 
-                  interpolatedPoints.push(interpolatedPoint)
-                  L.circle(interpolatedPoint.latLng, {color: 'black'}).addTo(this._map)
-               }
-               return interpolatedPoints
-            })()
+               interpolatedPoints.push(interpolatedPoint)
+               derivedLatLngs.push(interpolatedPoint.latLng)
 
+            }
 
             derivedBearings = ( () => {
                let bearings = [];
-               for (var i = 0; i < derivedLatLngs.length; i++) {
+               for (var i = 0; i < interpolatedPoints.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
-                     derivedLatLngs[i].latLng, latlngs[ derivedLatLngs[i].predecessor ]
+                     interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
                   )
                   bearings.push(bearing)
                }
@@ -179,6 +177,11 @@ export default L.Polyline.include({
 
          }
 
+         derivedLatLngs.forEach( point => {
+            L.circle([point.lat, point.lng], {color:'black'}).addTo(this._map)
+         })
+
+
          let n = latlngs.length - 1
          let hats = [];
 
@@ -186,6 +189,7 @@ export default L.Polyline.include({
 
          // Function to build hats based on index and a given hatsize in meters
          const pushHats = (i, size, coords, bearings) => {
+
             let bearing = L.GeometryUtil.bearing(
                latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
             )
