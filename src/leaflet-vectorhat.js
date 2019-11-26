@@ -15,7 +15,6 @@ export default L.Polyline.include({
          yawn: 60,
          size: '15%',
          frequency: 'allvertices',
-         endOnly: false,
          proportionalToTotal: false,
       }
 

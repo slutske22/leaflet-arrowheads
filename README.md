@@ -79,17 +79,18 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
 
    <tr>
-      <td> endOnly </td>
-      <td> Boolean </td>
-      <td> false </td>
-      <td> When applying vectorhats to multi-segment polylines, every vertex will render a vectorhat except the first.  When <code>endOnly</code> is set to true, only the last vertex will show a vectorhat. </td>
+      <td> frequency </td>
+      <td> Number | String <br>
+      <i> ( Number of vectorhats | Meters, Pixels, 'allvertices', 'endonly' ) </i> </td>
+      <td> 'allvertices' </td>
+      <td> How many vectorhats are rendered on a polyline.  'allvertices' renders a hat on each vertex.  'endonly' renders only one at the end. A number value renders that number of vectorhats evenly spaces across the polyline.  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render vectorhats spaced evenly along the polyline with roughly that many meters between each one.  A string value with suffix 'px' (i.e. <code>'30px'</code>) will render vectorhats spaced evenly with roughly that many pixels between each, regardless of zoom level.</td>
    </tr>
 
    <tr>
       <td> proportionalToTotal </td>
       <td> Boolean </td>
       <td> false </td>
-      <td> Only relevant when <code>size</code> is given as a percent, and when <code>endOnly</code> is set to true.  Will render the vectorhat at the end of the polyline with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
+      <td> Only relevant when <code>size</code> is given as a percent, and when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the vectorhat at the end of the polyline with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
 
 </table>
