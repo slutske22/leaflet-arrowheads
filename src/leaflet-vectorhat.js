@@ -104,7 +104,7 @@ export default L.Polyline.include({
 
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === '%' ){
 
-            console.log('frequency in %');
+            console.log('Error: vectorhat frequency option cannot be given in percent.  Try another unit.');
 
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === 'm' ){
 

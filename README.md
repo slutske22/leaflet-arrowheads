@@ -179,5 +179,30 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 </table>
 
 
+<table width="100%">
+   <tr><td><b>Frequency Options</b></td></tr>
+   <tr><td>
+      <code>L.polyline([coords]).vectorhats( {frequency: 20} )</code><br>
+      <br>
+      <img src="images/frequency-1.png" width="100%">
+   </td></tr>
+   <tr><td>
+      <code>L.polyline([coords]).vectorhats( {frequency: '500m'} )</code><br>
+      <br>
+      <img src="images/frequency-2.png "width="100%">
+   </td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).vectorhats( {frequency: '50px', size: '12px'} )</code><br>
+      <br>
+      <img src="images/frequency-3.gif" width="100%">
+   </td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).vectorhats()  // standard option</code><br>
+      <br>
+      <img src="images/frequency-4.gif" width="100%">
+   </td></tr>
+</table>
+
+
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
 .
