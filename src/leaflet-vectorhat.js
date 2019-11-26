@@ -98,19 +98,50 @@ export default L.Polyline.include({
 
          //  Determining latlng and bearing arrays based on frequency choice:
          if ( !isNaN(frequency) ) {
+
             spacing = 1 / frequency;
             noOfPoints = frequency;
+
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === '%' ){
+
             console.log('frequency in %');
+
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === 'm' ){
+
             console.log('frequency in meters');
             spacing = frequency.slice(0,frequency.length-1) / totalLength;
             noOfPoints = 1 / spacing
             // round things out for more even spacing:
             noOfPoints = Math.floor(noOfPoints)
             spacing = 1 / noOfPoints
-         }
 
+         } else if ( frequency.toString().slice( frequency.toString().length - 2, frequency.toString().length ) === 'px' ){
+
+            spacing = ( () => {
+
+               let chosenFrequency = frequency.slice(0,frequency.length-2)
+               let refPoint1 = this._map.getCenter()
+               let xy1 = this._map.latLngToLayerPoint( refPoint1 )
+               let xy2 = {
+                  x: xy1.x + Number(chosenFrequency),
+                  y: xy1.y
+               }
+               let refPoint2 = this._map.layerPointToLatLng( xy2 )
+               let derivedMeters = this._map.distance(refPoint1, refPoint2)
+               return derivedMeters / totalLength;
+            })()
+
+            noOfPoints = 1 / spacing
+
+            // round things out for more even spacing:
+            noOfPoints = Math.floor(noOfPoints)
+            spacing = 1 / noOfPoints
+
+            console.log('noOfPoints', noOfPoints);
+            console.log('spacing', spacing);
+
+
+         }
 
 
          if (options.frequency === 'allvertices'){
@@ -167,6 +198,13 @@ export default L.Polyline.include({
 
             derivedBearings = ( () => {
                let bearings = [];
+
+               // bearings.push(
+               //    L.GeometryUtil.bearing(
+               //      interpolatedPoints[0].latLng, latlngs[0]
+               //   )
+               // )
+
                for (var i = 0; i < interpolatedPoints.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
                      interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
@@ -212,7 +250,7 @@ export default L.Polyline.include({
                : L.polyline(hatPoints, hatOptions)
 
             hats.push(hat)
-            
+
          } // pushHats()
 
 
@@ -263,43 +301,38 @@ export default L.Polyline.include({
          //  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
          for (var i = 0; i < derivedLatLngs.length; i++) {
 
+            // ---- If size is chosen in meters -------------------------
+            if (size.slice(size.length-1, size.length) === 'm' ){
 
+               let hatSize = size.slice(0, size.length-1)
+               pushHats(hatSize)
 
-            // -----------------------------------------------------------
-            //              If size is given in percent
-            // -----------------------------------------------------------
-            if (size.slice(size.length-1, size.length) === '%' ){
+            // ---- If size is chosen in percent ------------------------
+            } else if (size.slice(size.length-1, size.length) === '%' ){
 
                let sizePercent = size.slice(0, size.length-1)
                let hatSize = ( () => {
-
                   if (options.frequency === 'endonly' && options.proportionalToTotal){
                      return totalLength * sizePercent / 100;
                   } else {
                      let averageDistance = ( totalLength / (peice.length-1) )
                      return averageDistance * sizePercent / 100
                   }
-
                })() // hatsize calculation
-
 
                pushHats( hatSize );
 
-            // -----------------------------------------------------------
-            //                If size is given in pixels
-            // -----------------------------------------------------------
+            // ---- If size is chosen in pixels --------------------------
             } else if ( size.slice(size.length-2, size.length) === 'px' ){
 
                pushHatsFromPixels(options.size)
 
-            // -----------------------------------------------------------
-            //       If size is given in meters (as a unitless number)
-            // -----------------------------------------------------------
+            // ---- If size unit is not given -----------------------------
             } else {
 
-               this.options.noClip = false;
-
-               pushHats(options.size)
+               console.log(
+                  'Error: Vectorhat size unit not defined.  Check your vectorhat options.'
+               )
 
             }  // if else block for Size
 
