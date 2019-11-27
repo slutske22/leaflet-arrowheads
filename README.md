@@ -16,11 +16,14 @@ Then you can simply import its content into your project:
 `import { } from './leaflet-arrowheads.js'`
 
 
-If you don't want to use npm, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then L.GeometryUtil, then leaflet-arrowheads, then your script.js file:
+If you don't want to use npm or modules, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then [L.GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), then leaflet-arrowheads, then your script.js file:
 
-````
+````html
 <head>
-   
+  <script src="...leaflet.js"></script>
+  <link href="...leaflet.css">
+  <script src="...leaflet.geometryutil.js"></script>
+  <script src="...yourscript.js"></script>
 </head>
 ````
 
