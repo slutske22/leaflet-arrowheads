@@ -7,6 +7,10 @@
 
 ## Installation
 
+TODO: You can use npm to install leaflet-arrowheads:
+
+`npm install -leaflet-arrowheads`
+
 ## Usage
 
 Vectorhats can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
