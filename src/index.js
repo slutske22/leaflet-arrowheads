@@ -1,4 +1,4 @@
-import Polyline from './leaflet-arrowheads.js'
+import { } from './leaflet-arrowheads.js'
 
 var mapOptions = {
   center:  [34.024209560512354, -118.80992889404297 ],

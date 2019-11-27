@@ -1,5 +1,5 @@
-# leaflet-vectorhats
- Leaflet-Vecotrhats is a small plugin for leaflet to quickly draw vector hats on polylines for vector visualization.
+# leaflet-arrowheads
+ Leaflet-Arrowheads is a small plugin for leaflet to quickly draw vector hats on polylines for vector visualization.
 
 <p align="center">
   <img src="images/banner.PNG" width="80%">
@@ -7,9 +7,22 @@
 
 ## Installation
 
-TODO: You can use npm to install leaflet-arrowheads:
+You can use npm to install leaflet-arrowheads:
 
 `npm install -leaflet-arrowheads`
+
+Then you can simply import its content into your project:
+
+`import { } from './leaflet-arrowheads.js'`
+
+
+If you don't want to use npm, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then L.GeometryUtil, then leaflet-arrowheads, then your script.js file:
+
+````
+<head>
+   
+</head>
+````
 
 ## Usage
 
@@ -123,7 +136,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          <img src="images/yawn-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.vectorhats({ 
+         <pre>L.polyline.vectorhats({
   yawn: 90
 })</pre>
       </td>
@@ -132,13 +145,13 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({ 
-  yawn: 40 
+      <td><pre>L.polyline.vectorhats({
+  yawn: 40
 })</pre></td>
       <td><img src="images/yawn-3.PNG" width="100px"></td>
       <td><pre>.vectorhats({
-  yawn: 40, 
-  fill: true 
+  yawn: 40,
+  fill: true
 })</pre></td>
       <td><img src="images/yawn-4.PNG" width="100px"></td>
    </tr>
@@ -157,7 +170,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          <img src="images/color-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.vectorhats({ 
+         <pre>L.polyline.vectorhats({
   fill: true
 })</pre>
       </td>
@@ -166,27 +179,27 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({ 
-  color: 'black' 
+      <td><pre>L.polyline.vectorhats({
+  color: 'black'
 })</pre></td>
       <td><img src="images/color-2.PNG" width="100px"></td>
       <td><pre>L.polyline([coords],{
   color: 'black'
 })
-    .vectorhats({ 
-       fill: true 
+    .vectorhats({
+       fill: true
     })</pre></td>
       <td><img src="images/fill-2.PNG" width="100px"></td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({ 
-  color: 'black' 
+      <td><pre>L.polyline.vectorhats({
+  color: 'black'
 })</pre></td>
       <td><img src="images/fill-3.PNG" width="100px"></td>
-      <td><pre>L.polyline.vectorhats({ 
+      <td><pre>L.polyline.vectorhats({
   fill: true,
   color: 'black'
-  fillColor: 'green' 
+  fillColor: 'green'
 })</pre></td>
       <td><img src="images/color-3.PNG" width="100px"></td>
    </tr>
