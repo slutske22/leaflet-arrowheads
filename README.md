@@ -27,6 +27,7 @@ If you don't want to use npm or modules, you can simply download the source file
   <script src="...leaflet.js"></script>
   <link href="...leaflet.css">
   <script src="...leaflet.geometryutil.js"></script>
+  <script src="...leaflet-arrowheads.js"></script>
   <script src="...yourscript.js"></script>
 </head>
 ````
