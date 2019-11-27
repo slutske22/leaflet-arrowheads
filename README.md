@@ -33,43 +33,43 @@ If you don't want to use npm or modules, you can simply download the source file
 
 ## Usage
 
-Vectorhats can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
+Arrowheads can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
 
 ````javascript
-var myVector = L.polyline([ coords ]).vectorhats()
+var myVector = L.polyline([ coords ]).arrowheads()
 ````
 
-Vectorhats will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
+Arrowheads will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
 ````javascript
 myVector.addTo(map) or myVector.remove()
 ````
 
-If you need to access the vectorhats directly, you can call the `.getVectorhats()` method on your polyline.
+If you need to access the arrowheads directly, you can call the `.getArrowheads()` method on your polyline.
 
 ````javascript
-myVector.getVectorhats() // returns the vectorhats polyline object
-myVector.getVectorhats().remove() // removes vectorhats from map
+myVector.getArrowheads() // returns the arrowheads polyline object
+myVector.getArrowheads().remove() // removes arrowheads from map
 ````
 
-Vectorhats can also be deleted from their parent polyline entirely:
+Arrowheads can also be deleted from their parent polyline entirely:
 
 ````javascript
 myVector.deleteHats()
 ````
 
-Vectorhats can take a configuration object as its argument:
+Arrowheads can take a configuration object as its argument:
 
 ````javascript
-var myVector = L.polyline([ coords ]).vectorhats({ <Options> })
+var myVector = L.polyline([ coords ]).arrowheads({ <Options> })
 ````
 
 
 ## Options
 
-Vectorhats offers a variety of options for rendering and styling vectorhats.  See the options table below.<br>
+Arrowheads offers a variety of options for rendering and styling arrowheads.  See the options table below.<br>
 <br>
-Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Vectorhats also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the vectorhats' options, but changing smoothFactor will result in improperly rendered arrows.<br>
+Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
 <br>
 <table>
 
@@ -84,7 +84,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> yawn </td>
       <td> Number <i color="grey"> ( Degrees ) </i> </td>
       <td> 40 </td>
-      <td>  Defines the width of the opening of the vectorhat, given in degrees.  The larger the angle, the wider the arrowhead. </td>
+      <td>  Defines the width of the opening of the arrowhead, given in degrees.  The larger the angle, the wider the arrowhead. </td>
    </tr>
 
    <tr>
@@ -94,7 +94,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> '15%' </td>
       <td> Determines the size of the arrowhead.  Accepts three types of values: <br>
          <ul>
-            <li> A number will set the size of the vectorhat to that number of meters </li>
+            <li> A number will set the size of the arrowhead to that number of meters </li>
             <li> A string value which is a number with a percent sign <i>( '15%', '20%', '25%', etc. )</i> will render arrows whose size is that percentage of the size of the parent polyline.  If the polyline has multiple segments, 'size' will take the percent of the average size of the segments. </li>
             <li> A string value which is a number with the suffix 'px' <i>( '20px', '25px', '30px', etc. )</i> will render an arrowhead whose size stays at a constant pixel value, regardless of zoom level.  Will look strange at low zoom levels or for smaller parent vectors.  Ideal for larger parent vectors and at higher zoom levels. </li>
          </ul>
@@ -104,15 +104,15 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    <tr>
       <td> frequency </td>
       <td> Number | String <br>
-      <i> ( Number of vectorhats | Meters, Pixels, 'allvertices', 'endonly' ) </i> </td>
+      <i> ( Number of arrowheads | Meters, Pixels, 'allvertices', 'endonly' ) </i> </td>
       <td> 'allvertices' </td>
-      <td> How many vectorhats are rendered on a polyline.  
+      <td> How many arrowheads are rendered on a polyline.  
          <ul>
             <li> 'allvertices' renders a hat on each vertex. </li>
             <li> 'endonly' renders only one at the end.</li>
-            <li> A number value renders that number of vectorhats evenly spaces across the polyline.  </li>
-            <li>  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render vectorhats spaced evenly along the polyline with roughly that many meters between each one.  </li>
-            <li>A string value with suffix 'px' (i.e. <code>'30px'</code>) will render vectorhats spaced evenly with roughly that many pixels between each, regardless of zoom level.</li>
+            <li> A number value renders that number of arrowheads evenly spaces across the polyline.  </li>
+            <li>  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render arrowheads spaced evenly along the polyline with roughly that many meters between each one.  </li>
+            <li>A string value with suffix 'px' (i.e. <code>'30px'</code>) will render arrowheads spaced evenly with roughly that many pixels between each, regardless of zoom level.</li>
          </ul>
       </td>
    </tr>
@@ -121,7 +121,7 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> proportionalToTotal </td>
       <td> Boolean </td>
       <td> false </td>
-      <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the vectorhat(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
+      <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
 
 </table>
@@ -135,14 +135,14 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
    <tr>
       <td width="35%">
-         <pre>L.polyline.vectorhats()</pre>
+         <pre>L.polyline.arrowheads()</pre>
          (Standard option gives 60 degree yawn)
       </td>
       <td>
          <img src="images/yawn-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.vectorhats({
+         <pre>L.polyline.arrowheads({
   yawn: 90
 })</pre>
       </td>
@@ -151,11 +151,11 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({
+      <td><pre>L.polyline.arrowheads({
   yawn: 40
 })</pre></td>
       <td><img src="images/yawn-3.PNG" width="100px"></td>
-      <td><pre>.vectorhats({
+      <td><pre>.arrowheads({
   yawn: 40,
   fill: true
 })</pre></td>
@@ -169,14 +169,14 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
    <tr>
       <td width="35%">
-         <pre>L.polyline.vectorhats()</pre><br>
-         (Standard options makes vectorhats a vector with same color as parent)
+         <pre>L.polyline.arrowheads()</pre><br>
+         (Standard options makes arrowheads a vector with same color as parent)
       </td>
       <td>
          <img src="images/color-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.vectorhats({
+         <pre>L.polyline.arrowheads({
   fill: true
 })</pre>
       </td>
@@ -185,24 +185,24 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({
+      <td><pre>L.polyline.arrowheads({
   color: 'black'
 })</pre></td>
       <td><img src="images/color-2.PNG" width="100px"></td>
       <td><pre>L.polyline([coords],{
   color: 'black'
 })
-    .vectorhats({
+    .arrowheads({
        fill: true
     })</pre></td>
       <td><img src="images/fill-2.PNG" width="100px"></td>
    </tr>
    <tr>
-      <td><pre>L.polyline.vectorhats({
+      <td><pre>L.polyline.arrowheads({
   color: 'black'
 })</pre></td>
       <td><img src="images/fill-3.PNG" width="100px"></td>
-      <td><pre>L.polyline.vectorhats({
+      <td><pre>L.polyline.arrowheads({
   fill: true,
   color: 'black'
   fillColor: 'green'
@@ -226,27 +226,27 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).vectorhats( {frequency: 'allvertices'} )  // standard option</code><br>
+      <code>L.polyline([coords]).arrowheads( {frequency: 'allvertices'} )  // standard option</code><br>
       <br>
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).vectorhats( {frequency: 'endonly', size: '50%'} )</code><br>
+      <code>L.polyline([coords]).arrowheads( {frequency: 'endonly', size: '50%'} )</code><br>
       <br>
       <img src="images/frequency-5.PNG" width="100%">
    </td></tr>
    <tr><td>
-      <code>L.polyline([coords]).vectorhats( {frequency: 20} ) // 20 vectorhats evenly distributed</code><br>
+      <code>L.polyline([coords]).arrowheads( {frequency: 20} ) // 20 arrowheads evenly distributed</code><br>
       <br>
       <img src="images/frequency-1.PNG">
    </td></tr>
    <tr><td>
-      <code>L.polyline([coords]).vectorhats( {frequency: '500m'} ) // vectorhats every ~500 m evenly distributed</code><br>
+      <code>L.polyline([coords]).arrowheads( {frequency: '500m'} ) // arrowheads every ~500 m evenly distributed</code><br>
       <br>
       <img src="images/frequency-2.PNG">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).vectorhats( {frequency: '50px', size: '12px'} ) // vectorhats every 50px regardless of zoom</code><br>
+      <code>L.polyline([coords]).arrowheads( {frequency: '50px', size: '12px'} ) // arrowheads every 50px regardless of zoom</code><br>
       <br>
       <img src="images/frequency-3.gif" width="100%">
    </td></tr>
