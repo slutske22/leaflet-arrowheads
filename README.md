@@ -211,9 +211,30 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
 </table>
 
+<table>
+   <tr>
+      <td>
+         <pre>L.polyline([coords]).arrowheads({size: '20px', fill: true})</pre>
+      </td>
+      <td>
+         <img src="images/size-1.gif">
+      </td>
+   </tr>
+</table>
+
 
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).vectorhats( {frequency: 'allvertices'} )  // standard option</code><br>
+      <br>
+      <img src="images/frequency-4.gif" width="100%">
+   </td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).vectorhats( {frequency: 'endonly'} )  // standard option</code><br>
+      <br>
+      <img src="images/frequency-5.png" width="100%">
+   </td></tr>
    <tr><td>
       <code>L.polyline([coords]).vectorhats( {frequency: 20} ) // 20 vectorhats evenly distributed</code><br>
       <br>
@@ -228,11 +249,6 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <code>L.polyline([coords]).vectorhats( {frequency: '50px', size: '12px'} ) // vectorhats every 50px regardless of zoom</code><br>
       <br>
       <img src="images/frequency-3.gif" width="100%">
-   </td></tr>
-   <tr><td>    
-      <code>L.polyline([coords]).vectorhats( {frequency: 'allvertices'} )  // standard option</code><br>
-      <br>
-      <img src="images/frequency-4.gif" width="100%">
    </td></tr>
 </table>
 
