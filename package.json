@@ -2,7 +2,7 @@
   "name": "leaflet-vectorhats",
   "version": "1.0.0",
   "description": "Add vector hats to leaflet polylines",
-  "main": "src/leaflet-vectorhat.js",
+  "main": "src/leaflet-arrowheads.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
