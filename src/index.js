@@ -1,4 +1,4 @@
-import Polyline from './leaflet-vectorhat.js'
+import Polyline from './leaflet-arrowhead.js'
 
 var mapOptions = {
   center:  [34.024209560512354, -118.80992889404297 ],
@@ -20,32 +20,32 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 // var simpleVector0 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng-0.25],
 //    [map.getCenter().lat+0.05, map.getCenter().lng-0.25 + 0.05],
-// ], {color: 'black'}).vectorhats()
+// ], {color: 'black'}).arrowheads()
 //
 // var simpleVector1 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng-0.15],
 //    [map.getCenter().lat+0.05, map.getCenter().lng-0.15 + 0.05],
-// ], {color: 'blue'}).vectorhats({frequency: '50px'})
+// ], {color: 'blue'}).arrowheads({frequency: '50px'})
 //
 // var simpleVector2 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng-0.05],
 //    [map.getCenter().lat+0.05, map.getCenter().lng-0.05 + 0.05],
-// ], {color: 'purple'}).vectorhats()
+// ], {color: 'purple'}).arrowheads()
 //
 // var simpleVector3 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng+0.05],
 //    [map.getCenter().lat+0.05, map.getCenter().lng+0.05 + 0.05],
-// ], {color: 'green'}).vectorhats()
+// ], {color: 'green'}).arrowheads()
 //
 // var simpleVector4 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng+0.15],
 //    [map.getCenter().lat+0.05, map.getCenter().lng+0.15 + 0.05],
-// ], {color: 'orange'}).vectorhats()
+// ], {color: 'orange'}).arrowheads()
 //
 // var simpleVector5 = L.polyline([
 //    [map.getCenter().lat-0.05, map.getCenter().lng+0.25],
 //    [map.getCenter().lat+0.05, map.getCenter().lng+0.25 + 0.05],
-// ], {color: 'red'}).vectorhats()
+// ], {color: 'red'}).arrowheads()
 //
 // var group = L.layerGroup([
 //    simpleVector0, simpleVector1, simpleVector2, simpleVector3, simpleVector4, simpleVector5
@@ -62,7 +62,7 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 //    [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
 //    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
 //    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
-// ], {smoothFactor: 1, weight: 2}).vectorhats({fill: true}).addTo(map)
+// ], {smoothFactor: 1, weight: 2}).arrowheads({fill: true}).addTo(map)
 // //
 // var multiVector2 = L.polyline([
 //    [
@@ -74,7 +74,7 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 //       [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
 //       [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
 //    ]
-// ], {smoothFactor: 30}).vectorhats({size: '10%', endOnly: true}).addTo(map)
+// ], {smoothFactor: 30}).arrowheads({size: '10%', endOnly: true}).addTo(map)
 //
 // var multiVector3 = L.polyline([
 //    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng-0.20],
@@ -86,7 +86,7 @@ var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{
 //    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.10],
 //    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.15],
 //    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.20],
-// ], {smoothFactor: 10, weight: 2}).vectorhats({size: '20%', frequency: 20}).addTo(map)
+// ], {smoothFactor: 10, weight: 2}).arrowheads({size: '20%', frequency: 20}).addTo(map)
 
 
 var malibuPathPoints = [
@@ -328,4 +328,4 @@ var malibuPathPoints = [
   ]
 ]
 
-var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).vectorhats({size: '20%'}).addTo(map)
+var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).arrowheads({size: '20%', frequency: '50px'}).addTo(map)

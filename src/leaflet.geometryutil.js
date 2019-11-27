@@ -765,6 +765,3 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 return L.GeometryUtil;
 
 }));
-
-
-export default L.GeometryUtil

@@ -1,4 +1,4 @@
-import GeometryUtil from './leaflet.geometryutil.js'
+import { } from '/node_modules/leaflet-geometryutil/src/leaflet.geometryutil.js'
 
 
 function modulus(i, n){
@@ -8,7 +8,7 @@ function modulus(i, n){
 
 export default L.Polyline.include({
 
-   vectorhats: function(options = {}){
+   arrowheads: function(options = {}){
 
       // Merge user input options with default options:
       const defaults = {
@@ -21,7 +21,7 @@ export default L.Polyline.include({
       this.options.noClip = true;
 
       let actualOptions = Object.assign({}, defaults, options)
-      this._vectorhatOptions = actualOptions;
+      this._arrowheadOptions = actualOptions;
 
       this._hatsApplied = true;
       return this;
@@ -30,9 +30,9 @@ export default L.Polyline.include({
    buildVectorHats: function( options ){
 
       // Reset variables from previous this._update()
-      if (this._vectorhats){
-         this._vectorhats.remove()
-         let vectorhats = []
+      if (this._arrowheads){
+         this._arrowheads.remove()
+         let arrowheads = []
          let allhats = []
       }
 
@@ -40,8 +40,8 @@ export default L.Polyline.include({
       //  ------------  FILTER THE OPTIONS ----------------------- //
       /*
          * The next 3 lines folds the options of the parent polyline into the default options for all polylines
-         * The options for the vectorhat are then folded in as well
-         * All options defined in parent polyline will be inherited by the vectorhat, unless otherwise specified in the vectorhat(options) call
+         * The options for the arrowhead are then folded in as well
+         * All options defined in parent polyline will be inherited by the arrowhead, unless otherwise specified in the arrowhead(options) call
       */
 
 
@@ -50,7 +50,7 @@ export default L.Polyline.include({
       // merge default options of parent polyline (this.options's prototype's prototype) with options passed to parent polyline (this.options).
       let parentOptions = Object.assign({}, defaultOptionsOfParent, this.options)
 
-      // now merge in the options the user has put in the vectorhat call
+      // now merge in the options the user has put in the arrowhead call
       let hatOptions = Object.assign({}, parentOptions, options)
 
       // ...with a few exceptions:
@@ -103,7 +103,7 @@ export default L.Polyline.include({
 
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === '%' ){
 
-            console.log('Error: vectorhat frequency option cannot be given in percent.  Try another unit.');
+            console.log('Error: arrowhead frequency option cannot be given in percent.  Try another unit.');
 
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === 'm' ){
 
@@ -330,7 +330,7 @@ export default L.Polyline.include({
             } else {
 
                console.log(
-                  'Error: Vectorhat size unit not defined.  Check your vectorhat options.'
+                  'Error: Arrowhead size unit not defined.  Check your arrowhead options.'
                )
 
             }  // if else block for Size
@@ -346,28 +346,28 @@ export default L.Polyline.include({
       //  --------------------------------------------------------- //
 
 
-      let vectorhats = L.layerGroup(allhats)
-      this._vectorhats = vectorhats;
+      let arrowheads = L.layerGroup(allhats)
+      this._arrowheads = arrowheads;
 
       return this
 
    },
 
 
-   getVectorhats: function(){
-      if (this._vectorhats){
-         return this._vectorhats;
+   getArrowheads: function(){
+      if (this._arrowheads){
+         return this._arrowheads;
       } else {
-         return console.log(`Error: You tried to call '.getVectorhats() on a shape that does not have a vectorhat.  Use '.vectorhats()' to add a vectorhats before trying to call '.getVectorhats()'`);
+         return console.log(`Error: You tried to call '.getArrowheads() on a shape that does not have a arrowhead.  Use '.arrowheads()' to add a arrowheads before trying to call '.getArrowheads()'`);
       }
    },
 
    deleteHats: function(){
 
-      if (this._vectorhats){
-         this._vectorhats.remove()
-         delete this._vectorhats;
-         delete this._vectorhatOptions;
+      if (this._arrowheads){
+         this._arrowheads.remove()
+         delete this._arrowheads;
+         delete this._arrowheadOptions;
          this._hatsApplied = false;
       }
 
@@ -377,12 +377,12 @@ export default L.Polyline.include({
 
    addTo: function (map) {
       map.addLayer(this);
-      if (this._vectorhat){
-         map.addLayer(this._vectorhat);
+      if (this._arrowhead){
+         map.addLayer(this._arrowhead);
       }
       if (this._hatsApplied){
-         this.buildVectorHats(this._vectorhatOptions);
-         map.addLayer(this._vectorhats);
+         this.buildVectorHats(this._arrowheadOptions);
+         map.addLayer(this._arrowheads);
       }
       return this;
    },
@@ -397,17 +397,17 @@ export default L.Polyline.include({
 
 
       if (this._hatsApplied){
-         this.buildVectorHats(this._vectorhatOptions);
-         this._map.addLayer(this._vectorhats);
+         this.buildVectorHats(this._arrowheadOptions);
+         this._map.addLayer(this._arrowheads);
       }
 	},
 
 
    remove: function () {
 
-      if (this._vectorhats){
-         this._vectorhats.removeFrom(this._map || this._mapToAdd);
-         this._vectorhats = []
+      if (this._arrowheads){
+         this._arrowheads.removeFrom(this._map || this._mapToAdd);
+         this._arrowheads = []
       }
       return this.removeFrom(this._map || this._mapToAdd);
    },
@@ -423,8 +423,8 @@ L.LayerGroup.include({
 		var id = layer in this._layers ? layer : this.getLayerId(layer);
 
 		if (this._map && this._layers[id]) {
-         if (this._layers[id]._vectorhats){
-            this._layers[id]._vectorhats.remove() ;
+         if (this._layers[id]._arrowheads){
+            this._layers[id]._arrowheads.remove() ;
          }
 			this._map.removeLayer(this._layers[id]);
 		}
