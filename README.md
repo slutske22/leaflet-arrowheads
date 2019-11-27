@@ -226,7 +226,8 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads( {frequency: 'allvertices'} )  // standard option</code><br>
+      <code>L.polyline([coords], {smoothFactor: 5}).arrowheads( {frequency: 'allvertices'} )  
+      // standard option</code><br>
       <br>
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
