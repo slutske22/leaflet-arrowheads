@@ -231,9 +231,9 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).vectorhats( {frequency: 'endonly'} )  // standard option</code><br>
+      <code>L.polyline([coords]).vectorhats( {frequency: 'endonly', size: '50%'} )</code><br>
       <br>
-      <img src="images/frequency-5.png" width="100%">
+      <img src="images/frequency-5.PNG" width="100%">
    </td></tr>
    <tr><td>
       <code>L.polyline([coords]).vectorhats( {frequency: 20} ) // 20 vectorhats evenly distributed</code><br>
@@ -252,6 +252,6 @@ Vectorhats inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </td></tr>
 </table>
 
+## Alternatives
 
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
-.
+After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator).  This offers some great methods to decorate your lines, potentially with arrowheads.  
