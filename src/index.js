@@ -1,11 +1,11 @@
 import { } from './leaflet-arrowheads.js'
 
 var mapOptions = {
-  center:     [
-        60.18553155384399,
-        8.171253204346903
-     ],
-  zoom: 18,
+  center:   [
+      34.02556114475524,
+      -118.78169059753418
+    ],
+  zoom: 12,
   zoomDelta: 0.5,
   zoomSnap: 0,
   wheelPxPerZoomLevel: 100
@@ -331,9 +331,10 @@ var malibuPathPoints = [
   ]
 ]
 
-var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).arrowheads({size: '50%'}).addTo(map)
+var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).arrowheads({size: '50%', frequency: '50px'}).addTo(map)
 
 window.malibuPath = malibuPath
+window.map = map
 
 // var norwayPathPoints = [
 //    [

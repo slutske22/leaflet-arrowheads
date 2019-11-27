@@ -107,7 +107,6 @@ export default L.Polyline.include({
 
          } else if ( frequency.toString().slice( frequency.toString().length - 1, frequency.toString().length ) === 'm' ){
 
-            console.log('frequency in meters');
             spacing = frequency.slice(0,frequency.length-1) / totalLength;
             noOfPoints = 1 / spacing
             // round things out for more even spacing:
@@ -136,9 +135,6 @@ export default L.Polyline.include({
             noOfPoints = Math.floor(noOfPoints)
             spacing = 1 / noOfPoints
 
-            console.log('noOfPoints', noOfPoints);
-            console.log('spacing', spacing);
-
 
          }
 
@@ -159,9 +155,6 @@ export default L.Polyline.include({
             derivedLatLngs = latlngs
             derivedLatLngs.shift()
 
-            // console.log('derivedLatLngs', derivedLatLngs);
-            // console.log('derivedBearings', derivedBearings);
-
          } else if (options.frequency === 'endonly') {
 
             console.log('end only');
@@ -175,10 +168,6 @@ export default L.Polyline.include({
                   latlngs[latlngs.length - 2], latlngs[latlngs.length - 1]
                ) + 180
             ];
-
-            // console.log('derivedLatLngs', derivedLatLngs);
-            // console.log('derivedBearings', derivedBearings);
-
 
          } else {
 
@@ -198,12 +187,6 @@ export default L.Polyline.include({
             derivedBearings = ( () => {
                let bearings = [];
 
-               // bearings.push(
-               //    L.GeometryUtil.bearing(
-               //      interpolatedPoints[0].latLng, latlngs[0]
-               //   )
-               // )
-
                for (var i = 0; i < interpolatedPoints.length; i++) {
                   let bearing = L.GeometryUtil.bearing(
                      interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
@@ -213,21 +196,11 @@ export default L.Polyline.include({
                return bearings;
             })()
 
-            // console.log('derivedLatLngs', derivedLatLngs);
-            // console.log('derivedBearings', derivedBearings);
-
-
          }
-
-         // derivedLatLngs.forEach( point => {
-         //    L.circle([point.lat, point.lng], {color:'black'}).addTo(this._map)
-         // })
 
 
          let n = latlngs.length - 1
          let hats = [];
-
-
 
          // Function to build hats based on index and a given hatsize in meters
          const pushHats = (size) => {
@@ -371,18 +344,14 @@ export default L.Polyline.include({
          this._hatsApplied = false;
       }
 
-
    },
 
 
    addTo: function (map) {
       map.addLayer(this);
-      if (this._arrowhead){
-         map.addLayer(this._arrowhead);
-      }
       if (this._hatsApplied){
          this.buildVectorHats(this._arrowheadOptions);
-         map.addLayer(this._arrowheads);
+         this._arrowheads.addTo(this._map)
       }
       return this;
    },
