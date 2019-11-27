@@ -9,11 +9,15 @@
 
 You can use npm to install leaflet-arrowheads:
 
-`npm install -leaflet-arrowheads`
+````javascript
+npm install -leaflet-arrowheads
+````
 
 Then you can simply import its content into your project:
 
-`import { } from './leaflet-arrowheads.js'`
+````javascript
+import { } from './leaflet-arrowheads.js'
+````
 
 
 If you don't want to use npm or modules, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then [L.GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), then leaflet-arrowheads, then your script.js file:
@@ -31,33 +35,32 @@ If you don't want to use npm or modules, you can simply download the source file
 
 Vectorhats can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
 
-````
+````javascript
 var myVector = L.polyline([ coords ]).vectorhats()
 ````
 
 Vectorhats will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
-````
+````javascript
 myVector.addTo(map) or myVector.remove()
 ````
 
 If you need to access the vectorhats directly, you can call the `.getVectorhats()` method on your polyline.
 
-````
+````javascript
 myVector.getVectorhats() // returns the vectorhats polyline object
 myVector.getVectorhats().remove() // removes vectorhats from map
 ````
 
 Vectorhats can also be deleted from their parent polyline entirely:
 
-````
+````javascript
 myVector.deleteHats()
-
 ````
 
 Vectorhats can take a configuration object as its argument:
 
-````
+````javascript
 var myVector = L.polyline([ coords ]).vectorhats({ <Options> })
 ````
 
