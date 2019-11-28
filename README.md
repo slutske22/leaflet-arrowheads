@@ -85,7 +85,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    <tr>
       <td> yawn </td>
       <td> Number <i color="grey"> ( Degrees ) </i> </td>
-      <td> 40 </td>
+      <td> 60 </td>
       <td>  Defines the width of the opening of the arrowhead, given in degrees.  The larger the angle, the wider the arrowhead. </td>
    </tr>
 
