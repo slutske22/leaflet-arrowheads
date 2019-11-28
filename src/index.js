@@ -1,11 +1,17 @@
 import { } from './leaflet-arrowheads.js'
 
+
+
+
+
+
+
 var mapOptions = {
   center:   [
-      34.02556114475524,
-      -118.78169059753418
+      32.02556114475524,
+      -119.78169059753418
     ],
-  zoom: 12,
+  zoom: 9,
   zoomDelta: 0.5,
   zoomSnap: 0,
   wheelPxPerZoomLevel: 100
@@ -13,83 +19,110 @@ var mapOptions = {
 
 const map = L.map('mapID', mapOptions)
 
-var mbStandardOutdoorLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.outdoors',
-      accessToken: 'pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNqeGw1Y3BibDAybG4zeHFyaXl3OXVwZXUifQ.fZ_5Raq5z-DUpo2AK-bQHA'
-   }).addTo(map)
-//
-// var simpleVector0 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng-0.25],
-//    [map.getCenter().lat+0.05, map.getCenter().lng-0.25 + 0.05],
-// ], {color: 'black'}).arrowheads()
-//
-// var simpleVector1 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng-0.15],
-//    [map.getCenter().lat+0.05, map.getCenter().lng-0.15 + 0.05],
-// ], {color: 'blue'}).arrowheads({frequency: '50px'})
-//
-// var simpleVector2 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng-0.05],
-//    [map.getCenter().lat+0.05, map.getCenter().lng-0.05 + 0.05],
-// ], {color: 'purple'}).arrowheads()
-//
-// var simpleVector3 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng+0.05],
-//    [map.getCenter().lat+0.05, map.getCenter().lng+0.05 + 0.05],
-// ], {color: 'green'}).arrowheads()
-//
-// var simpleVector4 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng+0.15],
-//    [map.getCenter().lat+0.05, map.getCenter().lng+0.15 + 0.05],
-// ], {color: 'orange'}).arrowheads()
-//
-// var simpleVector5 = L.polyline([
-//    [map.getCenter().lat-0.05, map.getCenter().lng+0.25],
-//    [map.getCenter().lat+0.05, map.getCenter().lng+0.25 + 0.05],
-// ], {color: 'red'}).arrowheads()
-//
-// var group = L.layerGroup([
-//    simpleVector0, simpleVector1, simpleVector2, simpleVector3, simpleVector4, simpleVector5
-// ])
-//
-// group.addTo(map)
+const myLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+})
+
+myLayer.addTo(map)
 
 
+
+
+//  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
+
+let group1Offsetx = 0.7,
+   group1Offsety = 1
+
+var simpleVector0 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.25],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.25 + 0.05],
+], {color: 'black'}).arrowheads().bindPopup(`simpleVector0: L.polyline(coords).arrowheads()`, {maxWidth: 2000})
+
+var simpleVector1 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.15],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.15 + 0.05],
+], {color: 'blue', weight: 2}).arrowheads().bindPopup(`<pre>simpleVector1 = L.polyline(coords, {color: 'blue', weight: 2 }).arrowheads()
+   </pre>`, {maxWidth: 2000})
+
+var simpleVector2 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.05],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety -0.05 + 0.05],
+], {color: 'purple'}).arrowheads({fill: true}).bindPopup(`<pre>simpleVector1 = L.polyline(coords)
+   .arrowheads({fill: true})
+   </pre>`, {maxWidth: 2000})
+
+var simpleVector3 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.05],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.05 + 0.05],
+], {color: 'green'}).arrowheads({color: 'black'}).bindPopup(`<pre>simpleVector1 = L.polyline(coords, {color: 'green'}).arrowheads({color: 'black'})
+   </pre>`, {maxWidth: 2000})
+
+var simpleVector4 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.15],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.15 + 0.05],
+], {color: 'orange', weight: 2}).arrowheads({yawn: 40}).bindPopup(`<pre>simpleVector1 = L.polyline(coords, {color: 'orange', weight: 2}).arrowheads({yawn: 40})
+   </pre>`, {maxWidth: 2000})
+
+var simpleVector5 = L.polyline([
+   [map.getCenter().lat-0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.25],
+   [map.getCenter().lat+0.05 + group1Offsetx, map.getCenter().lng - group1Offsety +0.25 + 0.05],
+], {color: 'red'}).arrowheads({fill: true, color: 'purple'}).bindPopup(`<pre>simpleVector1 = L.polyline().arrowheads({fill: true, color: 'purple'})
+   </pre>`, {maxWidth: 2000})
+
+var group1 = L.layerGroup([
+   simpleVector0, simpleVector1, simpleVector2, simpleVector3, simpleVector4, simpleVector5
+])
+
+group1.addTo(map)
+
+
+
+
+
+
+
+//  ------- GROUP 2: Arrowhead Size Options------------------------//
+
+var multiVector1 = L.polyline([
+   [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
+   [map.getCenter().lat-0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
+   [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
+   [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
+], {smoothFactor: 1, weight: 2}).arrowheads({fill: true}).addTo(map)
 //
-//
-// var multiVector1 = L.polyline([
-//    [map.getCenter().lat-0.002, map.getCenter().lng-0.006],
-//    [map.getCenter().lat-0.001, map.getCenter().lng-0.007],
-//    [map.getCenter().lat+0.000, map.getCenter().lng-0.006],
-//    [map.getCenter().lat+0.001, map.getCenter().lng-0.007],
-//    [map.getCenter().lat+0.002, map.getCenter().lng-0.006],
-// ], {smoothFactor: 1, weight: 2}).arrowheads({fill: true}).addTo(map)
-// //
-// var multiVector2 = L.polyline([
-//    [
-//       [map.getCenter().lat-0.2, map.getCenter().lng-0.4 + 0.5],
-//       [map.getCenter().lat-0.1, map.getCenter().lng-0.5 + 0.5],
-//       [map.getCenter().lat+0.0, map.getCenter().lng-0.4 + 0.5]
-//    ],
-//    [
-//       [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
-//       [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
-//    ]
-// ], {smoothFactor: 30}).arrowheads({size: '10%', endOnly: true}).addTo(map)
-//
-// var multiVector3 = L.polyline([
-//    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng-0.20],
-//    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng-0.15],
-//    [map.getCenter().lat-0.22 + 0.5, map.getCenter().lng-0.10],
-//    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng-0.05],
-//    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.00],
-//    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.05],
-//    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.10],
-//    [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.15],
-//    [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.20],
-// ], {smoothFactor: 10, weight: 2}).arrowheads({size: '20%', frequency: 20}).addTo(map)
+var multiVector2 = L.polyline([
+   [
+      [map.getCenter().lat-0.2, map.getCenter().lng-0.4 + 0.5],
+      [map.getCenter().lat-0.1, map.getCenter().lng-0.5 + 0.5],
+      [map.getCenter().lat+0.0, map.getCenter().lng-0.4 + 0.5]
+   ],
+   [
+      [map.getCenter().lat+0.1, map.getCenter().lng-0.5 + 0.5],
+      [map.getCenter().lat+0.2, map.getCenter().lng-0.4 + 0.5]
+   ]
+], {smoothFactor: 30}).arrowheads({size: '10%', endOnly: true}).addTo(map)
+
+var multiVector3 = L.polyline([
+   [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng-0.20],
+   [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng-0.15],
+   [map.getCenter().lat-0.22 + 0.5, map.getCenter().lng-0.10],
+   [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng-0.05],
+   [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.00],
+   [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.05],
+   [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.10],
+   [map.getCenter().lat-0.25 + 0.5, map.getCenter().lng+0.15],
+   [map.getCenter().lat-0.30 + 0.5, map.getCenter().lng+0.20],
+], {smoothFactor: 10, weight: 2}).arrowheads({size: '20%', frequency: 20}).addTo(map)
+
+
+
+
+
+
+//  ------- GROUP 3: Arrowhead frequency options --------------------//
+
+
 
 
 var malibuPathPoints = [
@@ -331,7 +364,16 @@ var malibuPathPoints = [
   ]
 ]
 
-var malibuPath = L.polyline([malibuPathPoints], {smoothFactor: 1.5, weight: 2}).arrowheads({size: '50%', frequency: '50px'}).addTo(map)
+var malibuPathPointsShifted = malibuPathPoints.map( point => {
+
+      // point[0] - 2,
+      // point[1] - 1
+
+})
+
+console.log(malibuPathPointsShifted);
+
+var malibuPath = L.polyline([malibuPathPointsShifted], {smoothFactor: 1.5, weight: 2}).arrowheads({size: '50%', frequency: '50px'}).addTo(map)
 
 window.malibuPath = malibuPath
 window.map = map
