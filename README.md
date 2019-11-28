@@ -218,7 +218,10 @@ Polylines in this demo have popups which each contain the code for that polyline
    </tr>
 </table>
 
-<table>
+<table width="2000px">
+    <tr>
+      <td colspan="2"><b>Size Options</td>
+   </tr>
    <tr>
       <td>
          <pre>L.polyline([coords]).arrowheads({size: '20px', fill: true})</pre>
