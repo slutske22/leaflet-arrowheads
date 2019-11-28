@@ -9,14 +9,15 @@
 
 You can use npm to install leaflet-arrowheads:
 
-````javascript
+````
 npm install -leaflet-arrowheads
 ````
 
 Then you can simply import its content into your project:
 
-````javascript
-import { } from './leaflet-arrowheads.js'
+````
+import { } from './leaflet-arrowheads.js'  // or
+import { } from 'leaflet-arrowheads' // when working with a build pack
 ````
 
 
@@ -129,6 +130,11 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
 
 ## Examples
+
+A demo project is available for viewing at https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc.
+The web page alone without the code: https://zfxxc.csb.app/
+
+Polylines in this demo have popups which each contain the code for that polyline.  Click around, and feel free to look through the codesandbox for more detail.
 
 <table>
    <tr>
