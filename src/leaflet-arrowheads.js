@@ -157,8 +157,6 @@ export default L.Polyline.include({
 
          } else if (options.frequency === 'endonly') {
 
-            console.log('end only');
-
             derivedLatLngs = [
                latlngs[latlngs.length - 1]
             ];
