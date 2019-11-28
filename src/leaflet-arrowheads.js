@@ -1,4 +1,4 @@
-import { } from 'leaflet-geometryutil'
+import { } from '/node_modules/leaflet-geometryutil/src/leaflet.geometryutil.js'
 
 
 function modulus(i, n){
@@ -156,8 +156,6 @@ export default L.Polyline.include({
             derivedLatLngs.shift()
 
          } else if (options.frequency === 'endonly') {
-
-            console.log('end only');
 
             derivedLatLngs = [
                latlngs[latlngs.length - 1]
