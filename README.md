@@ -268,3 +268,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 ## Alternatives
 
 After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator).  This offers some great methods to decorate your lines, potentially with arrowheads.  
+
+## Limitations
+
+Arrowheads look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
