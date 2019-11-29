@@ -17,7 +17,7 @@ npm install -leaflet-arrowheads
 
 Then you can simply import its content into your project:
 
-````
+````javascript
 import { } from './leaflet-arrowheads.js'  // or
 import { } from 'leaflet-arrowheads' // when working with a build pack
 ````
