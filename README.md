@@ -144,14 +144,14 @@ Polylines in this demo have popups which each contain the code for that polyline
    </tr>
    <tr>
       <td width="35%">
-         <pre>L.polyline.arrowheads()</pre>
+         <pre>L.polyline([]).arrowheads()</pre>
          (Standard option gives 60 degree yawn)
       </td>
       <td>
          <img src="images/yawn-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.arrowheads({
+         <pre>L.polyline([]).arrowheads({
   yawn: 90
 })</pre>
       </td>
@@ -160,7 +160,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.arrowheads({
+      <td><pre>L.polyline([]).arrowheads({
   yawn: 40
 })</pre></td>
       <td><img src="images/yawn-3.PNG" width="100px"></td>
@@ -178,14 +178,14 @@ Polylines in this demo have popups which each contain the code for that polyline
    </tr>
    <tr>
       <td width="35%">
-         <pre>L.polyline.arrowheads()</pre><br>
+         <pre>L.polyline([]).arrowheads()</pre><br>
          (Standard options makes arrowheads a vector with same color as parent)
       </td>
       <td>
          <img src="images/color-1.PNG" width="100px">
       </td>
       <td width="35%">
-         <pre>L.polyline.arrowheads({
+         <pre>L.polyline([]).arrowheads({
   fill: true
 })</pre>
       </td>
@@ -194,11 +194,11 @@ Polylines in this demo have popups which each contain the code for that polyline
       </td>
    </tr>
    <tr>
-      <td><pre>L.polyline.arrowheads({
+      <td><pre>L.polyline([]).arrowheads({
   color: 'black'
 })</pre></td>
       <td><img src="images/color-2.PNG" width="100px"></td>
-      <td><pre>L.polyline([coords],{
+      <td><pre>L.polyline([],{
   color: 'black'
 })
     .arrowheads({
@@ -207,11 +207,11 @@ Polylines in this demo have popups which each contain the code for that polyline
       <td><img src="images/fill-2.PNG" width="100px"></td>
    </tr>
    <tr>
-      <td><pre>L.polyline.arrowheads({
+      <td><pre>L.polyline([]).arrowheads({
   color: 'black'
 })</pre></td>
       <td><img src="images/fill-3.PNG" width="100px"></td>
-      <td><pre>L.polyline.arrowheads({
+      <td><pre>L.polyline([]).arrowheads({
   fill: true,
   color: 'black'
   fillColor: 'green'
@@ -222,7 +222,10 @@ Polylines in this demo have popups which each contain the code for that polyline
 
 <table width="2000px">
     <tr>
-      <td colspan="2"><b>Size Options</td>
+     <td colspan="2"><b>Size Options</b></td>
+   </tr>
+   <tr>
+      <td colspan="2">Setting size to a number or percent will give you a fixed size arrowhead (in meters or percent of the size of the segment, respectively), regardless of zoom size.  See the frequency examples below for a better idea.</td>
    </tr>
    <tr>
       <td>
