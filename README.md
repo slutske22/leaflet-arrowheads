@@ -1,5 +1,5 @@
 # leaflet-arrowheads
- Leaflet-Arrowheads is a small plugin for leaflet to quickly draw vector hats on polylines for vector visualization.
+ Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
 
 <p align="center">
   <img src="images/banner.PNG" width="80%">
@@ -7,15 +7,17 @@
 
 ## Installation
 
+Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
+
 You can use npm to install leaflet-arrowheads:
 
 ````
-npm install -leaflet-arrowheads
+npm install -leaflet-arrowheads --save
 ````
 
 Then you can simply import its content into your project:
 
-````
+````javascript
 import { } from './leaflet-arrowheads.js'  // or
 import { } from 'leaflet-arrowheads' // when working with a build pack
 ````
@@ -266,3 +268,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 ## Alternatives
 
 After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator).  This offers some great methods to decorate your lines, potentially with arrowheads.  
+
+## Limitations
+
+Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
