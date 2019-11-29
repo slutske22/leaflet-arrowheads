@@ -7,6 +7,8 @@
 
 ## Installation
 
+Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
+
 You can use npm to install leaflet-arrowheads:
 
 ````
