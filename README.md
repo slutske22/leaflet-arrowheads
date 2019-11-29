@@ -1,5 +1,5 @@
 # leaflet-arrowheads
- Leaflet-Arrowheads is a small plugin for leaflet to quickly draw vector hats on polylines for vector visualization.
+ Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
 
 <p align="center">
   <img src="images/banner.PNG" width="80%">
