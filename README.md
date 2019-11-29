@@ -271,4 +271,4 @@ After writing this plugin I discovered [Leaflet.PolylineDecorator](https://githu
 
 ## Limitations
 
-Arrowheads look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
+Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
