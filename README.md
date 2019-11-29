@@ -12,7 +12,7 @@ Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaf
 You can use npm to install leaflet-arrowheads:
 
 ````
-npm install -leaflet-arrowheads
+npm install -leaflet-arrowheads --save
 ````
 
 Then you can simply import its content into your project:
