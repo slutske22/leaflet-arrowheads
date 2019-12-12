@@ -333,7 +333,7 @@ export default L.Polyline.include({
       }
    },
 
-   deleteHats: function(){
+   deleteArrowheads: function(){
 
       if (this._arrowheads){
          this._arrowheads.remove()

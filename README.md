@@ -59,7 +59,7 @@ myVector.getArrowheads().remove() // removes arrowheads from map
 Arrowheads can also be deleted from their parent polyline entirely:
 
 ````javascript
-myVector.deleteHats()
+myVector.deleteArrowheads()
 ````
 
 Arrowheads can take a configuration object as its argument:
@@ -112,7 +112,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> 'allvertices' </td>
       <td> How many arrowheads are rendered on a polyline.  
          <ul>
-            <li> 'allvertices' renders a hat on each vertex. </li>
+            <li> 'allvertices' renders an arrowhead on each vertex. </li>
             <li> 'endonly' renders only one at the end.</li>
             <li> A number value renders that number of arrowheads evenly spaces across the polyline.  </li>
             <li>  A string value with suffix 'm' (i.e. <code>'100m'</code>) will render arrowheads spaced evenly along the polyline with roughly that many meters between each one.  </li>
