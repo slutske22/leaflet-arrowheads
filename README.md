@@ -9,21 +9,7 @@
 
 Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
 
-You can use npm to install leaflet-arrowheads:
-
-````
-npm install -leaflet-arrowheads --save
-````
-
-Then you can simply import its content into your project:
-
-````javascript
-import { } from './leaflet-arrowheads.js'  // or
-import { } from 'leaflet-arrowheads' // when working with a build pack
-````
-
-
-If you don't want to use npm or modules, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then [L.GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), then leaflet-arrowheads, then your script.js file:
+If you don't want to use npm or modules, you can simply download the source file from this branch and include it in your HTML header.  But your leaflet script link must come first, then [L.GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), then leaflet-arrowheads, then your script.js file:
 
 ````html
 <head>
@@ -34,6 +20,12 @@ If you don't want to use npm or modules, you can simply download the source file
   <script src="...yourscript.js"></script>
 </head>
 ````
+
+See [this codesandbox](https://codesandbox.io/s/leaflet-arrowheads-example-no-imports-6khz4) for an example of how this can be set up.
+
+### Using ES6 imports
+
+Head back to the [master branch](https://github.com/slutske22/leaflet-arrowheads) for instructions on using with imports.
 
 ## Usage
 
