@@ -22,18 +22,10 @@ import { } from './leaflet-arrowheads.js'  // or
 import { } from 'leaflet-arrowheads' // when working with a build pack
 ````
 
+### Without ES6 Imports
 
-If you don't want to use npm or modules, you can simply download the source file and include it in your HTML header.  But your leaflet script link must come first, then [L.GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), then leaflet-arrowheads, then your script.js file:
+Check out the [no-imports branch](https://github.com/slutske22/leaflet-arrowheads/tree/no-imports) for instructions on how to link this module directly from your HTML header.
 
-````html
-<head>
-  <script src="...leaflet.js"></script>
-  <link href="...leaflet.css">
-  <script src="...leaflet.geometryutil.js"></script>
-  <script src="...leaflet-arrowheads.js"></script>
-  <script src="...yourscript.js"></script>
-</head>
-````
 
 ## Usage
 
