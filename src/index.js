@@ -1,10 +1,3 @@
-import { } from './leaflet-arrowheads.js'
-
-
-
-
-
-
 
 var mapOptions = {
   center:   [
@@ -144,7 +137,7 @@ var multiVector5 = L.polyline([
       [map.getCenter().lat+0.0 + group2offsety, map.getCenter().lng-0.5 + group2offsetx + 0.6],
       [map.getCenter().lat+0.1 + group2offsety, map.getCenter().lng-0.4 + group2offsetx + 0.6]
    ]
-], {smoothFactor: 30, color: 'darkred'}).arrowheads({size: '15px', frequency: '50px', fill: true, yawn: 30}).bindPopup("<code>var multiVector5 = L.polyline(coords).arrowheads({size: '15px', frequency: '50px', fill: true, yawn: 30})</code>", {maxWidth: 2000})
+], {smoothFactor: 30, color: 'darkred'}).arrowheads({size: '15px', fill: true, yawn: 30}).bindPopup("<code>var multiVector5 = L.polyline(coords).arrowheads({size: '15px', frequency: '50px', fill: true, yawn: 30})</code>", {maxWidth: 2000})
 
 
 var group2 = L.layerGroup([
@@ -448,17 +441,3 @@ var group3 = L.layerGroup([
 
 group3.addTo(map)
 
-
-
-// var norwayPathPoints = [
-//    [
-//       58.83080439883584,
-//       10.711669921874998
-//    ],
-//    [
-//       60.18570156483399,
-//       8.171253204345703
-//    ]
-// ]
-//
-// var norwayPath = L.polyline(norwayPathPoints).arrowheads({size: '15px', fill: true}).addTo(map)
