@@ -54,9 +54,10 @@ export default L.Polyline.include({
       let hatOptions = Object.assign({}, parentOptions, options)
 
       // ...with a few exceptions:
-      hatOptions.smoothFactor = 1;
+      hatOptions.smoothFactor = 1
       hatOptions.fillOpacity = 1
       hatOptions.fill = options.fill ? true : false
+      hatOptions.interactive = false
 
       //  ------------  FILTER THE OPTIONS END -------------------- //
       //  --------------------------------------------------------- //
