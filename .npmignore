@@ -1,3 +1,7 @@
+#Folders
+/images
+
+#Files
 src/index.css
 src/index.html
 src/index.js
