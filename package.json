@@ -1,10 +1,10 @@
 {
   "name": "leaflet-arrowheads",
-  "version": "1.0.9",
+  "version": "1.0.8",
   "description": "Add arrow heads to leaflet polylines",
   "main": "src/leaflet-arrowheads.js",
   "scripts": {
-    "build": "...",
+    "build": "echo \"Error: no test specified\"",
     "use:npmReadme": "mv 'README.md' 'git.README.md' && mv 'npm.README.md' 'README.md'",
     "use:gitReadme": "mv 'README.md' 'npm.README.md' && mv 'git.README.md' 'README.md'",
     "prepublishOnly": "run-s build use:npmReadme",
