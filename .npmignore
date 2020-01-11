@@ -1,7 +1,10 @@
 #Folders
-/images
+images/
 
 #Files
 src/index.css
 src/index.html
 src/index.js
+.gitignore
+.gitattributes
+.npmignore
