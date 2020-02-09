@@ -1,4 +1,4 @@
-import { } from 'leaflet-geometryutil'
+import 'leaflet-geometryutil'
 
 
 function modulus(i, n){
