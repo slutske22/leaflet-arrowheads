@@ -1,12 +1,10 @@
-import './leaflet-geometryutil.js'
-
 
 function modulus(i, n){
    return (i % n + n) % n;
 }
 
 
-export default L.Polyline.include({
+L.Polyline.include({
 
    arrowheads: function(options = {}){
 
