@@ -6,3 +6,13 @@ body,
    margin: 0;
    padding: 0;
 }
+
+
+.norwayLink{
+   color: #0078A8;
+}
+
+.norwayLink:hover{
+   text-decoration: underline;
+   cursor: pointer;
+}

@@ -443,15 +443,77 @@ group3.addTo(map)
 
 
 
-// var norwayPathPoints = [
-//    [
-//       58.83080439883584,
-//       10.711669921874998
-//    ],
-//    [
-//       60.18570156483399,
-//       8.171253204345703
-//    ]
-// ]
-//
-// var norwayPath = L.polyline(norwayPathPoints).arrowheads({size: '15px', fill: true}).addTo(map)
+
+
+//  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
+
+var bigVector0 = L.polyline([
+  [
+    59.85688529423247,
+    10.491943359375
+  ],
+  [
+    59.94985301711567,
+    10.817413330078125
+  ]
+
+], {color: 'black', stroke: '2'}).arrowheads({fill: false, yawn: 30})
+
+var bigVector1 = L.polyline([
+  [
+    58.401711667608,
+    5.6689453125
+  ],
+  [
+    60.261617082844616,
+    10.8544921875
+  ]
+], {color: 'blue', weight: 2}).arrowheads({fill: false, yawn: 30})
+
+var bigVector2 = L.polyline([
+  [
+    47.57652571374621,
+    -27.333984375
+  ],
+  [
+    61.227957176677876,
+    10.810546875
+  ]
+], {color: 'purple', weight: '2'}).arrowheads({size: '20px', fill: false, yawn: 30})
+
+var bigVector3 = L.polyline([
+
+  [
+    31.203404950917395,
+    -84.0234375
+  ],
+  [
+    62.34960927573042,
+    10.8984375
+  ]
+], {color: 'black', weight: '2'}).arrowheads({size: '20px', fill: false, yawn: 30, frequency: 10})
+
+
+var groupBig = L.layerGroup([
+   bigVector0, bigVector1, bigVector2, bigVector3
+])
+
+groupBig.addTo(map)
+
+
+const somePopup = L.marker(map.getCenter()).bindPopup(`
+  <h4 onClick={flyToNorway()} class="norwayLink">To Norway!</h4>
+`)
+
+somePopup.addTo(map)
+
+function flyToNorway(){
+
+  map.flyTo([
+    47.57652571374621,
+    -27.333984375
+  ],3,{animate: true, duration: 5})
+
+  somePopup.closePopup()
+  
+}

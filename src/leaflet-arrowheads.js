@@ -143,7 +143,7 @@ L.Polyline.include({
             derivedBearings = ( () => {
                let bearings = [];
                for (var i = 1; i < latlngs.length; i++) {
-                  let bearing = L.GeometryUtil.bearing(
+                  let bearing = L.GeometryUtil.angle( this._map, 
                      latlngs[ modulus( (i-1), latlngs.length ) ], latlngs[i]
                   ) + 180
                   bearings.push(bearing)
@@ -161,7 +161,7 @@ L.Polyline.include({
             ];
 
             derivedBearings = [
-               L.GeometryUtil.bearing(
+               L.GeometryUtil.angle( this._map, 
                   latlngs[latlngs.length - 2], latlngs[latlngs.length - 1]
                ) + 180
             ];
@@ -185,7 +185,7 @@ L.Polyline.include({
                let bearings = [];
 
                for (var i = 0; i < interpolatedPoints.length; i++) {
-                  let bearing = L.GeometryUtil.bearing(
+                  let bearing = L.GeometryUtil.angle( this._map, 
                      interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
                   )
                   bearings.push(bearing)
