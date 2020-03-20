@@ -5,6 +5,8 @@
   <img src="images/banner.PNG" width="80%">
 </p>
 
+## [DEMO](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
+
 ## Installation
 
 Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
