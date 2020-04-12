@@ -5,7 +5,7 @@
   <img src="images/banner.PNG" width="80%">
 </p>
 
-## [DEMO](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
+## [:eyes: DEMO :eyes:](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
 
 ## Installation
 
