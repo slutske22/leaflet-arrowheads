@@ -28,10 +28,8 @@ L.Polyline.include({
    buildVectorHats: function( options ){
 
       // Reset variables from previous this._update()
-      if (this._arrowheads){
+      if (this._arrowheads && this._arrowheads.length > 0){
          this._arrowheads.remove()
-         let arrowheads = []
-         let allhats = []
       }
 
       //  -------------------------------------------------------- //
