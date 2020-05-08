@@ -30,8 +30,6 @@ L.Polyline.include({
       // Reset variables from previous this._update()
       if (this._arrowheads){
          this._arrowheads.remove()
-         let arrowheads = []
-         let allhats = []
       }
 
       //  -------------------------------------------------------- //
@@ -372,8 +370,7 @@ L.Polyline.include({
    remove: function () {
 
       if (this._arrowheads){
-         this._arrowheads.removeFrom(this._map || this._mapToAdd);
-         this._arrowheads = []
+         this._arrowheads.remove();
       }
       return this.removeFrom(this._map || this._mapToAdd);
    },
@@ -413,5 +410,40 @@ L.LayerGroup.include({
 
    },
 
+
+})
+
+
+L.Map.include({
+
+   removeLayer: function (layer) {
+
+      var id = L.Util.stamp(layer);
+      
+      if (layer._arrowheads){
+         layer._arrowheads.remove()
+      }
+
+		if (!this._layers[id]) { return this; }
+
+		if (this._loaded) {
+			layer.onRemove(this);
+		}
+
+		if (layer.getAttribution && this.attributionControl) {
+			this.attributionControl.removeAttribution(layer.getAttribution());
+		}
+
+		delete this._layers[id];
+
+		if (this._loaded) {
+			this.fire('layerremove', {layer: layer});
+			layer.fire('remove');
+		}
+
+		layer._map = layer._mapToAdd = null;
+
+		return this;
+	},
 
 })
