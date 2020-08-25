@@ -69,6 +69,12 @@ Arrowheads can take a configuration object as its argument:
 var myVector = L.polyline([ coords ]).arrowheads({ <Options> })
 ````
 
+You can also use arrowheads on a GeoJSON that contains `LineString` or `MultiLineString` features by adding it as an option:
+
+````javascript
+var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } })
+````
+
 
 ## Options
 
@@ -276,3 +282,5 @@ After writing this plugin I discovered [Leaflet.PolylineDecorator](https://githu
 ## Limitations
 
 Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
+
+***New Bug / TODO:*** Applying option `frequency` or anything other than default occsionally renders the arrowheads *backwards* for polylines with many vertices, especially at lower zoom levels.  This is likely also because of the interpolations.  Either this is some new bug that arose, or I didn't notice it before.  Need to fix this asap.
