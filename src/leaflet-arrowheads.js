@@ -467,12 +467,12 @@ L.GeoJSON.include({
       switch (geometry.type) {
       case 'Point':
          latlng = _coordsToLatLng(coords);
-         return _pointToLayer(pointToLayer, geojson, latlng, options);
+         return this._pointToLayer(pointToLayer, geojson, latlng, options);
    
       case 'MultiPoint':
          for (i = 0, len = coords.length; i < len; i++) {
             latlng = _coordsToLatLng(coords[i]);
-            layers.push(_pointToLayer(pointToLayer, geojson, latlng, options));
+            layers.push(this._pointToLayer(pointToLayer, geojson, latlng, options));
          }
          return new L.FeatureGroup(layers);
    
@@ -492,7 +492,7 @@ L.GeoJSON.include({
    
       case 'GeometryCollection':
          for (i = 0, len = geometry.geometries.length; i < len; i++) {
-            var layer = geometryToLayer({
+            var layer = this.geometryToLayer({
                geometry: geometry.geometries[i],
                type: 'Feature',
                properties: geojson.properties
@@ -542,6 +542,12 @@ L.GeoJSON.include({
 		}
 
 		return this.addLayer(layer);
-	}
+   },
+   
+   _pointToLayer: function (pointToLayerFn, geojson, latlng, options) {
+      return pointToLayerFn ?
+         pointToLayerFn(geojson, latlng) :
+         new L.Marker(latlng, options && options.markersInheritOptions && options);
+   }
 
 })
