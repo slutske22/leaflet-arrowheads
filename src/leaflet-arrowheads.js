@@ -184,7 +184,7 @@ L.Polyline.include({
 
                for (var i = 0; i < interpolatedPoints.length; i++) {
                   let bearing = L.GeometryUtil.angle( this._map, 
-                     interpolatedPoints[i].latLng, latlngs[ interpolatedPoints[i].predecessor ]
+                     latlngs[ interpolatedPoints[i].predecessor + 1 ], latlngs[ interpolatedPoints[i].predecessor ]
                   )
                   bearings.push(bearing)
                }
