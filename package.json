@@ -1,6 +1,6 @@
 {
 	"name": "leaflet-arrowheads",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "Add arrow heads to leaflet polylines",
 	"main": "src/index.js",
 	"scripts": {
