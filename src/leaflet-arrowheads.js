@@ -338,15 +338,6 @@ L.Polyline.include({
       }
    },
 
-   addTo: function (map) {
-      map.addLayer(this);
-      if (this._hatsApplied) {
-         this.buildVectorHats(this._arrowheadOptions);
-         this._arrowheads.addTo(this._map);
-      }
-      return this;
-   },
-
    _update: function () {
       if (!this._map) {
          return;
