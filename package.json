@@ -4,7 +4,6 @@
 	"description": "Add arrow heads to leaflet polylines",
 	"main": "src/index.js",
 	"scripts": {
-		"build": "echo \"Error: no test specified\"",
 		"use:npmReadme": "mv 'README.md' 'git.README.md' && mv 'npm.README.md' 'README.md'",
 		"use:gitReadme": "mv 'README.md' 'npm.README.md' && mv 'git.README.md' 'README.md'",
 		"prepublishOnly": "run-s build use:npmReadme",
