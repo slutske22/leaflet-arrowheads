@@ -6,7 +6,7 @@
 	"scripts": {
 		"use:npmReadme": "mv 'README.md' 'git.README.md' && mv 'npm.README.md' 'README.md'",
 		"use:gitReadme": "mv 'README.md' 'npm.README.md' && mv 'git.README.md' 'README.md'",
-		"prepublishOnly": "run-s build use:npmReadme",
+		"prepublishOnly": "npm run use:npmReadme",
 		"postpublish": "npm run use:gitReadme"
 	},
 	"keywords": [
