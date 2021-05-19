@@ -66,15 +66,15 @@ L.Polyline.include({
       let allhats = []; // empty array to receive hat polylines
       const { frequency } = options;
 
-      this._parts.forEach((peice, index) => {
-         // Immutable variables for each peice
-         const latlngs = peice.map((point) =>
+      if (this._parts) this._parts.forEach((part, index) => {
+         // Immutable variables for each part
+         const latlngs = part.map((point) =>
             this._map.layerPointToLatLng(point)
          );
 
          const totalLength = (() => {
             let total = 0;
-            for (var i = 0; i < peice.length - 1; i++) {
+            for (var i = 0; i < part.length - 1; i++) {
                total += this._map.distance(latlngs[i], latlngs[i + 1]);
             }
             return total;
@@ -288,7 +288,7 @@ L.Polyline.include({
                   ) {
                      return (totalLength * sizePercent) / 100;
                   } else {
-                     let averageDistance = totalLength / (peice.length - 1);
+                     let averageDistance = totalLength / (part.length - 1);
                      return (averageDistance * sizePercent) / 100;
                   }
                })(); // hatsize calculation
@@ -305,10 +305,10 @@ L.Polyline.include({
                   'Error: Arrowhead size unit not defined.  Check your arrowhead options.'
                );
             } // if else block for Size
-         } // for loop for each point witin a peice
+         } // for loop for each point witin a part
 
          allhats.push(...hats);
-      }); // forEach peice
+      }); // forEach part
 
       //  --------- LOOP THROUGH EACH POLYLINE END ---------------- //
       //  --------------------------------------------------------- //
@@ -342,7 +342,7 @@ L.Polyline.include({
       map.addLayer(this);
       if (this._hatsApplied) {
          this.buildVectorHats(this._arrowheadOptions);
-         this._arrowheads.addTo(this._map);
+         this._arrowheads.addTo(map);
       }
       return this;
    },
