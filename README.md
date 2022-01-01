@@ -80,7 +80,7 @@ var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } })
 
 Arrowheads offers a variety of options for rendering and styling arrowheads.  See the options table below.<br>
 <br>
-Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
+Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Arrowheads also inherit all options from their parent polylines, except `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
 <br>
 <table>
 
@@ -132,7 +132,14 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> proportionalToTotal </td>
       <td> Boolean </td>
       <td> false </td>
-      <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
+      <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments. </td>
+   </tr>
+
+   <tr>
+      <td> fill </td>
+      <td> Boolean </td>
+      <td> false </td>
+      <td> Whether to fill the arrowhead with color. </td>
    </tr>
 
 </table>
