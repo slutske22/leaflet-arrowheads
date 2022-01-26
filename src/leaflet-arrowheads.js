@@ -10,6 +10,7 @@ L.Polyline.include({
 			size: '15%',
 			frequency: 'allvertices',
 			proportionalToTotal: false,
+			endOffsetPixels: 0,
 		};
 
 		this.options.noClip = true;
@@ -20,6 +21,13 @@ L.Polyline.include({
 		this._hatsApplied = true;
 		return this;
 	},
+	
+	disToPixeldistance: function (distance) {
+    var l2 = L.GeometryUtil.destination(this._map.getCenter(),90,distance);
+    var p1 = this._map.latLngToContainerPoint(this._map.getCenter())
+    var p2 = this._map.latLngToContainerPoint(l2)
+    return p1.distanceTo(p2)
+  },
 
 	buildVectorHats: function (options) {
 		// Reset variables from previous this._update()
@@ -221,10 +229,17 @@ L.Polyline.include({
 
 				hats.push(hat);
 			}; // pushHats()
+			
+			
 
 			// Function to build hats based on pixel input
 			const pushHatsFromPixels = (size) => {
-				let sizePixels = size.slice(0, size.length - 2);
+				let sizePixels = parseInt(size.slice(0, size.length - 2));
+				let peiceLengthInPixels = this.disToPixeldistance(totalLength);
+				if(peiceLengthInPixels < sizePixels) {
+				  return;
+				}
+				let head = derivedLatLngs[i];
 
 				let derivedXY = this._map.latLngToLayerPoint(derivedLatLngs[i]);
 
@@ -232,6 +247,25 @@ L.Polyline.include({
 
 				let thetaLeft = (180 - bearing - options.yawn / 2) * (Math.PI / 180),
 					thetaRight = (180 - bearing + options.yawn / 2) * (Math.PI / 180);
+					
+			  if (options.endOffsetPixels) {
+			    if (peiceLengthInPixels < sizePixels + options.endOffsetPixels) {
+			      return;
+			    }
+			    const pointA = {
+			      x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaLeft)),
+			      y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaLeft))
+			    };
+			    const pointB = {
+			     x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaRight)),
+           y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaRight))
+			    }
+          derivedXY = {
+            x: (pointA.x + pointB.x) / 2,
+            y: (pointA.y + pointB.y) / 2
+          }
+          head = this._map.layerPointToLatLng(derivedXY);
+        }
 
 				let dxLeft = sizePixels * Math.sin(thetaLeft),
 					dyLeft = sizePixels * Math.cos(thetaLeft),
@@ -252,7 +286,7 @@ L.Polyline.include({
 
 				let hatPoints = [
 					[leftWingPoint.lat, leftWingPoint.lng],
-					[derivedLatLngs[i].lat, derivedLatLngs[i].lng],
+					[head.lat, head.lng],
 					[rightWingPoint.lat, rightWingPoint.lng],
 				];
 
@@ -328,6 +362,10 @@ L.Polyline.include({
 			delete this._arrowheadOptions;
 			this._hatsApplied = false;
 		}
+	},
+	
+	redraw: function() {
+	  this._update();
 	},
 
 	_update: function () {
