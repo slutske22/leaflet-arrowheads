@@ -139,7 +139,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> endOffsetPixels </td>
       <td> Number <i color="grey"> ( pixels ) </i> </td>
       <td> 0 </td>
-      <td>  Defines the number of pixels from the end that the final arrowhead will be. </td>
+      <td>  Defines the number of pixels to offset the arrowhead from the vertex </td>
    </tr>
 
 </table>
