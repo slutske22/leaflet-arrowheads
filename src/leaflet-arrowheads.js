@@ -22,12 +22,12 @@ L.Polyline.include({
 		return this;
 	},
 	
-  disToPixeldistance: function (distance) {
-    var l2 = L.GeometryUtil.destination(this._map.getCenter(),90,distance);
-    var p1 = this._map.latLngToContainerPoint(this._map.getCenter())
-    var p2 = this._map.latLngToContainerPoint(l2)
-    return p1.distanceTo(p2)
-  },
+	disToPixeldistance: function (distance) {
+		var l2 = L.GeometryUtil.destination(this._map.getCenter(),90,distance);
+		var p1 = this._map.latLngToContainerPoint(this._map.getCenter())
+		var p2 = this._map.latLngToContainerPoint(l2)
+		return p1.distanceTo(p2)
+	},
 
 	buildVectorHats: function (options) {
 		// Reset variables from previous this._update()
@@ -362,10 +362,6 @@ L.Polyline.include({
 			delete this._arrowheadOptions;
 			this._hatsApplied = false;
 		}
-	},
-	
-	redraw: function() {
-	  this._update();
 	},
 
 	_update: function () {
