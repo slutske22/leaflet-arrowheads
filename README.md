@@ -134,6 +134,13 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> false </td>
       <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
+ 
+    <tr>
+      <td> endOffsetPixels </td>
+      <td> Number <i color="grey"> ( pixels ) </i> </td>
+      <td> 0 </td>
+      <td>  Defines the number of pixels from the end that the final arrowhead will be. </td>
+   </tr>
 
 </table>
 
