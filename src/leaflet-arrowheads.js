@@ -248,24 +248,24 @@ L.Polyline.include({
 				let thetaLeft = (180 - bearing - options.yawn / 2) * (Math.PI / 180),
 					thetaRight = (180 - bearing + options.yawn / 2) * (Math.PI / 180);
 					
-			  if (options.endOffsetPixels) {
-			    if (peiceLengthInPixels < sizePixels + options.endOffsetPixels) {
-			      return;
-			    }
-			    const pointA = {
-			      x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaLeft)),
-			      y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaLeft))
-			    };
-			    const pointB = {
-			     x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaRight)),
-           y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaRight))
-			    }
-          derivedXY = {
-            x: (pointA.x + pointB.x) / 2,
-            y: (pointA.y + pointB.y) / 2
-          }
-          head = this._map.layerPointToLatLng(derivedXY);
-        }
+				if (options.endOffsetPixels) {
+					if (peiceLengthInPixels < sizePixels + options.endOffsetPixels) {
+						return;
+					}
+					const pointA = {
+						x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaLeft)),
+						y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaLeft))
+					};
+					const pointB = {
+						x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaRight)),
+						y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaRight))
+					}
+					derivedXY = {
+						x: (pointA.x + pointB.x) / 2,
+						y: (pointA.y + pointB.y) / 2
+					}
+					head = this._map.layerPointToLatLng(derivedXY);
+				}
 
 				let dxLeft = sizePixels * Math.sin(thetaLeft),
 					dyLeft = sizePixels * Math.cos(thetaLeft),
