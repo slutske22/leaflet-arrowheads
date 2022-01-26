@@ -252,14 +252,16 @@ L.Polyline.include({
 					if (peiceLengthInPixels < sizePixels + options.endOffsetPixels) {
 						return;
 					}
+					// legs of isosceles triangle used to make sure distance from vertex is correct
+					const legLength = options.endOffsetPixels / Math.cos(options.yawn);
 					const pointA = {
-						x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaLeft)),
-						y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaLeft))
+						x: derivedXY.x - legLength * Math.sin(thetaLeft),
+						y: derivedXY.y - legLength * Math.cos(thetaLeft),
 					};
 					const pointB = {
-						x: derivedXY.x + (options.endOffsetPixels * Math.sin(thetaRight)),
-						y: derivedXY.y + (options.endOffsetPixels * Math.cos(thetaRight))
-					}
+						x: derivedXY.x - legLength * Math.sin(thetaRight),
+						y: derivedXY.y - legLength * Math.cos(thetaRight),
+					};
 					derivedXY = {
 						x: (pointA.x + pointB.x) / 2,
 						y: (pointA.y + pointB.y) / 2
