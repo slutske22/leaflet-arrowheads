@@ -265,11 +265,11 @@ L.Polyline.include({
 					/*        
 						     Old Vertex
 							A
-					               / \
-					              /   \
-					   Point A - /_____\ - Point B
+					               /|\
+					              / | \
+					   Point A - /__|__\ - Point B
 					                |
-					            New Vertex
+					            New Vertex "offset" distance from old vertex
 					*/
 					derivedXY = {
 						x: (pointA.x + pointB.x) / 2,
