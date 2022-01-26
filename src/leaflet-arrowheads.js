@@ -262,6 +262,15 @@ L.Polyline.include({
 						x: derivedXY.x - legLength * Math.sin(thetaRight),
 						y: derivedXY.y - legLength * Math.cos(thetaRight),
 					};
+					/*        
+						     Old Vertex
+							A
+					               / \
+					              /   \
+					   Point A - /_____\ - Point B
+					                |
+					            New Vertex
+					*/
 					derivedXY = {
 						x: (pointA.x + pointB.x) / 2,
 						y: (pointA.y + pointB.y) / 2
