@@ -81,6 +81,10 @@ L.Polyline.include({
 			this._arrowheads.remove();
 		}
 
+		if (this._ghosts) {
+			this._ghosts.remove();
+		}
+
 		//  -------------------------------------------------------- //
 		//  ------------  FILTER THE OPTIONS ----------------------- //
 		/*
@@ -120,9 +124,15 @@ L.Polyline.include({
 			this._buildGhosts({ start: offsets.start, end: offsets.end });
 		}
 
-		this._parts.forEach((peice, index) => {
+		const lineToTrace = this._ghosts || this;
+
+		lineToTrace._parts.forEach((peice, index) => {
 			// Immutable variables for each peice
 			const latlngs = peice.map((point) => this._map.layerPointToLatLng(point));
+
+			if (frequency === 'enonly') {
+				console.log(latlngs)
+			}
 
 			const totalLength = (() => {
 				let total = 0;
@@ -183,7 +193,7 @@ L.Polyline.include({
 
 				derivedLatLngs = latlngs;
 				derivedLatLngs.shift();
-			} else if (options.frequency === 'endonly') {
+			} else if (options.frequency === 'endonly' && latlngs.length >= 2) {
 				derivedLatLngs = [latlngs[latlngs.length - 1]];
 
 				derivedBearings = [
@@ -357,6 +367,8 @@ L.Polyline.include({
 
 			latlngs = Array.isArray(latlngs[0]) ? latlngs : [latlngs];
 
+			console.log(latlngs)
+
 			const newLatLngs = latlngs.map((segment) => {
 				// Get total distance of original latlngs
 				const totalLength = (() => {
@@ -407,7 +419,7 @@ L.Polyline.include({
 						(totalLength - endOffsetInMeters) / totalLength
 					);
 
-					segment = segment.slice(0, newEnd.predecessor);
+					segment = segment.slice(0, newEnd.predecessor + 1);
 					segment.push(newEnd.latLng);
 				}
 
@@ -415,10 +427,12 @@ L.Polyline.include({
 			});
 
 			this._ghosts = L.polyline(newLatLngs, {
+				...this.options,
 				color: 'black',
 				smoothFactor: 0,
+				interactive: false
 			});
-			this._ghosts.redraw();
+			this._ghosts.addTo(this._map)
 		}
 	},
 
