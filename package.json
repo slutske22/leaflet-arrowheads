@@ -20,8 +20,8 @@
 	"author": "Seth Lutske",
 	"license": "MIT",
 	"dependencies": {
-		"leaflet": "^1.6.0",
-		"leaflet-geometryutil": "^0.9.3"
+		"leaflet": "^1.7.1",
+		"leaflet-geometryutil": "^0.10.0"
 	},
 	"devDependencies": {
 		"npm-run-all": "^4.1.5"
