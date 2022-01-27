@@ -289,21 +289,21 @@ Polylines in this demo have popups which each contain the code for that polyline
 		size: '30px',
 		offsets: { end: '15px' }});</code><br>
       <br>
-      <img src="images/offset-end-1.png" width="70%">
+      <img src="images/offset-end-1.png" width="60%">
    </td></tr>
    <tr><td>    
       <code>L.polyline([coords]).arrowheads({ frequency: 20,
       size: '300m',
 		offsets: { end: '15px' }});</code><br>
       <br>
-      <img src="images/offset-end-2.png" width="70%">
+      <img src="images/offset-end-2.png" width="60%">
    </td></tr>
    <tr><td>    
       <code>L.polyline([coords1, coords2]).arrowheads({ frequency: '1000m',
       size: '300m',
 		offsets: { start: '5000m', end: '15px' }});</code><br>
       <br>
-      <img src="images/offset-both-1.png" width="70%">
+      <img src="images/offset-both-1.png" width="60%">
    </td></tr>
 </table>
 
