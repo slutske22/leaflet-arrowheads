@@ -1,8 +1,6 @@
 var mapOptions = {
-	center: [32.02556114475524, -119.78169059753418],
-	zoom: 9,
-	zoomDelta: 0.5,
-	zoomSnap: 0,
+	center: { lat: 31.81534015582749, lng: -120.30408809499046 }, //////// revert!
+	zoom: 13, //////// revert!
 	wheelPxPerZoomLevel: 100,
 };
 
@@ -483,13 +481,15 @@ var path6 = L.polyline([path6points], { smoothFactor: 1.5, weight: 2 })
 var path7 = L.polyline([path7points], {
 	smoothFactor: 1.5,
 	weight: 5,
-}).arrowheads({ offsets: { end: '10px' } });
+}).arrowheads({ offsets: { start: '20px', end: '120px' } });
 
 window.path7 = path7;
 
 var group3 = L.layerGroup([path1, path2, path3, path4, path5, path6, path7]);
 
 group3.addTo(map);
+
+path7._ghosts.addTo(map);
 
 //  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
 

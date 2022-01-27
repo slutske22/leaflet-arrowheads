@@ -353,12 +353,11 @@ L.Polyline.include({
 
 	_buildGhosts: function ({ start, end }) {
 		if (start || end) {
-			let ghosts = [];
 			let latlngs = this.getLatLngs();
 
 			latlngs = Array.isArray(latlngs[0]) ? latlngs : [latlngs];
 
-			latlngs.forEach((segment) => {
+			const newLatLngs = latlngs.map((segment) => {
 				// Get total distance of original latlngs
 				const totalLength = (() => {
 					let total = 0;
@@ -369,6 +368,29 @@ L.Polyline.include({
 				})();
 
 				// Modify latlngs to end at interpolated point
+				if (start) {
+					let endOffsetInMeters = (() => {
+						if (isInMeters(start)) {
+							return Number(start.slice(0, start.length - 1));
+						} else if (isInPixels(start)) {
+							let pixels = Number(start.slice(0, start.length - 2));
+							return pixelsToMeters(pixels, this._map);
+						}
+					})();
+
+					let newStart = L.GeometryUtil.interpolateOnLine(
+						this._map,
+						segment,
+						endOffsetInMeters / totalLength
+					);
+
+					segment = segment.slice(
+						newStart.predecessor === -1 ? 1 : newStart.predecessor + 1,
+						segment.length
+					);
+					segment.unshift(newStart.latLng);
+				}
+
 				if (end) {
 					let endOffsetInMeters = (() => {
 						if (isInMeters(end)) {
@@ -387,11 +409,16 @@ L.Polyline.include({
 
 					segment = segment.slice(0, newEnd.predecessor);
 					segment.push(newEnd.latLng);
-					ghosts.push(segment);
 				}
+
+				return segment;
 			});
 
-			this._ghosts = ghosts;
+			this._ghosts = L.polyline(newLatLngs, {
+				color: 'black',
+				smoothFactor: 0,
+			});
+			this._ghosts.redraw();
 		}
 	},
 
