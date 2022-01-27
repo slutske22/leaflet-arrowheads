@@ -131,7 +131,7 @@ L.Polyline.include({
 			const latlngs = peice.map((point) => this._map.layerPointToLatLng(point));
 
 			if (frequency === 'enonly') {
-				console.log(latlngs)
+				console.log(latlngs);
 			}
 
 			const totalLength = (() => {
@@ -367,8 +367,6 @@ L.Polyline.include({
 
 			latlngs = Array.isArray(latlngs[0]) ? latlngs : [latlngs];
 
-			console.log(latlngs)
-
 			const newLatLngs = latlngs.map((segment) => {
 				// Get total distance of original latlngs
 				const totalLength = (() => {
@@ -430,9 +428,9 @@ L.Polyline.include({
 				...this.options,
 				color: 'black',
 				smoothFactor: 0,
-				interactive: false
+				interactive: false,
 			});
-			this._ghosts.addTo(this._map)
+			this._ghosts.addTo(this._map);
 		}
 	},
 
