@@ -2,6 +2,60 @@ function modulus(i, n) {
 	return ((i % n) + n) % n;
 }
 
+/**
+ * Whether or not a string is in the format '<number>m'
+ * @param {string} value
+ * @returns Boolean
+ */
+function isInMeters(value) {
+	return (
+		value
+			.toString()
+			.trim()
+			.slice(value.toString().length - 1, value.toString().length) === 'm'
+	);
+}
+
+/**
+ * Whether or not a string is in the format '<number>%'
+ * @param {string} value
+ * @returns Boolean
+ */
+function isInPercent(value) {
+	return (
+		value
+			.toString()
+			.trim()
+			.slice(value.toString().length - 1, value.toString().length) === '%'
+	);
+}
+
+/**
+ * Whether or not a string is in the format '<number>px'
+ * @param {string} value
+ * @returns Boolean
+ */
+function isInPixels(value) {
+	return (
+		value
+			.toString()
+			.trim()
+			.slice(value.toString().length - 2, value.toString().length) === 'px'
+	);
+}
+
+function pixelsToMeters(pixels, map) {
+	let refPoint1 = map.getCenter();
+	let xy1 = map.latLngToLayerPoint(refPoint1);
+	let xy2 = {
+		x: xy1.x + Number(pixels),
+		y: xy1.y,
+	};
+	let refPoint2 = map.layerPointToLatLng(xy2);
+	let derivedMeters = map.distance(refPoint1, refPoint2);
+	return derivedMeters;
+}
+
 L.Polyline.include({
 	arrowheads: function (options = {}) {
 		// Merge user input options with default options:
@@ -60,7 +114,11 @@ L.Polyline.include({
 
 		let size = options.size.toString(); // stringify if its a number
 		let allhats = []; // empty array to receive hat polylines
-		const { frequency } = options;
+		const { frequency, offsets } = options;
+
+		if (offsets?.start || offsets?.end) {
+			this._buildGhosts({ start: offsets.start, end: offsets.end });
+		}
 
 		this._parts.forEach((peice, index) => {
 			// Immutable variables for each peice
@@ -84,48 +142,20 @@ L.Polyline.include({
 			if (!isNaN(frequency)) {
 				spacing = 1 / frequency;
 				noOfPoints = frequency;
-			} else if (
-				frequency
-					.toString()
-					.slice(
-						frequency.toString().length - 1,
-						frequency.toString().length
-					) === '%'
-			) {
+			} else if (isInPercent(frequency)) {
 				console.log(
 					'Error: arrowhead frequency option cannot be given in percent.  Try another unit.'
 				);
-			} else if (
-				frequency
-					.toString()
-					.slice(
-						frequency.toString().length - 1,
-						frequency.toString().length
-					) === 'm'
-			) {
+			} else if (isInMeters(frequency)) {
 				spacing = frequency.slice(0, frequency.length - 1) / totalLength;
 				noOfPoints = 1 / spacing;
 				// round things out for more even spacing:
 				noOfPoints = Math.floor(noOfPoints);
 				spacing = 1 / noOfPoints;
-			} else if (
-				frequency
-					.toString()
-					.slice(
-						frequency.toString().length - 2,
-						frequency.toString().length
-					) === 'px'
-			) {
+			} else if (isInPixels(frequency)) {
 				spacing = (() => {
 					let chosenFrequency = frequency.slice(0, frequency.length - 2);
-					let refPoint1 = this._map.getCenter();
-					let xy1 = this._map.latLngToLayerPoint(refPoint1);
-					let xy2 = {
-						x: xy1.x + Number(chosenFrequency),
-						y: xy1.y,
-					};
-					let refPoint2 = this._map.layerPointToLatLng(xy2);
-					let derivedMeters = this._map.distance(refPoint1, refPoint2);
+					let derivedMeters = pixelsToMeters(chosenFrequency, this._map);
 					return derivedMeters / totalLength;
 				})();
 
@@ -266,12 +296,12 @@ L.Polyline.include({
 			//  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
 			for (var i = 0; i < derivedLatLngs.length; i++) {
 				// ---- If size is chosen in meters -------------------------
-				if (size.slice(size.length - 1, size.length) === 'm') {
+				if (isInMeters(size)) {
 					let hatSize = size.slice(0, size.length - 1);
 					pushHats(hatSize);
 
 					// ---- If size is chosen in percent ------------------------
-				} else if (size.slice(size.length - 1, size.length) === '%') {
+				} else if (isInPercent(size)) {
 					let sizePercent = size.slice(0, size.length - 1);
 					let hatSize = (() => {
 						if (
@@ -288,7 +318,7 @@ L.Polyline.include({
 					pushHats(hatSize);
 
 					// ---- If size is chosen in pixels --------------------------
-				} else if (size.slice(size.length - 2, size.length) === 'px') {
+				} else if (isInPixels(size)) {
 					pushHatsFromPixels(options.size);
 
 					// ---- If size unit is not given -----------------------------
@@ -318,6 +348,50 @@ L.Polyline.include({
 			return console.log(
 				`Error: You tried to call '.getArrowheads() on a shape that does not have a arrowhead.  Use '.arrowheads()' to add a arrowheads before trying to call '.getArrowheads()'`
 			);
+		}
+	},
+
+	_buildGhosts: function ({ start, end }) {
+		if (start || end) {
+			let ghosts = [];
+			let latlngs = this.getLatLngs();
+
+			latlngs = Array.isArray(latlngs[0]) ? latlngs : [latlngs];
+
+			latlngs.forEach((segment) => {
+				// Get total distance of original latlngs
+				const totalLength = (() => {
+					let total = 0;
+					for (var i = 0; i < segment.length - 1; i++) {
+						total += this._map.distance(segment[i], segment[i + 1]);
+					}
+					return total;
+				})();
+
+				// Modify latlngs to end at interpolated point
+				if (end) {
+					let endOffsetInMeters = (() => {
+						if (isInMeters(end)) {
+							return Number(end.slice(0, end.length - 1));
+						} else if (isInPixels(end)) {
+							let pixels = Number(end.slice(0, end.length - 2));
+							return pixelsToMeters(pixels, this._map);
+						}
+					})();
+
+					let newEnd = L.GeometryUtil.interpolateOnLine(
+						this._map,
+						segment,
+						(totalLength - endOffsetInMeters) / totalLength
+					);
+
+					segment = segment.slice(0, newEnd.predecessor);
+					segment.push(newEnd.latLng);
+					ghosts.push(segment);
+				}
+			});
+
+			this._ghosts = ghosts;
 		}
 	},
 

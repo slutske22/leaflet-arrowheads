@@ -435,6 +435,10 @@ var path6points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 2.05, point[1] + group3offsetx - 1.7];
 });
 
+var path7points = malibuPathPoints.map((point) => {
+	return [point[0] + group3offsety - 2.1, point[1] + group3offsetx - 1.7];
+});
+
 var path1 = L.polyline([path1points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads()
 	.bindPopup('<code>var path1 = L.polyline(coords).arrowheads({})</code>', {
@@ -476,7 +480,14 @@ var path6 = L.polyline([path6points], { smoothFactor: 1.5, weight: 2 })
 		{ maxWidth: 2000 }
 	);
 
-var group3 = L.layerGroup([path1, path2, path3, path4, path5, path6]);
+var path7 = L.polyline([path7points], {
+	smoothFactor: 1.5,
+	weight: 5,
+}).arrowheads({ offsets: { end: '10px' } });
+
+window.path7 = path7;
+
+var group3 = L.layerGroup([path1, path2, path3, path4, path5, path6, path7]);
 
 group3.addTo(map);
 
