@@ -562,8 +562,6 @@ var group4 = L.layerGroup([path7, path8, path9]);
 group3.addTo(map);
 group4.addTo(map);
 
-path7._ghosts.addTo(map);
-
 //  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
 
 var bigVector0 = L.polyline(
