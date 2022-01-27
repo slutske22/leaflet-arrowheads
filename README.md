@@ -137,7 +137,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
    <tr>
       <td> offsets </td>
-      <td> Object <code>{ start?: string; end?: string }</code> </td>
+      <td> Object <br> <code>{ start?: string; end?: string }</code> </td>
       <td> undefined </td>
       <td> Enables the developer to have the arrowheads start or end at some offset from the start and/or end of the polyline. This option can contain one or both <code>start</code> and <code>end</code> properties.  Each must be a string defining the size of the offset in either meters or pixels (i.e. <code>'100m'</code>, <code>'15px'</code>, etc.)</td>
    </tr>
