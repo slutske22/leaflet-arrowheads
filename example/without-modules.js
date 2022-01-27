@@ -22,7 +22,7 @@ var boatIcon = L.icon({
 	shadowSize: [0, 0],
 	iconAnchor: [16, 16],
 	shadowAnchor: [4, 62],
-	popupAnchor: [-3, -76], 
+	popupAnchor: [-3, -76],
 });
 
 //  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
@@ -501,25 +501,36 @@ var path6 = L.polyline([path6points], { smoothFactor: 1.5, weight: 2 })
 		{ maxWidth: 2000 }
 	);
 
+// Offset paths
 var path7 = L.polyline([path7points], {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-}).arrowheads({
-	size: '300m',
-	frequency: 20,
-	offsets: { end: '15px' },
-});
+})
+	.arrowheads({
+		size: '300m',
+		frequency: 20,
+		offsets: { end: '15px' },
+	})
+	.bindPopup(
+		"<code>var path6 = L.polyline(coords).arrowheads({ size: '300m', frequency: 20, offsets: { end: '15px' } })</code>",
+		{ maxWidth: 2000 }
+	);
 
 var path8 = L.polyline([path8points[0], path8points[path8points.length - 1]], {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-}).arrowheads({
-	frequency: 'endonly',
-	size: '30px',
-	offsets: { end: '15px' },
-});
+})
+	.arrowheads({
+		frequency: 'endonly',
+		size: '30px',
+		offsets: { end: '15px' },
+	})
+	.bindPopup(
+		"<code>var path6 = L.polyline(coords).arrowheads({ size: '30px', frequency: 'endonly', offsets: { end: '15px' } })</code>",
+		{ maxWidth: 2000 }
+	);
 
 L.marker(path7points[path7points.length - 1], {
 	icon: boatIcon,
@@ -534,9 +545,16 @@ var path9 = L.polyline(path9points, {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-}).arrowheads({ offsets: { start: '20px', end: '120px' } });
-
-window.path9 = path9;
+})
+	.arrowheads({
+		frequency: '1000m',
+		size: '300m',
+		offsets: { start: '5000m', end: '10px' },
+	})
+	.bindPopup(
+		"<code>var path6 = L.polyline(coords).arrowheads({ size: '300m', frequency: '1000m', offsets: { start: '5000m', end: '10px' } })</code>",
+		{ maxWidth: 2000 }
+	);
 
 var group3 = L.layerGroup([path1, path2, path3, path4, path5, path6]);
 var group4 = L.layerGroup([path7, path8, path9]);

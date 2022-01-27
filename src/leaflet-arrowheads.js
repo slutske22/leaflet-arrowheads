@@ -426,7 +426,8 @@ L.Polyline.include({
 
 			this._ghosts = L.polyline(newLatLngs, {
 				...this.options,
-				color: 'black',
+				color: 'rgba(0,0,0,0)',
+				stroke: 0,
 				smoothFactor: 0,
 				interactive: false,
 			});
