@@ -57,6 +57,11 @@ function pixelsToMeters(pixels, map) {
 }
 
 L.Polyline.include({
+	/**
+	 * Adds arrowheads to an L.polyline
+	 * @param {object} options The options for the arrowhead.  See documentation for details
+	 * @returns The L.polyline instance that they arrowheads are attached to
+	 */
 	arrowheads: function (options = {}) {
 		// Merge user input options with default options:
 		const defaults = {
@@ -130,10 +135,6 @@ L.Polyline.include({
 			// Immutable variables for each peice
 			const latlngs = peice.map((point) => this._map.layerPointToLatLng(point));
 
-			if (frequency === 'enonly') {
-				console.log(latlngs);
-			}
-
 			const totalLength = (() => {
 				let total = 0;
 				for (var i = 0; i < peice.length - 1; i++) {
@@ -153,7 +154,7 @@ L.Polyline.include({
 				spacing = 1 / frequency;
 				noOfPoints = frequency;
 			} else if (isInPercent(frequency)) {
-				console.log(
+				console.error(
 					'Error: arrowhead frequency option cannot be given in percent.  Try another unit.'
 				);
 			} else if (isInMeters(frequency)) {
@@ -333,7 +334,7 @@ L.Polyline.include({
 
 					// ---- If size unit is not given -----------------------------
 				} else {
-					console.log(
+					console.error(
 						'Error: Arrowhead size unit not defined.  Check your arrowhead options.'
 					);
 				} // if else block for Size
@@ -355,7 +356,7 @@ L.Polyline.include({
 		if (this._arrowheads) {
 			return this._arrowheads;
 		} else {
-			return console.log(
+			return console.error(
 				`Error: You tried to call '.getArrowheads() on a shape that does not have a arrowhead.  Use '.arrowheads()' to add a arrowheads before trying to call '.getArrowheads()'`
 			);
 		}
@@ -442,6 +443,9 @@ L.Polyline.include({
 			delete this._arrowheadOptions;
 			this._hatsApplied = false;
 		}
+		if (this._ghosts) {
+			this._ghosts.remove();
+		}
 	},
 
 	_update: function () {
@@ -462,6 +466,9 @@ L.Polyline.include({
 	remove: function () {
 		if (this._arrowheads) {
 			this._arrowheads.remove();
+		}
+		if (this._ghosts) {
+			this._ghosts.remove();
 		}
 		return this.removeFrom(this._map || this._mapToAdd);
 	},
@@ -500,6 +507,9 @@ L.Map.include({
 
 		if (layer._arrowheads) {
 			layer._arrowheads.remove();
+		}
+		if (layer._ghosts) {
+			layer._ghosts.remove();
 		}
 
 		if (!this._layers[id]) {
