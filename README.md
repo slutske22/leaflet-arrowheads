@@ -3,7 +3,7 @@
 Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
 
 <p align="center">
-  <img src="images/banner.PNG" width="80%">
+  <img src="images/banner.PNG" width="100%">
 </p>
 
 ## [:eyes: DEMO :eyes:](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
@@ -326,7 +326,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       size: '30px',
       offsets: { end: '15px' }
    });</code></pre>
-      <img src="images/offset-end-1.png" width="60%">
+      <img src="images/offset-end-1.png" width="100%">
    </td></tr>
    <tr></tr>
    <tr><td>    
@@ -335,7 +335,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       size: '300m',
       offsets: { end: '15px' }
    });</code></pre>
-      <img src="images/offset-end-2.png" width="60%">
+      <img src="images/offset-end-2.png" width="100%">
    </td></tr>
    <tr></tr>
    <tr><td>    
@@ -347,7 +347,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          end: '15px' 
       }
    });</code></pre>
-      <img src="images/offset-both-1.png" width="60%">
+      <img src="images/offset-both-1.png" width="100%">
    </td></tr>
 </table>
 
@@ -367,7 +367,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          yawn: (i + 1) % 4 === 0 ? 35 : undefined,
       }),
    });</code></pre>
-      <img src="images/perHatOptions-1.png" width="80%">
+      <img src="images/perHatOptions-1.png" width="100%">
    </td></tr>
    <tr></tr>
 
@@ -383,7 +383,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
       }),
    });</code></pre>
-      <img src="images/perHatOptions-2.png" width="60%">
+      <img src="images/perHatOptions-2.png" width="100%">
    </td></tr>
 </table>
 
