@@ -142,6 +142,13 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> Enables the developer to have the arrowheads start or end at some offset from the start and/or end of the polyline. This option can contain one or both <code>start</code> and <code>end</code> properties.  Each must be a string defining the size of the offset in either meters or pixels (i.e. <code>'100m'</code>, <code>'15px'</code>, etc.)</td>
    </tr>
 
+   <tr>
+      <td> perHatOptions </td>
+      <td> Function <br> <code>(i: number) => ArrowheadOptions</code> </td>
+      <td> undefined </td>
+      <td> Enables the develop to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ <Options> })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
+   </tr>
+
 </table>
 
 
@@ -304,6 +311,37 @@ Polylines in this demo have popups which each contain the code for that polyline
 		offsets: { start: '5000m', end: '15px' }});</code><br>
       <br>
       <img src="images/offset-both-1.png" width="60%">
+   </td></tr>
+</table>
+
+<table>
+   <tr><td><b>perHatOptions</b></td></tr>
+   <tr><td>    
+      <pre><code class="highlight highlight-source-js">L.polyline([coords], { color: 'black', weight: '2' })
+   .arrowheads({
+		size: '20px',
+		fill: true,
+		yawn: 30,
+		frequency: 20,
+		perHatOptions: (i) => ({
+			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
+		})
+	});
+  </code></pre>
+      <img src="images/perHatOptions-1.png" width="60%">
+   </td></tr>
+   <tr><td>    
+      <pre><code class="highlight highlight-source-js">L.polyline([coords])
+   .arrowheads({ 
+      size: '20px',
+      fill: true,
+      yawn: 30,
+      frequency: 20,
+      perHatOptions: (i) => ({
+         color: \`rgba(150, 20, \${0 + 20 * i}, 1)\`,
+      }),
+   });</code></pre>
+      <img src="images/perHatOptions-2.png" width="60%">
    </td></tr>
 </table>
 

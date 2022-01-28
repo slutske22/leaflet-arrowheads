@@ -220,8 +220,10 @@ L.Polyline.include({
 						spacing * (i + 1)
 					);
 
-					interpolatedPoints.push(interpolatedPoint);
-					derivedLatLngs.push(interpolatedPoint.latLng);
+					if (interpolatedPoint) {
+						interpolatedPoints.push(interpolatedPoint);
+						derivedLatLngs.push(interpolatedPoint.latLng);
+					}
 				}
 
 				derivedBearings = (() => {
@@ -239,20 +241,21 @@ L.Polyline.include({
 				})();
 			}
 
-			let n = latlngs.length - 1;
 			let hats = [];
 
 			// Function to build hats based on index and a given hatsize in meters
 			const pushHats = (size, localHatOptions = {}) => {
+				let yawn = localHatOptions.yawn ?? options.yawn;
+
 				let leftWingPoint = L.GeometryUtil.destination(
 					derivedLatLngs[i],
-					derivedBearings[i] - options.yawn / 2,
+					derivedBearings[i] - yawn / 2,
 					size
 				);
 
 				let rightWingPoint = L.GeometryUtil.destination(
 					derivedLatLngs[i],
-					derivedBearings[i] + options.yawn / 2,
+					derivedBearings[i] + yawn / 2,
 					size
 				);
 
@@ -272,13 +275,14 @@ L.Polyline.include({
 			// Function to build hats based on pixel input
 			const pushHatsFromPixels = (size, localHatOptions = {}) => {
 				let sizePixels = size.slice(0, size.length - 2);
+				let yawn = localHatOptions.yawn ?? options.yawn;
 
 				let derivedXY = this._map.latLngToLayerPoint(derivedLatLngs[i]);
 
 				let bearing = derivedBearings[i];
 
-				let thetaLeft = (180 - bearing - options.yawn / 2) * (Math.PI / 180),
-					thetaRight = (180 - bearing + options.yawn / 2) * (Math.PI / 180);
+				let thetaLeft = (180 - bearing - yawn / 2) * (Math.PI / 180),
+					thetaRight = (180 - bearing + yawn / 2) * (Math.PI / 180);
 
 				let dxLeft = sizePixels * Math.sin(thetaLeft),
 					dyLeft = sizePixels * Math.cos(thetaLeft),
@@ -378,6 +382,10 @@ L.Polyline.include({
 		}
 	},
 
+	/**
+	 * Builds ghost polylines that are clipped versions of the polylines based on the offsets
+	 * If offsets are used, arrowheads are drawn from 'this._ghosts' rather than 'this'
+	 */
 	_buildGhosts: function ({ start, end }) {
 		if (start || end) {
 			let latlngs = this.getLatLngs();
