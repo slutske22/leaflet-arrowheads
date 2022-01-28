@@ -2,6 +2,12 @@ function modulus(i, n) {
 	return ((i % n) + n) % n;
 }
 
+function definedProps(obj) {
+	return Object.fromEntries(
+		Object.entries(obj).filter(([k, v]) => v !== undefined)
+	);
+}
+
 /**
  * Whether or not a string is in the format '<number>m'
  * @param {string} value
@@ -306,13 +312,20 @@ L.Polyline.include({
 
 			//  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
 			for (var i = 0; i < derivedLatLngs.length; i++) {
+				let { perHatOptions, ...globalOptions } = options;
+
+				perHatOptions = perHatOptions ? perHatOptions(i) : {};
+				perHatOptions = Object.assign(
+					globalOptions,
+					definedProps(perHatOptions)
+				);
+
+				size = perHatOptions.size ?? size;
+
 				// ---- If size is chosen in meters -------------------------
 				if (isInMeters(size)) {
 					let hatSize = size.slice(0, size.length - 1);
-					pushHats(
-						hatSize,
-						options.perHatOptions ? options.perHatOptions(i) : undefined
-					);
+					pushHats(hatSize, perHatOptions);
 
 					// ---- If size is chosen in percent ------------------------
 				} else if (isInPercent(size)) {
@@ -329,17 +342,11 @@ L.Polyline.include({
 						}
 					})(); // hatsize calculation
 
-					pushHats(
-						hatSize,
-						options.perHatOptions ? options.perHatOptions(i) : undefined
-					);
+					pushHats(hatSize, perHatOptions);
 
 					// ---- If size is chosen in pixels --------------------------
 				} else if (isInPixels(size)) {
-					pushHatsFromPixels(
-						options.size,
-						options.perHatOptions ? options.perHatOptions(i) : undefined
-					);
+					pushHatsFromPixels(options.size, perHatOptions);
 
 					// ---- If size unit is not given -----------------------------
 				} else {

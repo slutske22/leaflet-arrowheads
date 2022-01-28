@@ -483,10 +483,20 @@ var path3 = L.polyline([path3points], { smoothFactor: 1.5, weight: 2 })
 var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({
 		frequency: '500m',
-		perHatOptions: (i) => ({ color: i % 2 === 0 ? 'red' : 'blue' }),
+		perHatOptions: (i) => ({
+			color: i % 2 === 0 ? 'red' : undefined,
+			size: i % 3 === 0 ? '30%' : '15%',
+		}),
 	})
 	.bindPopup(
-		"<code>var path4 = L.polyline(coords).arrowheads({ frequency: '500m' })</code>",
+		`<code>var path4 = L.polyline(coords)<br>
+		&nbsp;&nbsp;.arrowheads({ <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;frequency: '500m', <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;perHatOptions: (i) => ({ <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: i % 2 === 0 ? 'red' : undefined, <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size: i % 3 === 0 ? '30%' : '15%', <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;}) <br>
+		&nbsp;&nbsp; });</code>`,
 		{ maxWidth: 2000 }
 	);
 
