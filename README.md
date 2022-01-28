@@ -316,6 +316,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 
 <table>
    <tr><td><b>perHatOptions</b></td></tr>
+   <tr></tr>
 
    <tr><td>    
       <pre><code class="highlight highlight-source-js">L.polyline([coords], { color: 'black', weight: '2' })
@@ -328,7 +329,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
 		})
 	});</code></pre>
-      <img src="images/perHatOptions-2.png" width="60%">
+      <img src="images/perHatOptions-1.png" width="80%">
    </td></tr>
 
    <tr><td>    
