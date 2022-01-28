@@ -321,14 +321,15 @@ Polylines in this demo have popups which each contain the code for that polyline
    <tr><td>    
       <pre><code class="highlight highlight-source-js">L.polyline([coords], { color: 'black', weight: '2' })
    .arrowheads({
-		size: '20px',
-		fill: true,
-		yawn: 30,
-		frequency: 20,
-		perHatOptions: (i) => ({
-			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
-		})
-	});</code></pre>
+      frequency: '500m',
+      color: 'darkblue',
+      perHatOptions: (i) => ({
+         size: i % 3 === 0 ? '30%' : '15%',
+         color: i % 2 === 0 ? 'red' : undefined,
+         fill: (i + 1) % 4 === 0,
+         yawn: (i + 1) % 4 === 0 ? 35 : undefined,
+      }),
+   });</code></pre>
       <img src="images/perHatOptions-1.png" width="80%">
    </td></tr>
 
