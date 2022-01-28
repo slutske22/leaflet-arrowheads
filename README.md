@@ -147,10 +147,12 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> perHatOptions </td>
       <td> Function <br> <code>(i: number) => ArrowheadOptions</code> </td>
       <td> undefined </td>
-      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ <Options> })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
+      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ &lt;Options&gt; })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
    </tr>
 
-</table>
+</table><br>
+<br>
+There are many different ways to combine these various options.  See examles below.  Many combinations are untested, so if you encounter a proble, open and issue or a PR.
 
 ## Examples
 
