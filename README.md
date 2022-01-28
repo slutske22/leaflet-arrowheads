@@ -1,5 +1,6 @@
 # leaflet-arrowheads
- Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
+
+Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
 
 <p align="center">
   <img src="images/banner.PNG" width="80%">
@@ -9,79 +10,79 @@
 
 ## Installation
 
-Leaflet-Arrowheads compatible with leaflet 1.7.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
+Leaflet-Arrowheads compatible with leaflet 1.7.1+. It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
 
 You can use npm to install leaflet-arrowheads:
 
-````
+```
 npm install leaflet-arrowheads --save
-````
+```
 
 Then you can simply import its content into your project:
 
-````javascript
-import 'leaflet-arrowheads'
-````
+```javascript
+import 'leaflet-arrowheads';
+```
 
 ### Without ES6 Imports
 
-Grab the [source file](https://github.com/slutske22/leaflet-arrowheads/blob/master/src/leaflet-arrowheads.js) and include it in your project.  You can include the source file in your header, but it must come *after* a link to  [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), which must come *after* a link to the leaflet source.  Your main project javascript will come after this, like so:
+Grab the [source file](https://github.com/slutske22/leaflet-arrowheads/blob/master/src/leaflet-arrowheads.js) and include it in your project. You can include the source file in your header, but it must come _after_ a link to [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), which must come _after_ a link to the leaflet source. Your main project javascript will come after this, like so:
 
-````html
+```html
 <head>
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-  <script src=".../scripts/leaflet.geometryutil.js"></script>
-  <script src=".../scripts/leaflet-arrowheads.js"></script>
-  <script src=".../yourProjectScript.js" defer></script>
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<script src=".../scripts/leaflet.geometryutil.js"></script>
+	<script src=".../scripts/leaflet-arrowheads.js"></script>
+	<script src=".../yourProjectScript.js" defer></script>
 </head>
-````
+```
 
 ## Usage
 
 Arrowheads can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
 
-````javascript
-var myVector = L.polyline([ coords ]).arrowheads()
-````
+```javascript
+var myVector = L.polyline([coords]).arrowheads();
+```
 
 Arrowheads will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
-````javascript
+```javascript
 myVector.addTo(map) or myVector.remove()
-````
+```
 
 If you need to access the arrowheads directly, you can call the `.getArrowheads()` method on your polyline.
 
-````javascript
-myVector.getArrowheads() // returns the arrowheads polyline object
-myVector.getArrowheads().remove() // removes arrowheads from map
-````
+```javascript
+myVector.getArrowheads(); // returns the arrowheads polyline object
+myVector.getArrowheads().remove(); // removes arrowheads from map
+```
 
 Arrowheads can also be deleted from their parent polyline entirely:
 
-````javascript
-myVector.deleteArrowheads()
-````
+```javascript
+myVector.deleteArrowheads();
+```
 
 Arrowheads can take a configuration object as its argument:
 
-````javascript
-var myVector = L.polyline([ coords ]).arrowheads({ <Options> })
-````
+```javascript
+var myVector = L.polyline([ coords ]).arrowheads({ <Options> });
+```
 
 You can also use arrowheads on a GeoJSON that contains `LineString` or `MultiLineString` features by adding it as an option:
 
-````javascript
-var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } })
-````
-
+```javascript
+var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } });
+```
 
 ## Options
 
-Arrowheads offers a variety of options for rendering and styling arrowheads.  See the options table below.<br>
+Arrowheads offers a variety of options for rendering and styling arrowheads. See the options table below.<br>
 <br>
-Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
+Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path). Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`. These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
 <br>
+
 <table>
 
    <tr>
@@ -146,18 +147,17 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> perHatOptions </td>
       <td> Function <br> <code>(i: number) => ArrowheadOptions</code> </td>
       <td> undefined </td>
-      <td> Enables the develop to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ <Options> })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
+      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ <Options> })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
    </tr>
 
 </table>
-
 
 ## Examples
 
 A demo project is available for viewing at https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc.
 The web page alone without the code: https://zfxxc.csb.app/
 
-Polylines in this demo have popups which each contain the code for that polyline.  Click around, and feel free to look through the codesandbox for more detail.
+Polylines in this demo have popups which each contain the code for that polyline. Click around, and feel free to look through the codesandbox for more detail.
 
 <table>
    <tr>
@@ -258,7 +258,6 @@ Polylines in this demo have popups which each contain the code for that polyline
    </tr>
 </table>
 
-
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
    <tr><td>    
@@ -351,8 +350,8 @@ Polylines in this demo have popups which each contain the code for that polyline
 
 ## Alternatives
 
-After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator).  This offers some great methods to decorate your lines, potentially with arrowheads.  
+After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator). This offers some great methods to decorate your lines, potentially with arrowheads.
 
 ## Limitations
 
-Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
+Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature. This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings. This may be able to be improved. Feel free to contribute / open a PR.
