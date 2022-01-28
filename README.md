@@ -9,7 +9,7 @@
 
 ## Installation
 
-Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
+Leaflet-Arrowheads compatible with leaflet 1.7.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
 
 You can use npm to install leaflet-arrowheads:
 
@@ -133,6 +133,13 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> Boolean </td>
       <td> false </td>
       <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
+   </tr>
+
+   <tr>
+      <td> offsets </td>
+      <td> Object <br> <code>{ <br> start?: string; <br> end?: string <br> }</code> </td>
+      <td> undefined </td>
+      <td> Enables the developer to have the arrowheads start or end at some offset from the start and/or end of the polyline. This option can contain one or both <code>start</code> and <code>end</code> properties.  Each must be a string defining the size of the offset in either meters or pixels (i.e. <code>'100m'</code>, <code>'15px'</code>, etc.)</td>
    </tr>
 
 </table>
@@ -272,6 +279,31 @@ Polylines in this demo have popups which each contain the code for that polyline
       <code>L.polyline([coords]).arrowheads( {frequency: '50px', size: '12px'} ) // arrowheads every 50px regardless of zoom</code><br>
       <br>
       <img src="images/frequency-3.gif" width="100%">
+   </td></tr>
+</table>
+
+<table>
+   <tr><td><b>Offset Options</b></td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).arrowheads({ frequency: 'endonly',
+		size: '30px',
+		offsets: { end: '15px' }});</code><br>
+      <br>
+      <img src="images/offset-end-1.png" width="60%">
+   </td></tr>
+   <tr><td>    
+      <code>L.polyline([coords]).arrowheads({ frequency: 20,
+      size: '300m',
+		offsets: { end: '15px' }});</code><br>
+      <br>
+      <img src="images/offset-end-2.png" width="60%">
+   </td></tr>
+   <tr><td>    
+      <code>L.polyline([coords1, coords2]).arrowheads({ frequency: '1000m',
+      size: '300m',
+		offsets: { start: '5000m', end: '15px' }});</code><br>
+      <br>
+      <img src="images/offset-both-1.png" width="60%">
    </td></tr>
 </table>
 
