@@ -6,6 +6,10 @@ var mapOptions = {
 
 const map = L.map('mapID', mapOptions);
 
+map.on('popupopen', () => {
+	hljs.highlightAll();
+});
+
 const myLayer = new L.TileLayer(
 	'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 	{
@@ -44,10 +48,10 @@ var simpleVector0 = L.polyline(
 	{ color: 'black' }
 )
 	.arrowheads()
-	.bindPopup(
-		`<code>var simpleVector0: L.polyline(coords).arrowheads()</code>`,
-		{ maxWidth: 2000 }
-	);
+	.bindPopup(`<pre><code>L.polyline(coords).arrowheads()</code></pre>`, {
+		maxWidth: 2000,
+		minWidth: 400,
+	});
 
 var simpleVector1 = L.polyline(
 	[
@@ -64,9 +68,9 @@ var simpleVector1 = L.polyline(
 )
 	.arrowheads()
 	.bindPopup(
-		`<code>var simpleVector1 = L.polyline(coords, {color: 'blue', weight: 2 }).arrowheads()
-   </code>`,
-		{ maxWidth: 2000 }
+		`<pre><code>L.polyline(coords, {color: 'blue', weight: 2 }).arrowheads()
+   </code></pre>`,
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var simpleVector2 = L.polyline(
@@ -84,10 +88,9 @@ var simpleVector2 = L.polyline(
 )
 	.arrowheads({ fill: true })
 	.bindPopup(
-		`<code>var simpleVector1 = L.polyline(coords)
-   .arrowheads({fill: true})
-   </code>`,
-		{ maxWidth: 2000 }
+		`<pre><code>var simpleVector1 = L.polyline(coords)
+  .arrowheads({fill: true});</code></pre>`,
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var simpleVector3 = L.polyline(
@@ -105,9 +108,9 @@ var simpleVector3 = L.polyline(
 )
 	.arrowheads({ color: 'black' })
 	.bindPopup(
-		`<code>var simpleVector1 = L.polyline(coords, {color: 'green'}).arrowheads({color: 'black'})
-   </code>`,
-		{ maxWidth: 2000 }
+		`<pre><code>L.polyline(coords, {color: 'green'})
+  .arrowheads({color: 'black'})</code></pre>`,
+	{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var simpleVector4 = L.polyline(
@@ -127,8 +130,8 @@ var simpleVector4 = L.polyline(
 	.bindPopup(
 		`<code>var simpleVector1 = L.polyline(coords, {color: 'orange', weight: 2}).arrowheads({yawn: 40})
    </code>`,
-		{ maxWidth: 2000 }
-	);
+	 { maxWidth: 2000, minWidth: 400 }
+	 );
 
 var simpleVector5 = L.polyline(
 	[
@@ -147,8 +150,8 @@ var simpleVector5 = L.polyline(
 	.bindPopup(
 		`<code>var simpleVector1 = L.polyline().arrowheads({fill: true, color: 'purple'})
    </code>`,
-		{ maxWidth: 2000 }
-	);
+	 { maxWidth: 2000, minWidth: 400 }
+	 );
 
 var group1 = L.layerGroup([
 	simpleVector0,
@@ -198,7 +201,7 @@ var multiVector1 = L.polyline(
 	.arrowheads()
 	.bindPopup(
 		'<code>var multiVector1 = L.polyline(coords).arrowheads()</code>',
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var multiVector2 = L.polyline(
@@ -233,7 +236,7 @@ var multiVector2 = L.polyline(
 	.arrowheads({ size: '10%', frequency: 'endonly' })
 	.bindPopup(
 		"<code>var multiVector2 = L.polyline(coords).arrowheads({size: '10%', frequency: 'endonly'})</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var multiVector3 = L.polyline(
@@ -268,7 +271,7 @@ var multiVector3 = L.polyline(
 	.arrowheads({ size: '10%', frequency: '3000m' })
 	.bindPopup(
 		"<code>var multiVector3 = L.polyline(coords).arrowheads({size: '10%', frequency: '3000m'})</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var multiVector4 = L.polyline(
@@ -303,7 +306,7 @@ var multiVector4 = L.polyline(
 	.arrowheads({ size: '10%', frequency: '50px', fill: true, yawn: 30 })
 	.bindPopup(
 		"<code>var multiVector4 = L.polyline(coords).arrowheads({size: '10%', frequency: '50px', fill: true, yawn: 30})</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var multiVector5 = L.polyline(
@@ -338,7 +341,7 @@ var multiVector5 = L.polyline(
 	.arrowheads({ size: '15px', frequency: '50px', fill: true, yawn: 30 })
 	.bindPopup(
 		"<code>var multiVector5 = L.polyline(coords).arrowheads({size: '15px', frequency: '50px', fill: true, yawn: 30})</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var group2 = L.layerGroup([
@@ -463,21 +466,26 @@ var path9points = [
 var path1 = L.polyline([path1points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads()
 	.bindPopup('<code>var path1 = L.polyline(coords).arrowheads({})</code>', {
-		maxWidth: 2000,
+		{ maxWidth: 2000, minWidth: 400 }
 	});
 
 var path2 = L.polyline([path2points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({ size: '50%', frequency: 'endonly' })
 	.bindPopup(
 		"<code>var path2 = L.polyline(coords).arrowheads({ size: '50%', frequency: 'endonly' })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var path3 = L.polyline([path3points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({ size: '25%', frequency: 'endonly', proportionalToTotal: true })
 	.bindPopup(
-		"<code>var path3 = L.polyline(coords).arrowheads({ size: '25%', frequency: 'endonly', proportionalToTotal: true })</code>",
-		{ maxWidth: 2000 }
+		`<pre><code>var path3 = L.polyline(coords)
+  .arrowheads({ 
+    size: '25%', 
+    frequency: 'endonly', 
+    proportionalToTotal: true
+  });</code></pre>`,
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
@@ -489,29 +497,29 @@ var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
 		}),
 	})
 	.bindPopup(
-		`<code>var path4 = L.polyline(coords)<br>
-		&nbsp;&nbsp;.arrowheads({ <br>
-		&nbsp;&nbsp;&nbsp;&nbsp;frequency: '500m', <br>
-		&nbsp;&nbsp;&nbsp;&nbsp;perHatOptions: (i) => ({ <br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: i % 2 === 0 ? 'red' : undefined, <br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size: i % 3 === 0 ? '30%' : '15%', <br>
-		&nbsp;&nbsp;&nbsp;&nbsp;}) <br>
-		&nbsp;&nbsp; });</code>`,
-		{ maxWidth: 2000 }
+		`<pre><code>var path4 = L.polyline(coords)<br>
+  .arrowheads({ <br>
+    frequency: '500m', <br>
+    perHatOptions: (i) => ({ <br>
+      color: i % 2 === 0 ? 'red' : undefined, <br>
+      size: i % 3 === 0 ? '30%' : '15%', <br>
+    }) <br>
+  });</code></pre>`,
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var path5 = L.polyline([path5points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({ frequency: '50px' })
 	.bindPopup(
 		"<code>var path5 = L.polyline(coords).arrowheads({ frequency: '50px' })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var path6 = L.polyline([path6points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({ size: '15px', frequency: '50px' })
 	.bindPopup(
 		"<code>var path6 = L.polyline(coords).arrowheads({ size: '15px', frequency: '50px' })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 // Offset paths
@@ -527,7 +535,7 @@ var path7 = L.polyline([path7points], {
 	})
 	.bindPopup(
 		"<code>var path6 = L.polyline(coords).arrowheads({ size: '300m', frequency: 20, offsets: { end: '15px' } })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var path8 = L.polyline([path8points[0], path8points[path8points.length - 1]], {
@@ -542,7 +550,7 @@ var path8 = L.polyline([path8points[0], path8points[path8points.length - 1]], {
 	})
 	.bindPopup(
 		"<code>var path6 = L.polyline(coords).arrowheads({ size: '30px', frequency: 'endonly', offsets: { end: '15px' } })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 L.marker(path7points[path7points.length - 1], {
@@ -566,7 +574,7 @@ var path9 = L.polyline(path9points, {
 	})
 	.bindPopup(
 		"<code>var path6 = L.polyline(coords).arrowheads({ size: '300m', frequency: '1000m', offsets: { start: '5000m', end: '10px' } })</code>",
-		{ maxWidth: 2000 }
+		{ maxWidth: 2000, minWidth: 400 }
 	);
 
 var group3 = L.layerGroup([path1, path2, path3, path4, path5, path6]);
