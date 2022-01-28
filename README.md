@@ -332,6 +332,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       <img src="images/perHatOptions-1.png" width="80%">
    </td></tr>
 
+   <tr></tr>
    <tr><td>    
       <pre><code class="highlight highlight-source-js">L.polyline([coords])
    .arrowheads({ 
