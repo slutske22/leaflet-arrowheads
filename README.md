@@ -91,6 +91,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> <b> Default </b> </td>
       <td> <b> Description </b> </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> yawn </td>
@@ -98,6 +99,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> 60 </td>
       <td>  Defines the width of the opening of the arrowhead, given in degrees.  The larger the angle, the wider the arrowhead. </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> size </td>
@@ -112,6 +114,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          </ul>
       </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> frequency </td>
@@ -128,6 +131,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          </ul>
       </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> proportionalToTotal </td>
@@ -135,6 +139,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> false </td>
       <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> offsets </td>
@@ -142,6 +147,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> undefined </td>
       <td> Enables the developer to have the arrowheads start or end at some offset from the start and/or end of the polyline. This option can contain one or both <code>start</code> and <code>end</code> properties.  Each must be a string defining the size of the offset in either meters or pixels (i.e. <code>'100m'</code>, <code>'15px'</code>, etc.)</td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> perArrowheadOptions </td>
@@ -165,6 +171,7 @@ Polylines in this demo have popups which each contain the code for that polyline
    <tr>
       <td colspan="4"><b>Yawn Options</td>
    </tr>
+   <tr></tr>
    <tr>
       <td width="35%">
          <pre>L.polyline([]).arrowheads()</pre>
@@ -182,6 +189,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          <img src="images/yawn-2.PNG" width="100px">
       </td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   yawn: 40
@@ -199,6 +207,7 @@ Polylines in this demo have popups which each contain the code for that polyline
    <tr>
       <td colspan="4"><b>Color and Fill Options</td>
    </tr>
+   <tr></tr>
    <tr>
       <td width="35%">
          <pre>L.polyline([]).arrowheads()</pre><br>
@@ -216,6 +225,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          <img src="images/fill-1.PNG" width="100px">
       </td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   color: 'black'
@@ -229,6 +239,7 @@ Polylines in this demo have popups which each contain the code for that polyline
     })</pre></td>
       <td><img src="images/fill-2.PNG" width="100px"></td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   color: 'black'
@@ -247,9 +258,11 @@ Polylines in this demo have popups which each contain the code for that polyline
     <tr>
      <td colspan="2"><b>Size Options</b></td>
    </tr>
+   <tr></tr>
    <tr>
       <td colspan="2">Setting size to a number or percent will give you a fixed size arrowhead (in meters or percent of the size of the segment, respectively), regardless of zoom size.  See the frequency examples below for a better idea.</td>
    </tr>
+   <tr></tr>
    <tr>
       <td>
          <pre>L.polyline([coords]).arrowheads({size: '20px', fill: true})</pre>
@@ -262,6 +275,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
+   <tr></tr>
    <tr><td>    
    Standard option:
       <pre><code>L.polyline([coords], { smoothFactor: 5 })
@@ -269,6 +283,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       <br>
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
+   <tr></tr>
    <tr><td>    
       <pre><code>L.polyline([coords])
    .arrowheads({ 
@@ -277,16 +292,19 @@ Polylines in this demo have popups which each contain the code for that polyline
    });</code></pre>
       <img src="images/frequency-5.PNG" width="100%">
    </td></tr>
+   <tr></tr>
    <tr><td>
       20 arrowheads evenly distributed
       <pre><code>L.polyline([coords]).arrowheads({ frequency: 20 });</code></pre>
       <img src="images/frequency-1.PNG">
    </td></tr>
+   <tr></tr>
    <tr><td>
       Arrowheads every ~500 m evenly distributed
       <pre><code>L.polyline([coords]).arrowheads({ frequency: '500m' });</code></pre>
       <img src="images/frequency-2.PNG">
    </td></tr>
+   <tr></tr>
    <tr><td>    
    Arrowheads every 50px regardless of zoom
       <pre><code>L.polyline([coords])
@@ -300,6 +318,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 
 <table>
    <tr><td><b>Offset Options</b></td></tr>
+   <tr></tr>
    <tr><td>    
       <pre><code>L.polyline([coords])
    .arrowheads({ 
@@ -309,6 +328,7 @@ Polylines in this demo have popups which each contain the code for that polyline
    });</code></pre>
       <img src="images/offset-end-1.png" width="60%">
    </td></tr>
+   <tr></tr>
    <tr><td>    
       <pre><code>L.polyline([coords])
    .arrowheads({ frequency: 20,
@@ -317,6 +337,7 @@ Polylines in this demo have popups which each contain the code for that polyline
    });</code></pre>
       <img src="images/offset-end-2.png" width="60%">
    </td></tr>
+   <tr></tr>
    <tr><td>    
       <pre><code>L.polyline([coords1, coords2])
    .arrowheads({ frequency: '1000m',
@@ -346,8 +367,9 @@ Polylines in this demo have popups which each contain the code for that polyline
          yawn: (i + 1) % 4 === 0 ? 35 : undefined,
       }),
    });</code></pre>
-      <img src="images/perArrowheadOptions-1.png" width="80%">
+      <img src="images/perHatOptions-1.png" width="80%">
    </td></tr>
+   <tr></tr>
 
    <tr></tr>
    <tr><td>    
@@ -361,7 +383,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
       }),
    });</code></pre>
-      <img src="images/perArrowheadOptions-2.png" width="60%">
+      <img src="images/perHatOptions-2.png" width="60%">
    </td></tr>
 </table>
 
