@@ -326,8 +326,7 @@ Polylines in this demo have popups which each contain the code for that polyline
 		perHatOptions: (i) => ({
 			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
 		})
-	});
-  </code></pre>
+	});</code></pre>
       <img src="images/perHatOptions-1.png" width="60%">
    </td></tr>
    <tr><td>    
