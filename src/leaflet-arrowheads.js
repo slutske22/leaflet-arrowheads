@@ -237,7 +237,7 @@ L.Polyline.include({
 			let hats = [];
 
 			// Function to build hats based on index and a given hatsize in meters
-			const pushHats = (size) => {
+			const pushHats = (size, localHatOptions = {}) => {
 				let leftWingPoint = L.GeometryUtil.destination(
 					derivedLatLngs[i],
 					derivedBearings[i] - options.yawn / 2,
@@ -257,14 +257,14 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, hatOptions)
-					: L.polyline(hatPoints, hatOptions);
+					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHats()
 
 			// Function to build hats based on pixel input
-			const pushHatsFromPixels = (size) => {
+			const pushHatsFromPixels = (size, localHatOptions = {}) => {
 				let sizePixels = size.slice(0, size.length - 2);
 
 				let derivedXY = this._map.latLngToLayerPoint(derivedLatLngs[i]);
@@ -298,8 +298,8 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, hatOptions)
-					: L.polyline(hatPoints, hatOptions);
+					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHatsFromPixels()
@@ -309,7 +309,10 @@ L.Polyline.include({
 				// ---- If size is chosen in meters -------------------------
 				if (isInMeters(size)) {
 					let hatSize = size.slice(0, size.length - 1);
-					pushHats(hatSize);
+					pushHats(
+						hatSize,
+						options.perHatOptions ? options.perHatOptions(i) : undefined
+					);
 
 					// ---- If size is chosen in percent ------------------------
 				} else if (isInPercent(size)) {
@@ -326,11 +329,17 @@ L.Polyline.include({
 						}
 					})(); // hatsize calculation
 
-					pushHats(hatSize);
+					pushHats(
+						hatSize,
+						options.perHatOptions ? options.perHatOptions(i) : undefined
+					);
 
 					// ---- If size is chosen in pixels --------------------------
 				} else if (isInPixels(size)) {
-					pushHatsFromPixels(options.size);
+					pushHatsFromPixels(
+						options.size,
+						options.perHatOptions ? options.perHatOptions(i) : undefined
+					);
 
 					// ---- If size unit is not given -----------------------------
 				} else {

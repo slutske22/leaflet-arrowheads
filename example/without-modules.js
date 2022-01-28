@@ -481,7 +481,10 @@ var path3 = L.polyline([path3points], { smoothFactor: 1.5, weight: 2 })
 	);
 
 var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({ frequency: '500m' })
+	.arrowheads({
+		frequency: '500m',
+		perHatOptions: (i) => ({ color: i % 2 === 0 ? 'red' : 'blue' }),
+	})
 	.bindPopup(
 		"<code>var path4 = L.polyline(coords).arrowheads({ frequency: '500m' })</code>",
 		{ maxWidth: 2000 }
