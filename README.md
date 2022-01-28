@@ -152,7 +152,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
 </table><br>
 <br>
-There are many different ways to combine these various options.  See examles below.  Many combinations are untested, so if you encounter a proble, open and issue or a PR.
+There are many different ways to combine these various options.  See examles below.  Many combinations are untested, so if you encounter a problem, open and issue or a PR.
 
 ## Examples
 
