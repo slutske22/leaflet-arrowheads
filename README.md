@@ -341,7 +341,7 @@ Polylines in this demo have popups which each contain the code for that polyline
       yawn: 30,
       frequency: 20,
       perHatOptions: (i) => ({
-         color: \`rgba(150, 20, \${0 + 20 * i}, 1)\`,
+         color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
       }),
    });</code></pre>
       <img src="images/perHatOptions-2.png" width="60%">
