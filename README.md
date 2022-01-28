@@ -144,10 +144,10 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
    </tr>
 
    <tr>
-      <td> perHatOptions </td>
+      <td> perArrowheadOptions </td>
       <td> Function <br> <code>(i: number) => ArrowheadOptions</code> </td>
       <td> undefined </td>
-      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ &lt;Options&gt; })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perHatOptions</code> callback.  See examples for details.</td>
+      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ &lt;Options&gt; })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perArrowheadOptions</code> callback.  See examples for details.</td>
    </tr>
 
 </table><br>
@@ -263,29 +263,37 @@ Polylines in this demo have popups which each contain the code for that polyline
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
    <tr><td>    
-      <code>L.polyline([coords], {smoothFactor: 5}).arrowheads( {frequency: 'allvertices'} )  
-      // standard option</code><br>
+   Standard option:
+      <pre><code>L.polyline([coords], { smoothFactor: 5 })
+   .arrowheads({ frequency: 'allvertices' });</code></pre>
       <br>
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads( {frequency: 'endonly', size: '50%'} )</code><br>
-      <br>
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: 'endonly', 
+      size: '50%' 
+   });</code></pre>
       <img src="images/frequency-5.PNG" width="100%">
    </td></tr>
    <tr><td>
-      <code>L.polyline([coords]).arrowheads( {frequency: 20} ) // 20 arrowheads evenly distributed</code><br>
-      <br>
+      20 arrowheads evenly distributed
+      <pre><code>L.polyline([coords]).arrowheads({ frequency: 20 });</code></pre>
       <img src="images/frequency-1.PNG">
    </td></tr>
    <tr><td>
-      <code>L.polyline([coords]).arrowheads( {frequency: '500m'} ) // arrowheads every ~500 m evenly distributed</code><br>
-      <br>
+      Arrowheads every ~500 m evenly distributed
+      <pre><code>L.polyline([coords]).arrowheads({ frequency: '500m' });</code></pre>
       <img src="images/frequency-2.PNG">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads( {frequency: '50px', size: '12px'} ) // arrowheads every 50px regardless of zoom</code><br>
-      <br>
+   Arrowheads every 50px regardless of zoom
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: '50px', 
+      size: '12px'
+   });</code></pre>
       <img src="images/frequency-3.gif" width="100%">
    </td></tr>
 </table>
@@ -293,30 +301,37 @@ Polylines in this demo have popups which each contain the code for that polyline
 <table>
    <tr><td><b>Offset Options</b></td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads({ frequency: 'endonly',
-		size: '30px',
-		offsets: { end: '15px' }});</code><br>
-      <br>
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: 'endonly',
+      size: '30px',
+      offsets: { end: '15px' }
+   });</code></pre>
       <img src="images/offset-end-1.png" width="60%">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads({ frequency: 20,
+      <pre><code>L.polyline([coords])
+   .arrowheads({ frequency: 20,
       size: '300m',
-		offsets: { end: '15px' }});</code><br>
-      <br>
+      offsets: { end: '15px' }
+   });</code></pre>
       <img src="images/offset-end-2.png" width="60%">
    </td></tr>
    <tr><td>    
-      <code>L.polyline([coords1, coords2]).arrowheads({ frequency: '1000m',
+      <pre><code>L.polyline([coords1, coords2])
+   .arrowheads({ frequency: '1000m',
       size: '300m',
-		offsets: { start: '5000m', end: '15px' }});</code><br>
-      <br>
+      offsets: { 
+         start: '5000m', 
+         end: '15px' 
+      }
+   });</code></pre>
       <img src="images/offset-both-1.png" width="60%">
    </td></tr>
 </table>
 
 <table>
-   <tr><td><b>perHatOptions</b></td></tr>
+   <tr><td><b>Per-Arrowhead Options</b></td></tr>
    <tr></tr>
 
    <tr><td>    
@@ -324,14 +339,14 @@ Polylines in this demo have popups which each contain the code for that polyline
    .arrowheads({
       frequency: '500m',
       color: 'darkblue',
-      perHatOptions: (i) => ({
+      perArrowheadOptions: (i) => ({
          size: i % 3 === 0 ? '30%' : '15%',
          color: i % 2 === 0 ? 'red' : undefined,
          fill: (i + 1) % 4 === 0,
          yawn: (i + 1) % 4 === 0 ? 35 : undefined,
       }),
    });</code></pre>
-      <img src="images/perHatOptions-1.png" width="80%">
+      <img src="images/perArrowheadOptions-1.png" width="80%">
    </td></tr>
 
    <tr></tr>
@@ -342,11 +357,11 @@ Polylines in this demo have popups which each contain the code for that polyline
       fill: true,
       yawn: 30,
       frequency: 20,
-      perHatOptions: (i) => ({
+      perArrowheadOptions: (i) => ({
          color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
       }),
    });</code></pre>
-      <img src="images/perHatOptions-2.png" width="60%">
+      <img src="images/perArrowheadOptions-2.png" width="60%">
    </td></tr>
 </table>
 

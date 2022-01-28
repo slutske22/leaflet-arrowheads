@@ -316,20 +316,20 @@ L.Polyline.include({
 
 			//  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
 			for (var i = 0; i < derivedLatLngs.length; i++) {
-				let { perHatOptions, ...globalOptions } = options;
+				let { perArrowheadOptions, ...globalOptions } = options;
 
-				perHatOptions = perHatOptions ? perHatOptions(i) : {};
-				perHatOptions = Object.assign(
+				perArrowheadOptions = perArrowheadOptions ? perArrowheadOptions(i) : {};
+				perArrowheadOptions = Object.assign(
 					globalOptions,
-					definedProps(perHatOptions)
+					definedProps(perArrowheadOptions)
 				);
 
-				size = perHatOptions.size ?? size;
+				size = perArrowheadOptions.size ?? size;
 
 				// ---- If size is chosen in meters -------------------------
 				if (isInMeters(size)) {
 					let hatSize = size.slice(0, size.length - 1);
-					pushHats(hatSize, perHatOptions);
+					pushHats(hatSize, perArrowheadOptions);
 
 					// ---- If size is chosen in percent ------------------------
 				} else if (isInPercent(size)) {
@@ -346,11 +346,11 @@ L.Polyline.include({
 						}
 					})(); // hatsize calculation
 
-					pushHats(hatSize, perHatOptions);
+					pushHats(hatSize, perArrowheadOptions);
 
 					// ---- If size is chosen in pixels --------------------------
 				} else if (isInPixels(size)) {
-					pushHatsFromPixels(options.size, perHatOptions);
+					pushHatsFromPixels(options.size, perArrowheadOptions);
 
 					// ---- If size unit is not given -----------------------------
 				} else {

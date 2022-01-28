@@ -517,7 +517,7 @@ var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
 	.arrowheads({
 		frequency: '500m',
 		color: 'darkblue',
-		perHatOptions: (i) => ({
+		perArrowheadOptions: (i) => ({
 			size: i % 3 === 0 ? '30%' : '15%',
 			color: i % 2 === 0 ? 'red' : undefined,
 			fill: (i + 1) % 4 === 0,
@@ -529,7 +529,7 @@ var path4 = L.polyline([path4points], { smoothFactor: 1.5, weight: 2 })
   .arrowheads({ 
     frequency: '500m',
     color: 'darkblue',
-    perHatOptions: (i) => ({ 
+    perArrowheadOptions: (i) => ({ 
       color: i % 2 === 0 ? 'red' : undefined, 
       size: i % 3 === 0 ? '30%' : '15%',
       fill: (i + 1) % 4 === 0,
@@ -678,7 +678,7 @@ var bigVector3 = L.polyline(
 		fill: true,
 		yawn: 30,
 		frequency: 20,
-		perHatOptions: (i) => ({
+		perArrowheadOptions: (i) => ({
 			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
 		}),
 	})
@@ -689,7 +689,7 @@ var bigVector3 = L.polyline(
     fill: true,
     yawn: 30,
     frequency: 20,
-    perHatOptions: (i) => ({
+    perArrowheadOptions: (i) => ({
       color: \`rgba(150, 20, \${0 + 20 * i}, 1)\`,
     }),
   });</code></pre>`,
