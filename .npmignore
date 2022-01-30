@@ -1,6 +1,7 @@
 #Folders
 images/
-examples/
+example/
+.vscode/
 
 #Files
 src/index.css
@@ -9,3 +10,4 @@ src/index.js
 .gitignore
 .gitattributes
 .npmignore
+.prettierrc
