@@ -1,18 +1,17 @@
 html,
 body,
-#mapID{
-   width: 100%;
-   height: 100%;
-   margin: 0;
-   padding: 0;
+#mapID {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-
-.norwayLink{
-   color: #0078A8;
+.norwayLink {
+	color: #0078a8;
 }
 
-.norwayLink:hover{
-   text-decoration: underline;
-   cursor: pointer;
+.norwayLink:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }

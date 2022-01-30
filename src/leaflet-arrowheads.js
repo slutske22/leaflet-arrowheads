@@ -2,6 +2,12 @@ function modulus(i, n) {
 	return ((i % n) + n) % n;
 }
 
+function definedProps(obj) {
+	return Object.fromEntries(
+		Object.entries(obj).filter(([k, v]) => v !== undefined)
+	);
+}
+
 /**
  * Whether or not a string is in the format '<number>m'
  * @param {string} value
@@ -214,8 +220,10 @@ L.Polyline.include({
 						spacing * (i + 1)
 					);
 
-					interpolatedPoints.push(interpolatedPoint);
-					derivedLatLngs.push(interpolatedPoint.latLng);
+					if (interpolatedPoint) {
+						interpolatedPoints.push(interpolatedPoint);
+						derivedLatLngs.push(interpolatedPoint.latLng);
+					}
 				}
 
 				derivedBearings = (() => {
@@ -233,20 +241,21 @@ L.Polyline.include({
 				})();
 			}
 
-			let n = latlngs.length - 1;
 			let hats = [];
 
 			// Function to build hats based on index and a given hatsize in meters
-			const pushHats = (size) => {
+			const pushHats = (size, localHatOptions = {}) => {
+				let yawn = localHatOptions.yawn ?? options.yawn;
+
 				let leftWingPoint = L.GeometryUtil.destination(
 					derivedLatLngs[i],
-					derivedBearings[i] - options.yawn / 2,
+					derivedBearings[i] - yawn / 2,
 					size
 				);
 
 				let rightWingPoint = L.GeometryUtil.destination(
 					derivedLatLngs[i],
-					derivedBearings[i] + options.yawn / 2,
+					derivedBearings[i] + yawn / 2,
 					size
 				);
 
@@ -257,22 +266,23 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, hatOptions)
-					: L.polyline(hatPoints, hatOptions);
+					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHats()
 
 			// Function to build hats based on pixel input
-			const pushHatsFromPixels = (size) => {
+			const pushHatsFromPixels = (size, localHatOptions = {}) => {
 				let sizePixels = size.slice(0, size.length - 2);
+				let yawn = localHatOptions.yawn ?? options.yawn;
 
 				let derivedXY = this._map.latLngToLayerPoint(derivedLatLngs[i]);
 
 				let bearing = derivedBearings[i];
 
-				let thetaLeft = (180 - bearing - options.yawn / 2) * (Math.PI / 180),
-					thetaRight = (180 - bearing + options.yawn / 2) * (Math.PI / 180);
+				let thetaLeft = (180 - bearing - yawn / 2) * (Math.PI / 180),
+					thetaRight = (180 - bearing + yawn / 2) * (Math.PI / 180);
 
 				let dxLeft = sizePixels * Math.sin(thetaLeft),
 					dyLeft = sizePixels * Math.cos(thetaLeft),
@@ -298,18 +308,28 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, hatOptions)
-					: L.polyline(hatPoints, hatOptions);
+					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHatsFromPixels()
 
 			//  -------  LOOP THROUGH POINTS IN EACH SEGMENT ---------- //
 			for (var i = 0; i < derivedLatLngs.length; i++) {
+				let { perArrowheadOptions, ...globalOptions } = options;
+
+				perArrowheadOptions = perArrowheadOptions ? perArrowheadOptions(i) : {};
+				perArrowheadOptions = Object.assign(
+					globalOptions,
+					definedProps(perArrowheadOptions)
+				);
+
+				size = perArrowheadOptions.size ?? size;
+
 				// ---- If size is chosen in meters -------------------------
 				if (isInMeters(size)) {
 					let hatSize = size.slice(0, size.length - 1);
-					pushHats(hatSize);
+					pushHats(hatSize, perArrowheadOptions);
 
 					// ---- If size is chosen in percent ------------------------
 				} else if (isInPercent(size)) {
@@ -326,11 +346,11 @@ L.Polyline.include({
 						}
 					})(); // hatsize calculation
 
-					pushHats(hatSize);
+					pushHats(hatSize, perArrowheadOptions);
 
 					// ---- If size is chosen in pixels --------------------------
 				} else if (isInPixels(size)) {
-					pushHatsFromPixels(options.size);
+					pushHatsFromPixels(options.size, perArrowheadOptions);
 
 					// ---- If size unit is not given -----------------------------
 				} else {
@@ -362,6 +382,10 @@ L.Polyline.include({
 		}
 	},
 
+	/**
+	 * Builds ghost polylines that are clipped versions of the polylines based on the offsets
+	 * If offsets are used, arrowheads are drawn from 'this._ghosts' rather than 'this'
+	 */
 	_buildGhosts: function ({ start, end }) {
 		if (start || end) {
 			let latlngs = this.getLatLngs();
