@@ -1,87 +1,90 @@
 # leaflet-arrowheads
- Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
+
+Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on polylines for vector visualization.
 
 <p align="center">
-  <img src="images/banner.PNG" width="80%">
+  <img src="images/banner.PNG" width="100%">
 </p>
 
-## [:eyes: DEMO :eyes:](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
+<h1 align="center">
+<a href="https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc">👀 DEMO 👀</a>
+</h1>
 
 ## Installation
 
-Leaflet-Arrowheads compatible with leaflet 1.5.1+.  It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
+Leaflet-Arrowheads compatible with leaflet 1.7.1+. It has 2 dependencies: [Leaflet](https://leafletjs.com/) itself, and [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil).
 
 You can use npm to install leaflet-arrowheads:
 
-````
+```
 npm install leaflet-arrowheads --save
-````
+```
 
 Then you can simply import its content into your project:
 
-````javascript
-import 'leaflet-arrowheads'
-````
+```javascript
+import 'leaflet-arrowheads';
+```
 
 ### Without ES6 Imports
 
-Grab the [source file](https://github.com/slutske22/leaflet-arrowheads/blob/master/src/leaflet-arrowheads.js) and include it in your project.  You can include the source file in your header, but it must come *after* a link to  [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), which must come *after* a link to the leaflet source.  Your main project javascript will come after this, like so:
+Grab the [source file](https://github.com/slutske22/leaflet-arrowheads/blob/master/src/leaflet-arrowheads.js) and include it in your project. You can include the source file in your header, but it must come _after_ a link to [Leaflet GeometryUtil](https://github.com/makinacorpus/Leaflet.GeometryUtil), which must come _after_ a link to the leaflet source. Your main project javascript will come after this, like so:
 
-````html
+```html
 <head>
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-  <script src=".../scripts/leaflet.geometryutil.js"></script>
-  <script src=".../scripts/leaflet-arrowheads.js"></script>
-  <script src=".../yourProjectScript.js" defer></script>
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<script src=".../scripts/leaflet.geometryutil.js"></script>
+	<script src=".../scripts/leaflet-arrowheads.js"></script>
+	<script src=".../yourProjectScript.js" defer></script>
 </head>
-````
+```
 
 ## Usage
 
 Arrowheads can be applied to any polyline, whether unisegmental, multisegmental, continuous, or discontinuous:
 
-````javascript
-var myVector = L.polyline([ coords ]).arrowheads()
-````
+```javascript
+var myVector = L.polyline([coords]).arrowheads();
+```
 
 Arrowheads will be added to your polyline and will automatically be added to and removed from the map when you call add and remove methods on your polyline:
 
-````javascript
+```javascript
 myVector.addTo(map) or myVector.remove()
-````
+```
 
 If you need to access the arrowheads directly, you can call the `.getArrowheads()` method on your polyline.
 
-````javascript
-myVector.getArrowheads() // returns the arrowheads polyline object
-myVector.getArrowheads().remove() // removes arrowheads from map
-````
+```javascript
+myVector.getArrowheads(); // returns the arrowheads polyline object
+myVector.getArrowheads().remove(); // removes arrowheads from map
+```
 
 Arrowheads can also be deleted from their parent polyline entirely:
 
-````javascript
-myVector.deleteArrowheads()
-````
+```javascript
+myVector.deleteArrowheads();
+```
 
 Arrowheads can take a configuration object as its argument:
 
-````javascript
-var myVector = L.polyline([ coords ]).arrowheads({ <Options> })
-````
+```javascript
+var myVector = L.polyline([ coords ]).arrowheads({ <Options> });
+```
 
 You can also use arrowheads on a GeoJSON that contains `LineString` or `MultiLineString` features by adding it as an option:
 
-````javascript
-var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } })
-````
-
+```javascript
+var myGeoJson = L.geoJSON(geoJsonData, { arrowheads: { <Options> } });
+```
 
 ## Options
 
-Arrowheads offers a variety of options for rendering and styling arrowheads.  See the options table below.<br>
+Arrowheads offers a variety of options for rendering and styling arrowheads. See the options table below.<br>
 <br>
-Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path).  Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`.  These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
+Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6.0.html#path). Arrowheads also inherit all options from their parent polylines, except `fill`, `fillOpacity`, and `smoothFactor`. These can be changed manually when defining the arrowheads' options, but changing smoothFactor will result in improperly rendered arrows.<br>
 <br>
+
 <table>
 
    <tr>
@@ -90,6 +93,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> <b> Default </b> </td>
       <td> <b> Description </b> </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> yawn </td>
@@ -97,6 +101,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> 60 </td>
       <td>  Defines the width of the opening of the arrowhead, given in degrees.  The larger the angle, the wider the arrowhead. </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> size </td>
@@ -111,6 +116,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          </ul>
       </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> frequency </td>
@@ -127,6 +133,7 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
          </ul>
       </td>
    </tr>
+   <tr></tr>
 
    <tr>
       <td> proportionalToTotal </td>
@@ -134,21 +141,41 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
       <td> false </td>
       <td> Only relevant when <code>size</code> is given as a percent. Useful when <code>frequency</code> is set to <code>'endonly'</code>.  Will render the arrowhead(s) with a size proportional to the entire length of the multi-segmented polyline, rather than proportional to the average length of all the segments.</td>
    </tr>
+   <tr></tr>
 
-</table>
+   <tr>
+      <td> offsets </td>
+      <td> Object <br> <code>{ <br> start?: string; <br> end?: string <br> }</code> </td>
+      <td> undefined </td>
+      <td> Enables the developer to have the arrowheads start or end at some offset from the start and/or end of the polyline. This option can contain one or both <code>start</code> and <code>end</code> properties.  Each must be a string defining the size of the offset in either meters or pixels (i.e. <code>'100m'</code>, <code>'15px'</code>, etc.)</td>
+   </tr>
+   <tr></tr>
 
+   <tr>
+      <td> perArrowheadOptions </td>
+      <td> Function <br> <code>(i: number) => ArrowheadOptions</code> </td>
+      <td> undefined </td>
+      <td> Enables the developer to customize arrowheads on a one-by-one basis.  Must be in the form of a function of <code>i</code>, which is the index of the arrowhead as it is rendered in the loop through all arrowheads.  Must return an object that is options object, the same type of options object that is the agrument for <code>.arrowheads({ &lt;Options&gt; })</code>.  Cannnot account for <code>frequency</code> or <code>proportionalToTotal</code> from within the <code>perArrowheadOptions</code> callback.  See examples for details.</td>
+   </tr>
+
+</table><br>
+<br>
+There are many different ways to combine these various options.  See examles below.  Many combinations are untested, so if you encounter a problem, open and issue or a PR.
 
 ## Examples
 
 A demo project is available for viewing at https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc.
 The web page alone without the code: https://zfxxc.csb.app/
 
-Polylines in this demo have popups which each contain the code for that polyline.  Click around, and feel free to look through the codesandbox for more detail.
+There is also a small typescript example sandbox [here](https://codesandbox.io/s/leaflet-arrowheads-ts-example-kwonf).
+
+Polylines in this demo have popups which each contain the code for that polyline. Click around, and feel free to look through the codesandbox for more detail.
 
 <table>
    <tr>
       <td colspan="4"><b>Yawn Options</td>
    </tr>
+   <tr></tr>
    <tr>
       <td width="35%">
          <pre>L.polyline([]).arrowheads()</pre>
@@ -166,6 +193,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          <img src="images/yawn-2.PNG" width="100px">
       </td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   yawn: 40
@@ -183,6 +211,7 @@ Polylines in this demo have popups which each contain the code for that polyline
    <tr>
       <td colspan="4"><b>Color and Fill Options</td>
    </tr>
+   <tr></tr>
    <tr>
       <td width="35%">
          <pre>L.polyline([]).arrowheads()</pre><br>
@@ -200,6 +229,7 @@ Polylines in this demo have popups which each contain the code for that polyline
          <img src="images/fill-1.PNG" width="100px">
       </td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   color: 'black'
@@ -213,6 +243,7 @@ Polylines in this demo have popups which each contain the code for that polyline
     })</pre></td>
       <td><img src="images/fill-2.PNG" width="100px"></td>
    </tr>
+   <tr></tr>
    <tr>
       <td><pre>L.polyline([]).arrowheads({
   color: 'black'
@@ -231,9 +262,11 @@ Polylines in this demo have popups which each contain the code for that polyline
     <tr>
      <td colspan="2"><b>Size Options</b></td>
    </tr>
+   <tr></tr>
    <tr>
       <td colspan="2">Setting size to a number or percent will give you a fixed size arrowhead (in meters or percent of the size of the segment, respectively), regardless of zoom size.  See the frequency examples below for a better idea.</td>
    </tr>
+   <tr></tr>
    <tr>
       <td>
          <pre>L.polyline([coords]).arrowheads({size: '20px', fill: true})</pre>
@@ -244,41 +277,124 @@ Polylines in this demo have popups which each contain the code for that polyline
    </tr>
 </table>
 
-
 <table>
    <tr><td><b>Frequency Options</b></td></tr>
+   <tr></tr>
    <tr><td>    
-      <code>L.polyline([coords], {smoothFactor: 5}).arrowheads( {frequency: 'allvertices'} )  
-      // standard option</code><br>
+   Standard option:
+      <pre><code>L.polyline([coords], { smoothFactor: 5 })
+   .arrowheads({ frequency: 'allvertices' });</code></pre>
       <br>
       <img src="images/frequency-4.gif" width="100%">
    </td></tr>
+   <tr></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads( {frequency: 'endonly', size: '50%'} )</code><br>
-      <br>
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: 'endonly', 
+      size: '50%' 
+   });</code></pre>
       <img src="images/frequency-5.PNG" width="100%">
    </td></tr>
+   <tr></tr>
    <tr><td>
-      <code>L.polyline([coords]).arrowheads( {frequency: 20} ) // 20 arrowheads evenly distributed</code><br>
-      <br>
+      20 arrowheads evenly distributed
+      <pre><code>L.polyline([coords]).arrowheads({ frequency: 20 });</code></pre>
       <img src="images/frequency-1.PNG">
    </td></tr>
+   <tr></tr>
    <tr><td>
-      <code>L.polyline([coords]).arrowheads( {frequency: '500m'} ) // arrowheads every ~500 m evenly distributed</code><br>
-      <br>
+      Arrowheads every ~500 m evenly distributed
+      <pre><code>L.polyline([coords]).arrowheads({ frequency: '500m' });</code></pre>
       <img src="images/frequency-2.PNG">
    </td></tr>
+   <tr></tr>
    <tr><td>    
-      <code>L.polyline([coords]).arrowheads( {frequency: '50px', size: '12px'} ) // arrowheads every 50px regardless of zoom</code><br>
-      <br>
+   Arrowheads every 50px regardless of zoom
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: '50px', 
+      size: '12px'
+   });</code></pre>
       <img src="images/frequency-3.gif" width="100%">
+   </td></tr>
+</table>
+
+<table>
+   <tr><td><b>Offset Options</b></td></tr>
+   <tr></tr>
+   <tr><td>    
+      <pre><code>L.polyline([coords])
+   .arrowheads({ 
+      frequency: 'endonly',
+      size: '30px',
+      offsets: { end: '15px' }
+   });</code></pre>
+      <img src="images/offset-end-1.png" width="100%">
+   </td></tr>
+   <tr></tr>
+   <tr><td>    
+      <pre><code>L.polyline([coords])
+   .arrowheads({ frequency: 20,
+      size: '300m',
+      offsets: { end: '15px' }
+   });</code></pre>
+      <img src="images/offset-end-2.png" width="100%">
+   </td></tr>
+   <tr></tr>
+   <tr><td>    
+      <pre><code>L.polyline([coords1, coords2])
+   .arrowheads({ frequency: '1000m',
+      size: '300m',
+      offsets: { 
+         start: '5000m', 
+         end: '15px' 
+      }
+   });</code></pre>
+      <img src="images/offset-both-1.png" width="100%">
+   </td></tr>
+</table>
+
+<table>
+   <tr><td><b>Per-Arrowhead Options</b></td></tr>
+   <tr></tr>
+
+   <tr><td>    
+      <pre><code class="highlight highlight-source-js">L.polyline([coords], { color: 'black', weight: '2' })
+   .arrowheads({
+      frequency: '500m',
+      color: 'darkblue',
+      perArrowheadOptions: (i) => ({
+         size: i % 3 === 0 ? '30%' : '15%',
+         color: i % 2 === 0 ? 'red' : undefined,
+         fill: (i + 1) % 4 === 0,
+         yawn: (i + 1) % 4 === 0 ? 35 : undefined,
+      }),
+   });</code></pre>
+      <img src="images/perHatOptions-1.png" width="100%">
+   </td></tr>
+   <tr></tr>
+
+   <tr></tr>
+   <tr><td>    
+      <pre><code class="highlight highlight-source-js">L.polyline([coords])
+   .arrowheads({ 
+      size: '20px',
+      fill: true,
+      yawn: 30,
+      frequency: 20,
+      perArrowheadOptions: (i) => ({
+         color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
+      }),
+   });</code></pre>
+      <img src="images/perHatOptions-2.png" width="100%">
    </td></tr>
 </table>
 
 ## Alternatives
 
-After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator).  This offers some great methods to decorate your lines, potentially with arrowheads.  
+After writing this plugin I discovered [Leaflet.PolylineDecorator](https://github.com/bbecquet/Leaflet.PolylineDecorator). This offers some great methods to decorate your lines, potentially with arrowheads.
 
 ## Limitations
 
-Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature.  This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings.  This may be able to be improved.  Feel free to contribute / open a PR.
+Arrowheads sometimes look like they're in slightly the wrong orientation in areas of high curvature. This is because of the way leaflet-arrowheads chooses and interpolates the points that it uses to calculate bearings. This may be able to be improved. Feel free to contribute / open a PR.
