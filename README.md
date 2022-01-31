@@ -6,7 +6,9 @@ Leaflet-Arrowheads is a small plugin for leaflet to quickly draw arrowheads on p
   <img src="images/banner.PNG" width="100%">
 </p>
 
-## [:eyes: DEMO :eyes:](https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc)
+<h1 align="center">
+<a href="https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc">👀 DEMO 👀</a>
+</h1>
 
 ## Installation
 
@@ -164,6 +166,8 @@ There are many different ways to combine these various options.  See examles bel
 
 A demo project is available for viewing at https://codesandbox.io/s/leaflet-arrowheads-example-zfxxc.
 The web page alone without the code: https://zfxxc.csb.app/
+
+There is also a small typescript example sandbox [here](https://codesandbox.io/s/leaflet-arrowheads-ts-example-kwonf).
 
 Polylines in this demo have popups which each contain the code for that polyline. Click around, and feel free to look through the codesandbox for more detail.
 
