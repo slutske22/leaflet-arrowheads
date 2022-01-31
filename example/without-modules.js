@@ -780,3 +780,19 @@ const geojsonExample = L.geoJSON(samplegeojson, { arrowheads: { size: '25%' } })
 		{ minWidth: 400 }
 	)
 	.addTo(map);
+
+//  ------- Layers control --------------//
+
+L.control
+	.layers(null, {
+		'Vector 1': simpleVector0,
+		'Vector 2': simpleVector1,
+		'Vector 3': simpleVector2,
+		'Vector 4': simpleVector3,
+		'Vector 5': simpleVector4,
+		'Vector 6': simpleVector5,
+		'Group 2': group2,
+		'Group 3': group3,
+		GeoJSON: geojsonExample,
+	})
+	.addTo(map);
