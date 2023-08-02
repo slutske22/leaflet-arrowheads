@@ -105,12 +105,12 @@ Arrowheads inherit all options from [L.Path](https://leafletjs.com/reference-1.6
 
    <tr>
       <td> size </td>
-      <td width="25%"> Number | String <br>
-      <i> ( Meters | Percent or Pixels ) </i> </td>
+      <td width="25%"> String <br>
+      <i> ( Meters or Percent or Pixels ) </i> </td>
       <td> '15%' </td>
       <td> Determines the size of the arrowhead.  Accepts three types of values: <br>
          <ul>
-            <li> A number will set the size of the arrowhead to that number of meters </li>
+            <li> A string value which is a number with the suffix 'm' <i>( '1.5m', '20m', '250m', etc. )</i> will render arrows whose size is that many metres. Ideal for maps with low variance in zoom levels. </li>
             <li> A string value which is a number with a percent sign <i>( '15%', '20%', '25%', etc. )</i> will render arrows whose size is that percentage of the size of the parent polyline.  If the polyline has multiple segments, 'size' will take the percent of the average size of the segments. </li>
             <li> A string value which is a number with the suffix 'px' <i>( '20px', '25px', '30px', etc. )</i> will render an arrowhead whose size stays at a constant pixel value, regardless of zoom level.  Will look strange at low zoom levels or for smaller parent vectors.  Ideal for larger parent vectors and at higher zoom levels. </li>
          </ul>
