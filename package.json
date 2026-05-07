@@ -21,7 +21,7 @@
 	"author": "Seth Lutske",
 	"license": "MIT",
 	"dependencies": {
-		"leaflet": "^1.7.1",
+		"leaflet": "^1.9.4",
 		"leaflet-geometryutil": "^0.10.0"
 	},
 	"devDependencies": {
