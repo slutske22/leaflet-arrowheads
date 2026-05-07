@@ -1,2 +1,3 @@
-import 'leaflet-geometryutil'
-import './leaflet-arrowheads.js'
+import {Arrow} from './leaflet-arrowheads.js'
+
+export {Arrow};

@@ -3,6 +3,7 @@
 	"version": "1.4.0",
 	"description": "Add arrow heads to leaflet polylines",
 	"main": "src/index.js",
+	"module": "src/index.js",
 	"scripts": {
 		"checkoutput": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
 		"use:npmReadme": "mv 'README.md' 'git.README.md' && mv 'npm.README.md' 'README.md'",
@@ -21,8 +22,7 @@
 	"author": "Seth Lutske",
 	"license": "MIT",
 	"dependencies": {
-		"leaflet": "^1.9.4",
-		"leaflet-geometryutil": "^0.10.0"
+		"leaflet": "^2.0.0-alpha.1"
 	},
 	"devDependencies": {
 		"@types/leaflet": "^1.7.9",

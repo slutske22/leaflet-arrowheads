@@ -1,3 +1,15 @@
+import {
+    FeatureGroup,
+    GeoJSON,
+    LayerGroup,
+    Map,
+    Marker,
+    Polygon,
+    Polyline,
+    Util,
+} from 'leaflet';
+import {angle, destination, interpolateOnLine} from './geometryutil.js';
+
 function modulus(i, n) {
 	return ((i % n) + n) % n;
 }
@@ -62,13 +74,17 @@ function pixelsToMeters(pixels, map) {
 	return derivedMeters;
 }
 
-L.Polyline.include({
+let Arrow = Polyline.extend({
+    initialize(latlngs, options) {
+        Polyline.prototype.initialize.call(this, latlngs, options);
+    },
+
 	/**
-	 * Adds arrowheads to an L.polyline
+	 * Adds arrowheads to an Polyline
 	 * @param {object} options The options for the arrowhead.  See documentation for details
-	 * @returns The L.polyline instance that they arrowheads are attached to
+	 * @returns The Polyline instance that they arrowheads are attached to
 	 */
-	arrowheads: function (options = {}) {
+	arrowheads(options = {}) {
 		// Merge user input options with default options:
 		const defaults = {
 			yawn: 60,
@@ -86,7 +102,7 @@ L.Polyline.include({
 		return this;
 	},
 
-	buildVectorHats: function (options) {
+	buildVectorHats(options) {
 		// Reset variables from previous this._update()
 		if (this._arrowheads) {
 			this._arrowheads.remove();
@@ -188,7 +204,7 @@ L.Polyline.include({
 					let bearings = [];
 					for (var i = 1; i < latlngs.length; i++) {
 						let bearing =
-							L.GeometryUtil.angle(
+							angle(
 								this._map,
 								latlngs[modulus(i - 1, latlngs.length)],
 								latlngs[i]
@@ -204,7 +220,7 @@ L.Polyline.include({
 				derivedLatLngs = [latlngs[latlngs.length - 1]];
 
 				derivedBearings = [
-					L.GeometryUtil.angle(
+					angle(
 						this._map,
 						latlngs[latlngs.length - 2],
 						latlngs[latlngs.length - 1]
@@ -214,7 +230,7 @@ L.Polyline.include({
 				derivedLatLngs = [];
 				let interpolatedPoints = [];
 				for (var i = 0; i < noOfPoints; i++) {
-					let interpolatedPoint = L.GeometryUtil.interpolateOnLine(
+					let interpolatedPoint = interpolateOnLine(
 						this._map,
 						latlngs,
 						spacing * (i + 1)
@@ -230,7 +246,7 @@ L.Polyline.include({
 					let bearings = [];
 
 					for (var i = 0; i < interpolatedPoints.length; i++) {
-						let bearing = L.GeometryUtil.angle(
+						let bearing = angle(
 							this._map,
 							latlngs[interpolatedPoints[i].predecessor + 1],
 							latlngs[interpolatedPoints[i].predecessor]
@@ -247,13 +263,13 @@ L.Polyline.include({
 			const pushHats = (size, localHatOptions = {}) => {
 				let yawn = localHatOptions.yawn ?? options.yawn;
 
-				let leftWingPoint = L.GeometryUtil.destination(
+				let leftWingPoint = destination(
 					derivedLatLngs[i],
 					derivedBearings[i] - yawn / 2,
 					size
 				);
 
-				let rightWingPoint = L.GeometryUtil.destination(
+				let rightWingPoint = destination(
 					derivedLatLngs[i],
 					derivedBearings[i] + yawn / 2,
 					size
@@ -266,8 +282,8 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
-					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
+					? new Polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: new Polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHats()
@@ -308,8 +324,8 @@ L.Polyline.include({
 				];
 
 				let hat = options.fill
-					? L.polygon(hatPoints, { ...hatOptions, ...localHatOptions })
-					: L.polyline(hatPoints, { ...hatOptions, ...localHatOptions });
+					? new Polygon(hatPoints, { ...hatOptions, ...localHatOptions })
+					: new Polyline(hatPoints, { ...hatOptions, ...localHatOptions });
 
 				hats.push(hat);
 			}; // pushHatsFromPixels()
@@ -366,13 +382,13 @@ L.Polyline.include({
 		//  --------- LOOP THROUGH EACH POLYLINE END ---------------- //
 		//  --------------------------------------------------------- //
 
-		let arrowheads = L.layerGroup(allhats);
+		let arrowheads = new LayerGroup(allhats);
 		this._arrowheads = arrowheads;
 
 		return this;
 	},
 
-	getArrowheads: function () {
+	getArrowheads() {
 		if (this._arrowheads) {
 			return this._arrowheads;
 		} else {
@@ -386,7 +402,7 @@ L.Polyline.include({
 	 * Builds ghost polylines that are clipped versions of the polylines based on the offsets
 	 * If offsets are used, arrowheads are drawn from 'this._ghosts' rather than 'this'
 	 */
-	_buildGhosts: function ({ start, end }) {
+	_buildGhosts({ start, end }) {
 		if (start || end) {
 			let latlngs = this.getLatLngs();
 
@@ -413,7 +429,7 @@ L.Polyline.include({
 						}
 					})();
 
-					let newStart = L.GeometryUtil.interpolateOnLine(
+					let newStart = interpolateOnLine(
 						this._map,
 						segment,
 						endOffsetInMeters / totalLength
@@ -436,7 +452,7 @@ L.Polyline.include({
 						}
 					})();
 
-					let newEnd = L.GeometryUtil.interpolateOnLine(
+					let newEnd = interpolateOnLine(
 						this._map,
 						segment,
 						(totalLength - endOffsetInMeters) / totalLength
@@ -449,7 +465,7 @@ L.Polyline.include({
 				return segment;
 			});
 
-			this._ghosts = L.polyline(newLatLngs, {
+			this._ghosts = new Polyline(newLatLngs, {
 				...this.options,
 				color: 'rgba(0,0,0,0)',
 				stroke: 0,
@@ -460,7 +476,7 @@ L.Polyline.include({
 		}
 	},
 
-	deleteArrowheads: function () {
+	deleteArrowheads() {
 		if (this._arrowheads) {
 			this._arrowheads.remove();
 			delete this._arrowheads;
@@ -472,7 +488,7 @@ L.Polyline.include({
 		}
 	},
 
-	_update: function () {
+	_update() {
 		if (!this._map) {
 			return;
 		}
@@ -487,7 +503,7 @@ L.Polyline.include({
 		}
 	},
 
-	remove: function () {
+	remove() {
 		if (this._arrowheads) {
 			this._arrowheads.remove();
 		}
@@ -498,8 +514,8 @@ L.Polyline.include({
 	},
 });
 
-L.LayerGroup.include({
-	removeLayer: function (layer) {
+LayerGroup.include({
+	removeLayer(layer) {
 		var id = layer in this._layers ? layer : this.getLayerId(layer);
 
 		if (this._map && this._layers[id]) {
@@ -514,7 +530,7 @@ L.LayerGroup.include({
 		return this;
 	},
 
-	onRemove: function (map, layer) {
+	onRemove(map, layer) {
 		for (var layer in this._layers) {
 			if (this._layers[layer]) {
 				this._layers[layer].remove();
@@ -525,9 +541,9 @@ L.LayerGroup.include({
 	},
 });
 
-L.Map.include({
-	removeLayer: function (layer) {
-		var id = L.Util.stamp(layer);
+Map.include({
+	removeLayer(layer) {
+		var id = Util.stamp(layer);
 
 		if (layer._arrowheads) {
 			layer._arrowheads.remove();
@@ -561,14 +577,14 @@ L.Map.include({
 	},
 });
 
-L.GeoJSON.include({
-	geometryToLayer: function (geojson, options) {
+GeoJSON.include({
+	geometryToLayer(geojson, options) {
 		var geometry = geojson.type === 'Feature' ? geojson.geometry : geojson,
 			coords = geometry ? geometry.coordinates : null,
 			layers = [],
 			pointToLayer = options && options.pointToLayer,
 			_coordsToLatLng =
-				(options && options.coordsToLatLng) || L.GeoJSON.coordsToLatLng,
+				(options && options.coordsToLatLng) || GeoJSON.coordsToLatLng,
 			latlng,
 			latlngs,
 			i,
@@ -590,16 +606,16 @@ L.GeoJSON.include({
 						this._pointToLayer(pointToLayer, geojson, latlng, options)
 					);
 				}
-				return new L.FeatureGroup(layers);
+				return new FeatureGroup(layers);
 
 			case 'LineString':
 			case 'MultiLineString':
-				latlngs = L.GeoJSON.coordsToLatLngs(
+				latlngs = GeoJSON.coordsToLatLngs(
 					coords,
 					geometry.type === 'LineString' ? 0 : 1,
 					_coordsToLatLng
 				);
-				var polyline = new L.Polyline(latlngs, options);
+				var polyline = new Polyline(latlngs, options);
 				if (options.arrowheads) {
 					polyline.arrowheads(options.arrowheads);
 				}
@@ -607,12 +623,12 @@ L.GeoJSON.include({
 
 			case 'Polygon':
 			case 'MultiPolygon':
-				latlngs = L.GeoJSON.coordsToLatLngs(
+				latlngs = GeoJSON.coordsToLatLngs(
 					coords,
 					geometry.type === 'Polygon' ? 1 : 2,
 					_coordsToLatLng
 				);
-				return new L.Polygon(latlngs, options);
+				return new Polygon(latlngs, options);
 
 			case 'GeometryCollection':
 				for (i = 0, len = geometry.geometries.length; i < len; i++) {
@@ -629,15 +645,15 @@ L.GeoJSON.include({
 						layers.push(layer);
 					}
 				}
-				return new L.FeatureGroup(layers);
+				return new FeatureGroup(layers);
 
 			default:
 				throw new Error('Invalid GeoJSON object.');
 		}
 	},
 
-	addData: function (geojson) {
-		var features = L.Util.isArray(geojson) ? geojson : geojson.features,
+	addData(geojson) {
+		var features = Util.isArray(geojson) ? geojson : geojson.features,
 			i,
 			len,
 			feature;
@@ -668,7 +684,7 @@ L.GeoJSON.include({
 		if (!layer) {
 			return this;
 		}
-		layer.feature = L.GeoJSON.asFeature(geojson);
+		layer.feature = GeoJSON.asFeature(geojson);
 
 		layer.defaultOptions = layer.options;
 		this.resetStyle(layer);
@@ -680,12 +696,14 @@ L.GeoJSON.include({
 		return this.addLayer(layer);
 	},
 
-	_pointToLayer: function (pointToLayerFn, geojson, latlng, options) {
+	_pointToLayer(pointToLayerFn, geojson, latlng, options) {
 		return pointToLayerFn
 			? pointToLayerFn(geojson, latlng)
-			: new L.Marker(
+			: new Marker(
 					latlng,
 					options && options.markersInheritOptions && options
 			  );
 	},
 });
+
+export { Arrow };
