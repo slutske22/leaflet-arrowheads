@@ -34,7 +34,7 @@ Grab the [source file](https://github.com/slutske22/leaflet-arrowheads/blob/mast
 <head>
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 	<script src=".../scripts/leaflet.geometryutil.js"></script>
-	<script src=".../scripts/leaflet-arrowheads.js"></script>
+	<script src=".../scripts/index.js"></script>
 	<script src=".../yourProjectScript.js" defer></script>
 </head>
 ```
