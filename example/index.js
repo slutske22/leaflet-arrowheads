@@ -1,4 +1,4 @@
-import { Map, TileLayer, Icon, LayerGroup, Marker, Control, GeoJSON } from 'leaflet';
+import { Map, TileLayer, Icon, LayerGroup, Marker, Control } from 'leaflet';
 import { arrow, Arrow } from '../src';
 
 const map = new Map('mapID').setView([32.02556114475524, -119.78169059753418], 9);
@@ -7,7 +7,7 @@ map.on('popupopen', () => {
 	hljs.highlightAll();
 });
 
-const myLayer = new TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+new TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 }).addTo(map);
 
@@ -35,14 +35,14 @@ const simpleVector0 = new Arrow(
                 map.getCenter().lat + 0.05 + group1Offsetx,
                 map.getCenter().lng - group1Offsety - 0.25 + 0.05,
             ],
+            [
+                map.getCenter().lat + 0.05 + group1Offsetx + 0.05,
+                map.getCenter().lng - group1Offsety - 0.25 + 0.05 + 0.05,
+            ],
         ],
-        { color: 'black' }
-    )
-	.arrowheads()
-	.bindPopup(`<pre><code>new Arrow(coords).arrowheads()</code></pre>`, {
-		maxWidth: 2000,
-		minWidth: 400,
-	});
+        { color: 'black', headFill: true }
+);
+
 
 const simpleVector1 = new Arrow(
 	[
@@ -56,33 +56,22 @@ const simpleVector1 = new Arrow(
 		],
 	],
 	{ color: 'blue', weight: 2 }
-)
-	.arrowheads()
-	.bindPopup(
-		`<pre><code>Arrow(coords, { color: 'blue', weight: 2 })
-  .arrowheads();</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+);
+
 
 const simpleVector2 = new Arrow(
+    [
         [
-            [
-                map.getCenter().lat - 0.05 + group1Offsetx,
-                map.getCenter().lng - group1Offsety - 0.05,
-            ],
-            [
-                map.getCenter().lat + 0.05 + group1Offsetx,
-                map.getCenter().lng - group1Offsety - 0.05 + 0.05,
-            ],
+            map.getCenter().lat - 0.05 + group1Offsetx,
+            map.getCenter().lng - group1Offsety - 0.05,
         ],
-        { color: 'purple' }
-    )
-	.arrowheads({ fill: true })
-	.bindPopup(
-		`<pre><code>var simpleVector1 = new Arrow(coords)
-  .arrowheads({ fill: true });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+        [
+            map.getCenter().lat + 0.05 + group1Offsetx,
+            map.getCenter().lng - group1Offsety - 0.05 + 0.05,
+        ],
+    ],
+    { color: 'purple' }
+);
 
 const simpleVector3 = new Arrow(
 	[
@@ -96,13 +85,7 @@ const simpleVector3 = new Arrow(
 		],
 	],
 	{ color: 'green' }
-)
-	.arrowheads({ color: 'black' })
-	.bindPopup(
-		`<pre><code>Arrow(coords, { color: 'green' })
-  .arrowheads({ color: 'black' })</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+);
 
 const simpleVector4 = new Arrow(
 	[
@@ -115,14 +98,8 @@ const simpleVector4 = new Arrow(
 			map.getCenter().lng - group1Offsety + 0.15 + 0.05,
 		],
 	],
-	{ color: 'orange', weight: 2 }
-)
-	.arrowheads({ yawn: 40 })
-	.bindPopup(
-		`<pre><code>Arrow(coords, { color: 'orange', weight: 2 })
-  .arrowheads({ yawn: 40 });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+	{ color: 'orange', weight: 2, yawn: 40 }
+);
 
 const simpleVector5 = new Arrow(
         [
@@ -135,65 +112,54 @@ const simpleVector5 = new Arrow(
                 map.getCenter().lng - group1Offsety + 0.25 + 0.05,
             ],
         ],
-        { color: 'red' }
-    )
-	.arrowheads({ fill: true, color: 'purple' })
-	.bindPopup(
-		`<pre><code>var simpleVector1 = new Arrow()
-            .arrowheads({ fill: true, color: 'purple' });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+        { color: 'red', headFill: true }
+);
 
-var group1 = new LayerGroup([
-	simpleVector0,
-	simpleVector1,
-	simpleVector2,
-	simpleVector3,
-	simpleVector4,
-	simpleVector5,
+const group1 = new LayerGroup([
+    simpleVector0,
+    simpleVector1,
+    simpleVector2,
+    simpleVector3,
+    simpleVector4,
+    simpleVector5,
 ]);
 
 group1.addTo(map);
 
 //  ------- GROUP 2: Arrowhead Size Options------------------------//
 
-var group2offsetx = 0.6;
-var group2offsety = 0.05;
+const group2offsetx = 0.6;
+const group2offsety = 0.05;
 
-var multiVector1 = new Arrow(
-	[
-		[
-			[
-				map.getCenter().lat - 0.2 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx,
-			],
-			[
-				map.getCenter().lat - 0.1 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx,
-			],
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx,
-			],
-		],
-		[
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx,
-			],
-			[
-				map.getCenter().lat + 0.1 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx,
-			],
-		],
-	],
-	{ smoothFactor: 30 }
-)
-	.arrowheads()
-	.bindPopup(`<pre><code>new Arrow(coords).arrowheads()</code></pre>`, {
-		maxWidth: 2000,
-		minWidth: 400,
-	});
+const multiVector1 = new Arrow(
+        [
+            [
+                [
+                    map.getCenter().lat - 0.2 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx,
+                ],
+                [
+                    map.getCenter().lat - 0.1 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx,
+                ],
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx,
+                ],
+            ],
+            [
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx,
+                ],
+                [
+                    map.getCenter().lat + 0.1 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx,
+                ],
+            ],
+        ],
+        { smoothFactor: 30 },
+);
 
 var multiVector2 = new Arrow(
 	[
@@ -223,151 +189,111 @@ var multiVector2 = new Arrow(
 		],
 	],
 	{ smoothFactor: 30, color: 'black' }
-)
-	.arrowheads({ size: '10%', frequency: 'endonly' })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '10%', 
-    frequency: 'endonly' 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+);
 
-var multiVector3 = new Arrow(
-	[
-		[
-			[
-				map.getCenter().lat - 0.2 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.3,
-			],
-			[
-				map.getCenter().lat - 0.1 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.3,
-			],
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.3,
-			],
-		],
-		[
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.3,
-			],
-			[
-				map.getCenter().lat + 0.1 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.3,
-			],
-		],
-	],
-	{ smoothFactor: 30, color: 'purple' }
-)
-	.arrowheads({ size: '10%', frequency: '3000m' })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({
-    size: '10%', 
-    frequency: '3000m'
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const multiVector3 = new Arrow(
+        [
+            [
+                [
+                    map.getCenter().lat - 0.2 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.3,
+                ],
+                [
+                    map.getCenter().lat - 0.1 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.3,
+                ],
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.3,
+                ],
+            ],
+            [
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.3,
+                ],
+                [
+                    map.getCenter().lat + 0.1 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.3,
+                ],
+            ],
+        ],
+        { smoothFactor: 30, color: 'purple' },
+);
 
-var multiVector4 = new Arrow(
-	[
-		[
-			[
-				map.getCenter().lat - 0.2 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.45,
-			],
-			[
-				map.getCenter().lat - 0.1 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.45,
-			],
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.45,
-			],
-		],
-		[
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.45,
-			],
-			[
-				map.getCenter().lat + 0.1 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.45,
-			],
-		],
-	],
-	{ smoothFactor: 30, color: 'green' }
-)
-	.arrowheads({ size: '10%', frequency: '50px', fill: true, yawn: 30 })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({
-    size: '10%',
-    frequency: '50px', 
-    fill: true, 
-    yawn: 30
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const multiVector4 = new Arrow(
+        [
+            [
+                [
+                    map.getCenter().lat - 0.2 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.45,
+                ],
+                [
+                    map.getCenter().lat - 0.1 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.45,
+                ],
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.45,
+                ],
+            ],
+            [
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.45,
+                ],
+                [
+                    map.getCenter().lat + 0.1 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.45,
+                ],
+            ],
+        ],
+        { smoothFactor: 30, color: 'green', headFill: true, yawn: 30 },
+);
 
-var multiVector5 = new Arrow(
-	[
-		[
-			[
-				map.getCenter().lat - 0.2 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.6,
-			],
-			[
-				map.getCenter().lat - 0.1 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.6,
-			],
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.6,
-			],
-		],
-		[
-			[
-				map.getCenter().lat + 0.0 + group2offsety,
-				map.getCenter().lng - 0.5 + group2offsetx + 0.6,
-			],
-			[
-				map.getCenter().lat + 0.1 + group2offsety,
-				map.getCenter().lng - 0.4 + group2offsetx + 0.6,
-			],
-		],
-	],
-	{ smoothFactor: 30, color: 'darkred' }
-)
-	.arrowheads({ size: '15px', frequency: '50px', fill: true, yawn: 30 })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({
-    size: '15px', 
-    frequency: '50px', 
-    fill: true, 
-    yawn: 30
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const multiVector5 = new Arrow(
+        [
+            [
+                [
+                    map.getCenter().lat - 0.2 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.6,
+                ],
+                [
+                    map.getCenter().lat - 0.1 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.6,
+                ],
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.6,
+                ],
+            ],
+            [
+                [
+                    map.getCenter().lat + 0.0 + group2offsety,
+                    map.getCenter().lng - 0.5 + group2offsetx + 0.6,
+                ],
+                [
+                    map.getCenter().lat + 0.1 + group2offsety,
+                    map.getCenter().lng - 0.4 + group2offsetx + 0.6,
+                ],
+            ],
+        ],
+        { smoothFactor: 30, color: 'darkred', headFill: true, yawn: 30 },
+);
 
-var group2 = new LayerGroup([
-	multiVector1,
-	multiVector2,
-	multiVector3,
-	multiVector4,
-	multiVector5,
+const group2 = new LayerGroup([
+    multiVector1,
+    multiVector2,
+    multiVector3,
+    multiVector4,
+    multiVector5,
 ]);
 
 group2.addTo(map);
 
 //  ------- GROUP 3: Arrowhead frequency options --------------------//
 
-var malibuPathPoints = [
+const malibuPathPoints = [
 	[34.047112447489766, -118.92691612243652],
 	[34.047112447489766, -118.92549991607666],
 	[34.04675685986366, -118.92356872558594],
@@ -429,43 +355,43 @@ var malibuPathPoints = [
 	[34.0346659933849, -118.70547294616698],
 ];
 
-var group3offsetx = 0.2,
+const group3offsetx = 0.2,
 	group3offsety = -0.1;
 
-var path1points = malibuPathPoints.map((point) => {
+const path1points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 1.8, point[1] + group3offsetx - 1.7];
 });
 
-var path2points = malibuPathPoints.map((point) => {
+const path2points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 1.85, point[1] + group3offsetx - 1.7];
 });
 
-var path3points = malibuPathPoints.map((point) => {
+const path3points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 1.9, point[1] + group3offsetx - 1.7];
 });
 
-var path4points = malibuPathPoints.map((point) => {
+const path4points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 1.95, point[1] + group3offsetx - 1.7];
 });
 
-var path5points = malibuPathPoints.map((point) => {
+const path5points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 2, point[1] + group3offsetx - 1.7];
 });
 
-var path6points = malibuPathPoints.map((point) => {
+const path6points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 2.05, point[1] + group3offsetx - 1.7];
 });
 
 // Offset path points:
-var path7points = malibuPathPoints.map((point) => {
+const path7points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 2.15, point[1] + group3offsetx - 1.7];
 });
 
-var path8points = malibuPathPoints.map((point) => {
+const path8points = malibuPathPoints.map((point) => {
 	return [point[0] + group3offsety - 2.23, point[1] + group3offsetx - 1.7];
 });
 
-var path9points = [
+const path9points = [
 	malibuPathPoints.map((point) => {
 		return [point[0] + group3offsety - 2.3, point[1] + group3offsetx - 1.7];
 	}),
@@ -474,124 +400,30 @@ var path9points = [
 	}),
 ];
 
-var path1 = new Arrow([path1points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads()
-	.bindPopup(`<pre><code>new Arrow(coords).arrowheads({})</code></pre>`, {
-		maxWidth: 2000,
-		minWidth: 400,
-	});
+const path1 = new Arrow([path1points], { smoothFactor: 1.5, weight: 2 });
 
-var path2 = new Arrow([path2points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({ size: '50%', frequency: 'endonly' })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '50%', 
-    frequency: 'endonly' 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const path2 = new Arrow([path2points], { smoothFactor: 1.5, weight: 2 });
 
-var path3 = new Arrow([path3points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({ size: '25%', frequency: 'endonly', proportionalToTotal: true })
-	.bindPopup(
-		`<pre><code>var path3 = new Arrow(coords)
-  .arrowheads({ 
-    size: '25%', 
-    frequency: 'endonly', 
-    proportionalToTotal: true
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const path3 = new Arrow([path3points], { smoothFactor: 1.5, weight: 2 });
 
-var path4 = new Arrow([path4points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({
-		frequency: '500m',
-		color: 'darkblue',
-		perArrowheadOptions: (i) => ({
-			size: i % 3 === 0 ? '30%' : '15%',
-			color: i % 2 === 0 ? 'red' : undefined,
-			fill: (i + 1) % 4 === 0,
-			yawn: (i + 1) % 4 === 0 ? 35 : undefined,
-		}),
-	})
-	.bindPopup(
-		`<pre><code>var path4 = new Arrow(coords)
-  .arrowheads({ 
-    frequency: '500m',
-    color: 'darkblue',
-    perArrowheadOptions: (i) => ({ 
-      color: i % 2 === 0 ? 'red' : undefined, 
-      size: i % 3 === 0 ? '30%' : '15%',
-      fill: (i + 1) % 4 === 0,
-      yawn: (i + 1) % 4 === 0 ? 35 : undefined,
-    })
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const path4 = new Arrow([path4points], { smoothFactor: 1.5, weight: 2, color: 'darkblue' });
 
-var path5 = new Arrow([path5points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({ frequency: '50px' })
-	.bindPopup(
-		`<pre><code>new Arrow(coords).arrowheads({ frequency: '50px' });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 450 }
-	);
+const path5 = new Arrow([path5points], { smoothFactor: 1.5, weight: 2 });
 
-var path6 = new Arrow([path6points], { smoothFactor: 1.5, weight: 2 })
-	.arrowheads({ size: '15px', frequency: '50px' })
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '15px', 
-    frequency: '50px' 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+const path6 = new Arrow([path6points], { smoothFactor: 1.5, weight: 2 });
 
 // Offset paths
-var path7 = new Arrow([path7points], {
+const path7 = new Arrow([path7points], {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-})
-	.arrowheads({
-		size: '300m',
-		frequency: 20,
-		offsets: { end: '15px' },
-	})
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '300m', 
-    frequency: 20, 
-    offsets: { 
-      end: '15px' 
-    } 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+});
 
-var path8 = new Arrow([path8points[0], path8points[path8points.length - 1]], {
+const path8 = new Arrow([path8points[0], path8points[path8points.length - 1]], {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-})
-	.arrowheads({
-		frequency: 'endonly',
-		size: '30px',
-		offsets: { end: '15px' },
-	})
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '30px', 
-    frequency: 'endonly', 
-    offsets: { 
-      end: '15px' 
-    } 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+});
 
 new Marker(path7points[path7points.length - 1], {
 	icon: boatIcon,
@@ -602,92 +434,52 @@ new Marker(path8points[path8points.length - 1], {
 	draggable: true,
 }).addTo(map);
 
-var path9 = new Arrow(path9points, {
+const path9 = new Arrow(path9points, {
 	smoothFactor: 1.5,
 	weight: 2,
 	color: 'darkblue',
-})
-	.arrowheads({
-		frequency: '1000m',
-		size: '300m',
-		offsets: { start: '5000m', end: '10px' },
-	})
-	.bindPopup(
-		`<pre><code>new Arrow(coords)
-  .arrowheads({ 
-    size: '300m', 
-    frequency: '1000m', 
-    offsets: { 
-      start: '5000m', 
-      end: '10px' 
-    } 
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+});
 
-var group3 = new LayerGroup([path1, path2, path3, path4, path5, path6]);
-var group4 = new LayerGroup([path7, path8, path9]);
+const group3 = new LayerGroup([path1, path2, path3, path4, path5, path6]);
+const group4 = new LayerGroup([path7, path8, path9]);
 
 group3.addTo(map);
 group4.addTo(map);
 
 //  ------- GROUP 1: Arrowhead Color, Fill, and Yawn Options --------------//
-
-var bigVector0 = new Arrow(
+const bigVector0 = new Arrow(
 	[
 		[59.85688529423247, 10.491943359375],
 		[59.94985301711567, 10.817413330078125],
 	],
-	{ color: 'black', stroke: '2' }
-).arrowheads({ fill: false, yawn: 30 });
+	{ color: 'black', stroke: '2', yawn: 30 }
+);
 
-var bigVector1 = new Arrow(
+const bigVector1 = new Arrow(
 	[
 		[58.401711667608, 5.6689453125],
 		[60.261617082844616, 10.8544921875],
 	],
-	{ color: 'blue', weight: 2 }
-).arrowheads({ fill: false, yawn: 30 });
+	{ color: 'blue', weight: 2, yawn: 30 }
+);
 
-var bigVector2 = new Arrow(
+const bigVector2 = new Arrow(
 	[
 		[47.57652571374621, -27.333984375],
 		[61.227957176677876, 10.810546875],
 	],
-	{ color: 'purple', weight: '2' }
-).arrowheads({ size: '20px', fill: false, yawn: 30 });
+	{ color: 'purple', weight: '2', yawn: 30 }
+);
 
-var bigVector3 = new Arrow(
+const bigVector3 = new Arrow(
 	[
 		[31.203404950917395, -84.0234375],
 		[62.34960927573042, 10.8984375],
 	],
-	{ color: 'black', weight: '2' }
-)
-	.arrowheads({
-		size: '20px',
-		fill: true,
-		yawn: 30,
-		frequency: 20,
-		perArrowheadOptions: (i) => ({
-			color: `rgba(150, 20, ${0 + 20 * i}, 1)`,
-		}),
-	})
-	.bindPopup(
-		`<pre><code class="hljs language-javascript">new Arrow(coords)
-  .arrowheads({ 
-    size: '20px',
-    fill: true,
-    yawn: 30,
-    frequency: 20,
-    perArrowheadOptions: (i) => ({
-      color: \`rgba(150, 20, \${0 + 20 * i}, 1)\`,
-    }),
-  });</code></pre>`,
-		{ maxWidth: 2000, minWidth: 400 }
-	);
+	{ color: 'black', weight: '2', yawn: 30 }
+);
 
-var groupBig = new LayerGroup([bigVector0, bigVector1, bigVector2, bigVector3]);
+const groupBig = new LayerGroup([bigVector0, bigVector1, bigVector2, bigVector3]);
 
 groupBig.addTo(map);
 
@@ -706,75 +498,9 @@ function flyToNorway() {
 	somePopup.closePopup();
 }
 
-// GeoJSON Examples:
-
-/*const samplegeojson = {
-	type: 'FeatureCollection',
-	features: [
-		{
-			type: 'Feature',
-			properties: {},
-			geometry: {
-				type: 'LineString',
-				coordinates: [
-					[-119.94323730468749, 31.487235582017444],
-					[-119.92401123046875, 31.508312698943445],
-					[-119.89654541015624, 31.529385064020936],
-					[-119.85260009765624, 31.541089879585808],
-					[-119.81689453125, 31.54577139493626],
-					[-119.75372314453125, 31.548112064557003],
-					[-119.7015380859375, 31.53640812943961],
-					[-119.66583251953124, 31.52470272697062],
-					[-119.62188720703125, 31.508312698943445],
-					[-119.5806884765625, 31.49191979634118],
-					[-119.52850341796875, 31.477866449675865],
-					[-119.47631835937499, 31.47083898476439],
-					[-119.41589355468749, 31.47083898476439],
-					[-119.34722900390625, 31.48020882071693],
-					[-119.2950439453125, 31.49426181553272],
-				],
-			},
-		},
-		{
-			type: 'Feature',
-			properties: {},
-			geometry: {
-				type: 'LineString',
-				coordinates: [
-					[-119.44885253906251, 31.512995857454676],
-					[-119.39941406249999, 31.52470272697062],
-					[-119.33624267578124, 31.53640812943961],
-					[-119.278564453125, 31.5504526754715],
-					[-119.22088623046875, 31.55981453201843],
-					[-119.1412353515625, 31.56449510799119],
-					[-119.08355712890625, 31.555133721172034],
-					[-119.02862548828125, 31.53640812943961],
-					[-118.98468017578125, 31.512995857454676],
-					[-118.91326904296874, 31.501287521196705],
-					[-118.86383056640625, 31.512995857454676],
-					[-118.80889892578126, 31.53640812943961],
-					[-118.75396728515625, 31.573855555238104],
-					[-118.73199462890626, 31.608948861695676],
-				],
-			},
-		},
-	],
-};
-
-const geojsonExample = new GeoJSON(samplegeojson, { arrowheads: { size: '25%' } })
-	.bindPopup(
-		`<pre><code>GeoJSON(sampleGeoJSON, {
-  arrowheads: { 
-    size: '25%' 
-  } 
-});</code></pre>`,
-		{ minWidth: 400 }
-	)
-	.addTo(map);*/
-
 //  ------- Layers control --------------//
 
-/*new Control
+new Control
 	.layers(null, {
 		'Vector 1': simpleVector0,
 		'Vector 2': simpleVector1,
@@ -783,7 +509,6 @@ const geojsonExample = new GeoJSON(samplegeojson, { arrowheads: { size: '25%' } 
 		'Vector 5': simpleVector4,
 		'Vector 6': simpleVector5,
 		'Group 2': group2,
-		'Group 3': group3,
-		GeoJSON: geojsonExample,
-	})
-	.addTo(map);*/
+		'Group 3': group3
+    })
+	.addTo(map);
